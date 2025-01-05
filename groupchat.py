@@ -2,13 +2,17 @@ from agent import Agent
 from chatmodel import ChatModel
 from tools import Tools
 from Place import Place
+from datetime import datetime
+import json
+import os
 
+os.system("cls")
 tools = Tools()
 ChatModel = ChatModel()
 
 market = Place("超市")
-
-shared_mem = []
+scenario = "你是一位社区居民，正在与其他居民进行日常聊天。"
+shared_memory = []
 residents_info = []
 
 residents = [
@@ -24,18 +28,37 @@ for resident in residents:
 for resident in residents:
     resident.join_place(market)
 
-shared_memories = []
 
-current_chat = "'赵强':{'target':'李华','context':'老板来包华子。今天超市生意怎么样？'}"
-shared_memories.append(current_chat)
+def save_dialogue(sender, receiver, context, action=None, action_param=None):
+    dialogue = {
+        "timestamp": datetime.now().isoformat(),
+        "sender": sender,
+        "receiver": receiver,
+        "context": context,
+        "action": action,
+        "action_param": action_param,
+    }
+    shared_memory.append(dialogue)
+    if len(shared_memory) > 10:
+        shared_memory.pop(0)
 
-for i in range(5):
+
+save_dialogue("赵强", "李华", "老板来包华子。今天超市生意怎么样？")
+print(shared_memory)
+for i in range(10):
     for member in market.members:
-        other_members = [str(mem) for mem in market.members if mem != member]
-        res_dict = member.generate_answer(
-            current_chat=current_chat,
-            member_info="\n".join(other_members),
-            shared_memory="\n".join(shared_memories),
+        respond = member.generate_answer(
+            scenario=scenario,
+            member_info="\n".join(
+                [str(mem) for mem in market.members if mem != member]
+            ),
+            shared_memory=shared_memory,
         )
-        # current_chat =
-    # shared_mem.append()
+        # 将返回结果中的 content 字符串解析为字典
+        content = json.loads(respond)
+
+        save_dialogue(
+            member.name,
+            content["Answer"]["receiver"],  # 访问解析后的字典
+            content["Answer"]["context"],
+        )

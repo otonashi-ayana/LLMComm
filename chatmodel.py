@@ -23,7 +23,6 @@ class ChatModel:
         model_completion = self.client.chat.completions.create(
             model=self.model_name,
             messages=messages,
-            # tools=tools,
             response_format={"type": "json_object"},
         )
         return model_completion.model_dump()

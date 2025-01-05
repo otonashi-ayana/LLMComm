@@ -11,7 +11,7 @@ class Tools:
                 "type": "function",
                 "function": {
                     "name": "leave_chat",
-                    "description": "当你想离开当前的发言时非常有用",
+                    "description": "如果你认为对话已经自然结束、对话变得无意义或重复、或者你无话可说，务必调用该工具来结束发言",
                     "parameters": {},
                 },
             },

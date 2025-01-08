@@ -1,0 +1,13 @@
+{
+    "fork_sim_code":"base_comm",
+    "start_date":"January 06, 2025, 00:00:00",
+    "curr_time":"January 06, 2025, 00:00:00",
+    "sec_per_step": 10,
+    "maze_name":"base_comm",
+    "persona_names":[
+        "lihua",
+        "wangmin",
+        "zhaoqiang"
+    ],
+    "step":0
+}

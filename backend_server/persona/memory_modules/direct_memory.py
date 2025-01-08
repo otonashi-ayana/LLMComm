@@ -1,7 +1,7 @@
 import json
 
 
-class Memory:
+class DirectMemory:
     def __init__(self):
         """世界信息"""
         self.curr_time = None  # 感知到的世界时间
@@ -9,6 +9,7 @@ class Memory:
 
         """个人核心信息"""
         self.name = None
+        self.name_en = None
         self.age = None
         self.gender = None
         self.personality = None
@@ -63,6 +64,7 @@ class Memory:
         scratch["curr_tile"] = self.curr_tile
 
         scratch["name"] = self.name
+        scratch["name_en"] = self.name_en
         scratch["age"] = self.age
         scratch["gender"] = self.gender
         scratch["personality"] = self.personality

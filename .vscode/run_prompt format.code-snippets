@@ -1,0 +1,53 @@
+{
+	// Place your LLMComm 工作区 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"Print to console": {
+		"prefix": "run_prompt_format",
+		"body": [
+			"def run_prompt_format():",
+			"    def create_prompt_input():",
+			"        prompt_input = []",
+			"        return prompt_input",
+			"",
+			"    def response_clean(response):",
+			"        pass",
+			"",
+			"    def response_validate(response):",
+			"        try:",
+			"            response_clean(response)",
+			"        except:",
+			"            return False",
+			"        return True",
+			"",
+			"    model_param = {",
+			"        \"model\": specify_model,",
+			"        \"max_tokens\": 5,",
+			"        \"temperature\": 0.8,",
+			"        \"top_p\": 0.8,",
+			"        \"stream\": False,",
+			"        \"stop\": None,",
+			"    }",
+			"    prompt_template = f\"{prompt_path}/#TODO/#TODO.txt\"",
+			"    prompt_input = create_prompt_input()",
+			"    prompt = generate_prompt(prompt_input, prompt_template)",
+			"    if debug:",
+			"				 print(\"\\n\")",
+			"        print_c(\"╔══<#TODO> prompt══╗\")",
+			"				 print(prompt)",
+			"        print_c(\"╚══════════════════╝\")",
+			"    output = generate_response(",
+			"        prompt, model_param, func_clean=response_clean, func_valid=response_validate",
+			"    )",
+			"    if debug:",
+			"        print_c(\"╔══<#TODO> output══╗\")",
+			"				 print(output)",
+			"        print_c(\"╚══════════════════╝\")",
+			"    return output"
+		],
+	}
+}

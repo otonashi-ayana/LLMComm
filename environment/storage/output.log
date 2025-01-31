@@ -1,0 +1,1334 @@
+<Maze.init> done
+
+
+╔═════<run_prompt_wake_up_time> prompt═════╗
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+输出该角色的起床时间（小时制）。
+
+要求：务必仅输出整数类型的小时数值,禁止输出其他任何内容。
+╚══════════════════════════════════════════╝
+prompt_tokens(cache hit): 128
+prompt_tokens(cache_miss): 15
+completion_tokens: 1
+╔═════<run_prompt_wake_up_time> output═════╗
+6
+╚══════════════════════════════════════════╝
+
+
+╔═════<run_prompt_daily_goals> prompt═════╗
+今日规划的示例格式如下:
+1) 8点起床并完成洗漱和早饭, 2) 11点到14点营业烧烤店, 3) 14点到17点休息调整, 4) 17点到23点继续营业烧烤店, 5) 23点到0点结束营业并回家休息
+
+某人物的信息如下：
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+根据该人物信息写出大致的今日规划。
+
+要求：务必按照示例格式输出，禁止输出无关内容
+╚═════════════════════════════════════════╝
+prompt_tokens(cache hit): 192
+prompt_tokens(cache_miss): 20
+completion_tokens: 77
+╔═════<run_prompt_daily_goals> output═════╗
+['6点起床', '6:00 起床并完成洗漱和早饭', '7:00 开始超市营业', '12:00 到小区内附近的饭馆吃饭', '13:00 继续超市营业', '22:00 结束营业并回家休息', '23:00 睡觉']
+╚═════════════════════════════════════════╝
+diversity_repeat_count: 0
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:Vf4Gdk) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:DIpkwa) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:5Y9Tgw) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:5mAqFl) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:YmS3Yp) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:tntf0f) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:bp6c7J) Monday January 06 - 06:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 370
+completion_tokens: 34
+╔══<run_prompt_generate_hourly_schedule> output══╗
+起床并完成洗漱和早饭
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:M6Uled) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:n3iRKs) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:4QKr1A) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:QkdHpA) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:60OJKH) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:JgTR5h) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:9xDtD7) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:lRDrPK) Monday January 06 - 07:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 404
+completion_tokens: 30
+╔══<run_prompt_generate_hourly_schedule> output══╗
+开始超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:ssu1hI) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:XZ8EVb) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:uBlCMa) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:qZrpdm) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:FU9maY) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:cWMgB1) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:AnksBF) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:Rw3m2W) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:78sgcY) Monday January 06 - 08:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 432
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:7OM0jv) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:h9Pk9m) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:wI5nt6) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:kGIWZG) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:VycINP) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:1UHcml) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:CvyHw1) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:G9MYci) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:n5jn8R) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:5KlhTu) Monday January 06 - 09:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 462
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:truPWW) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:e6Gye1) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:ESWTdB) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:K7hJYa) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:YzvlRr) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:9ArDX2) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:gZkmIK) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:fFnIg2) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:h0Seom) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:QSAZMi) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:EgDvVZ) Monday January 06 - 10:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 490
+completion_tokens: 30
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:NtHNz5) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:wU5zQN) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:plYyyN) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:2l0UhY) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:aDe9Xh) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:naRqrj) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:2nXC6k) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:asz2g1) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:tPOtkM) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:scAJHr) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:qSjnbu) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:qA2uRG) Monday January 06 - 11:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 525
+completion_tokens: 30
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:GaQujb) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:hmOqq0) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:KzFz9l) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:TgfTbv) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:7xjsnC) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:CD6GHY) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:MufEiF) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:cJHIeQ) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:wtcKBD) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:DhGamu) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:6xIYr5) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:shlG1H) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:vvZwLE) Monday January 06 - 12:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 552
+completion_tokens: 33
+╔══<run_prompt_generate_hourly_schedule> output══╗
+到小区内附近的饭馆吃饭
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:8di21b) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:mAHQZN) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:5NXbMj) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:tqJhLJ) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:RZHKKl) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:xcBwGp) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:GX9iic) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:997Wpf) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:E4RpQL) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:rxzdLJ) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:9YOPVa) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:HAL8td) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:sjtkwI) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:R5Tx7V) Monday January 06 - 13:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 583
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:feFocD) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:O0S3Ux) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:nr1Xh3) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:npGBBZ) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:9K6qqH) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:iTL1bJ) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:u4Xyk3) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:R3FFTZ) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:E9XNmS) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:CL0qQ6) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:Cbqwpx) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:aX4GWn) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:dgy4V8) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:m5kHHe) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:k2J8l7) Monday January 06 - 14:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 623
+completion_tokens: 30
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:JY1bRX) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:pPzysu) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:YXsTpE) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:cChi0F) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:dum1sQ) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:toAtVt) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:PIVNdl) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:MuBEF0) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:15tkKo) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:PSm7ez) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:8ROCRG) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:uglZCD) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:pnGEND) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:wrSsVO) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:HBjBVW) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:xCbHQ7) Monday January 06 - 15:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 644
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:4r7lzq) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:6CEnID) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:4HzYHv) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:tFIuoc) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:QYbV47) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:VjUhiL) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:TShurP) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:bKFKVV) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:GrxCH3) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:nbCSzZ) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:3Wnix1) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:BvgG0X) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:YWkvbR) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:RKE0R2) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:lO6EKD) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:7VKznT) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:5zokSX) Monday January 06 - 16:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 683
+completion_tokens: 30
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:3ncXRS) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:PnF89R) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:BkkoRO) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:UZzHaW) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:R6p1d3) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:eLeGm9) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:uUXVNY) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:QltDMn) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:9acJUw) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:NkFACT) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:dvNORg) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:4jlbmP) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:JkTMt7) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:tHwI1F) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:AHQKk0) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:moWusX) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:02qS0h) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:Zshjhz) Monday January 06 - 17:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 710
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:5RQx37) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:N9dU9J) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:e4xX9q) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:iTeJs8) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:pyK6MG) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:wiRuiP) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:piS8YZ) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:TgkZVp) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:wuL8Ih) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:DovAaI) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:WO7tQ8) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:u1nFo5) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:qrXJ7P) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:Yqv63e) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:FtPvYx) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:Ui71xp) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:FkkfBh) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+[(ID:Qpuhaf) Monday January 06 - 17:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:VNUT5a) Monday January 06 - 18:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 739
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:UyuEx2) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:ER81BL) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:cnOhy7) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:QxrWAA) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:qaCqG7) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:rdurTy) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:7niWNF) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:k9UKlM) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:aaFaWm) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:z3vsGr) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:X8KiH4) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:utihwm) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:OJs9Sk) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:yM3ePt) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:qfMPgA) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:2KoSIn) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:e34ddA) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+[(ID:F68pca) Monday January 06 - 17:00] 活动: 李华 正在 超市营业
+[(ID:qLNaS0) Monday January 06 - 18:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:Wo6DHA) Monday January 06 - 19:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 766
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:lofhZX) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:yb0LNk) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:giwHzt) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:G7pDQC) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:MsmO0d) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:yZmKR2) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:RX7sOK) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:mZMwCe) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:pmBM6z) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:3qeVp1) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:lS3Hxg) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:aSy59B) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:QwRKo7) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:NZx19O) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:c7HSNd) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:Z4sulf) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:Mxju8H) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+[(ID:1n47a0) Monday January 06 - 17:00] 活动: 李华 正在 超市营业
+[(ID:J37qyW) Monday January 06 - 18:00] 活动: 李华 正在 超市营业
+[(ID:JFgcP0) Monday January 06 - 19:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:Mn3cjF) Monday January 06 - 20:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 800
+completion_tokens: 2
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:rz4Cbm) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:TF8pn4) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:BXq7FQ) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:BuOSAd) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:Sr5ONs) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:ECs6Z9) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:Ya0QbA) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:GHc56L) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:l253tK) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:TeuQzo) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:BuoorJ) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:bHlpcS) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:BEKdjK) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:WbdsXN) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:iLOntm) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:Ta0r50) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:XWsLRN) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+[(ID:G8Jpux) Monday January 06 - 17:00] 活动: 李华 正在 超市营业
+[(ID:HS7v7D) Monday January 06 - 18:00] 活动: 李华 正在 超市营业
+[(ID:Rt3qzd) Monday January 06 - 19:00] 活动: 李华 正在 超市营业
+[(ID:diGQDV) Monday January 06 - 20:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:FhDD5f) Monday January 06 - 21:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 826
+completion_tokens: 29
+╔══<run_prompt_generate_hourly_schedule> output══╗
+超市营业
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:vWgyFz) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:IiIWUL) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:9J9BMR) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:1kDfzk) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:DXsQgn) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:Q0p9V3) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:AJxqnY) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:GuiHiK) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:QWIwUS) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:H8khDR) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:bUiUpn) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:SE00Z2) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:RJEP4u) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:dTwJmd) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:Nx65Se) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:xsfgT7) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:bvm1Go) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+[(ID:kbQQr4) Monday January 06 - 17:00] 活动: 李华 正在 超市营业
+[(ID:4ddGJ4) Monday January 06 - 18:00] 活动: 李华 正在 超市营业
+[(ID:3WXbax) Monday January 06 - 19:00] 活动: 李华 正在 超市营业
+[(ID:LQoVn1) Monday January 06 - 20:00] 活动: 李华 正在 超市营业
+[(ID:NDa8af) Monday January 06 - 21:00] 活动: 李华 正在 超市营业
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:qkBSR1) Monday January 06 - 22:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 857
+completion_tokens: 33
+╔══<run_prompt_generate_hourly_schedule> output══╗
+结束营业并回家休息
+╚════════════════════════════════════════════════╝
+
+
+╔══<run_prompt_generate_hourly_schedule> prompt══╗
+小时规划的模板如下: 
+[Monday January 06 - 00:00] 活动:[待填入]
+[Monday January 06 - 01:00] 活动:[待填入]
+[Monday January 06 - 02:00] 活动:[待填入]
+[Monday January 06 - 03:00] 活动:[待填入]
+[Monday January 06 - 04:00] 活动:[待填入]
+[Monday January 06 - 05:00] 活动:[待填入]
+[Monday January 06 - 06:00] 活动:[待填入]
+[Monday January 06 - 07:00] 活动:[待填入]
+[Monday January 06 - 08:00] 活动:[待填入]
+[Monday January 06 - 09:00] 活动:[待填入]
+[Monday January 06 - 10:00] 活动:[待填入]
+[Monday January 06 - 11:00] 活动:[待填入]
+[Monday January 06 - 12:00] 活动:[待填入]
+[Monday January 06 - 13:00] 活动:[待填入]
+[Monday January 06 - 14:00] 活动:[待填入]
+[Monday January 06 - 15:00] 活动:[待填入]
+[Monday January 06 - 16:00] 活动:[待填入]
+[Monday January 06 - 17:00] 活动:[待填入]
+[Monday January 06 - 18:00] 活动:[待填入]
+[Monday January 06 - 19:00] 活动:[待填入]
+[Monday January 06 - 20:00] 活动:[待填入]
+[Monday January 06 - 21:00] 活动:[待填入]
+[Monday January 06 - 22:00] 活动:[待填入]
+[Monday January 06 - 23:00] 活动:[待填入]
+===
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+
+[(ID:DXvAZT) Monday January 06 - 00:00] 活动: 李华 正在 睡觉
+[(ID:gg5Ruh) Monday January 06 - 01:00] 活动: 李华 正在 睡觉
+[(ID:NFniiV) Monday January 06 - 02:00] 活动: 李华 正在 睡觉
+[(ID:PgQYIX) Monday January 06 - 03:00] 活动: 李华 正在 睡觉
+[(ID:LgJDTI) Monday January 06 - 04:00] 活动: 李华 正在 睡觉
+[(ID:FyO0m2) Monday January 06 - 05:00] 活动: 李华 正在 睡觉
+[(ID:p2seVU) Monday January 06 - 06:00] 活动: 李华 正在 起床并完成洗漱和早饭
+[(ID:iDuiWk) Monday January 06 - 07:00] 活动: 李华 正在 开始超市营业
+[(ID:z69oP9) Monday January 06 - 08:00] 活动: 李华 正在 超市营业
+[(ID:KIE3Fe) Monday January 06 - 09:00] 活动: 李华 正在 超市营业
+[(ID:lJ8t4T) Monday January 06 - 10:00] 活动: 李华 正在 超市营业
+[(ID:auEXK4) Monday January 06 - 11:00] 活动: 李华 正在 超市营业
+[(ID:NKhcRl) Monday January 06 - 12:00] 活动: 李华 正在 到小区内附近的饭馆吃饭
+[(ID:NeoRi7) Monday January 06 - 13:00] 活动: 李华 正在 超市营业
+[(ID:1DcIuX) Monday January 06 - 14:00] 活动: 李华 正在 超市营业
+[(ID:NCfIC9) Monday January 06 - 15:00] 活动: 李华 正在 超市营业
+[(ID:FEJMhH) Monday January 06 - 16:00] 活动: 李华 正在 超市营业
+[(ID:3ORPm0) Monday January 06 - 17:00] 活动: 李华 正在 超市营业
+[(ID:gXLxwW) Monday January 06 - 18:00] 活动: 李华 正在 超市营业
+[(ID:U2Ipgv) Monday January 06 - 19:00] 活动: 李华 正在 超市营业
+[(ID:kkil33) Monday January 06 - 20:00] 活动: 李华 正在 超市营业
+[(ID:W1paB2) Monday January 06 - 21:00] 活动: 李华 正在 超市营业
+[(ID:9zUZjv) Monday January 06 - 22:00] 活动: 李华 正在 结束营业并回家休息
+
+
+以下为李华的大致日程:1) 6点起床,2) 6:00 起床并完成洗漱和早饭,3) 7:00 开始超市营业,4) 12:00 到小区内附近的饭馆吃饭,5) 13:00 继续超市营业,6) 22:00 结束营业并回家休息,7) 23:00 睡觉
+1.根据已有的 小时规划 和 大致日程 续写下一小时的行为规划。
+2.如果人物某时间段离开小区，行为规划一律为“外出”二字。
+3.务必仅给出续写的部分，仅续写出下一小时规划，禁止多写：
+[(ID:xfmbHQ) Monday January 06 - 23:00] 活动: 李华 正在
+╚════════════════════════════════════════════════╝
+prompt_tokens(cache hit): 512
+prompt_tokens(cache_miss): 898
+completion_tokens: 27
+╔══<run_prompt_generate_hourly_schedule> output══╗
+睡觉
+╚════════════════════════════════════════════════╝
+diversity_repeat_count: 1
+diversity_repeat_count: 2
+
+
+╔═════<run_gpt_prompt_task_decomp> prompt═════╗
+以五分钟为单位，续写人物的子任务
+---
+姓名:赵五
+年龄:42
+性别:男
+性格:性格圆润，处事圆滑
+个人背景:小区的原始居民，初中毕业来当地打工，是小区烧烤店老板。其经营的烤肉店经常因晚上噪音太大而受到周围居民的投诉，常经社区的多方调节。
+近期事项:
+生活方式:赵五每天早晨9:00醒来，晚上24:00睡觉。
+生活规划:赵五每天早晨11:00开始烧烤店营业，经营到23:00关门。
+当前日期:Monday January 06
+
+今天的日期是 Monday May 10. 从 09:00 ~ 11:00点, 赵五 计划 起床吃早饭放松, 从 11:00 ~ 14:00点, 赵五 计划 营业烧烤店, 从 14:00 ~ 17:00点, 赵五 计划 休息调整, 从17:00 ~ 23:00点, 赵五 计划 继续营业烧烤店, 从23:00 ~ 00:00点, 赵五 计划 结束营业并回家休息. 
+以5分钟为单位，列出赵五在 11:00 ~ 14:00点 营业烧烤店 时所做的子任务（总时长：180分钟）:
+1) 赵五 正在前往烧烤店位置并检查店内卫生情况。（分钟时长：15，剩余分钟：165）
+2) 赵五 开启店内音响并播放音乐，与早到的顾客寒暄并推荐特色菜。（分钟时长：15，剩余分钟：150）
+3) 赵五 准备食材并处理第一批点单，开始做烧烤。（分钟时长：20，剩余分钟：130）
+4) 赵五 为顾客上菜，并询问是否需要加点饮品或小吃，同时清理烤架打扫卫生。（分钟时长：20，剩余分钟：110）
+5) 赵五 处理新的点单，继续做烧烤，并为顾客上菜，顺便与他们聊天。（分钟时长：20，剩余分钟：95）
+6) 赵五 休息并等待新客人。（分钟时长：20，剩余分钟：75）
+7) 赵五 检查店内物资储备情况，如发现不足及时补充，并处理新点单，继续做烧烤。（分钟时长：20，剩余分钟：55）
+8) 赵五 为顾客上菜，同时清理烤架打扫卫生。（分钟时长：20，剩余分钟：35）
+9) 赵五 处理新点单，继续做烧烤，并为顾客上菜。（分钟时长：20，剩余分钟：15）
+10) 赵五 进行午间小结，检查店内物资和设施，确保下午营业顺利进行。（分钟时长：15，剩余分钟：0）
+---
+姓名:李华
+年龄:45
+性别:男
+性格:老实诚恳，开朗善良，喜欢聊天
+个人背景:小区内“李华超市”的老板。小区街坊邻居是他的顾客，他经常和顾客聊天。
+近期事项:
+生活方式:李华每天早晨6:00醒来，晚上11:00睡觉。
+生活规划:李华每天早晨7:00开始超市营业，在超市工作到22:00关门。中午12:00会去小区内附近的饭馆吃饭。
+当前日期:Monday January 06
+今天日期是 Monday January 06. 从 00:00 ~ 06:00点, 李华 计划 睡觉, 06:00 ~ 07:00点, 李华 计划 起床并完成洗漱和早饭, 07:00 ~ 08:00点, 李华 计划 开始超市营业.
+以5分钟为单位，列出 李华 在 06:00 ~ 07:00点 起床并完成洗漱和早饭 时所做的子任务（总时长：60）。仅返回子任务清单，禁止添加其他任何解释、总结或附加内容。：
+1) 李华
+╚═════════════════════════════════════════════╝
+prompt_tokens(cache hit): 768
+prompt_tokens(cache_miss): 81
+completion_tokens: 177
+╔═════<run_gpt_prompt_task_decomp> output═════╗
+[['起床并整理床铺', 5], ['前往卫生间洗漱，包括刷牙、洗脸和刮胡子', 10], ['换衣服并整理仪容', 5], ['前往厨房准备早饭，煮粥或煎蛋', 15], ['吃早饭并浏览手机新闻', 15], ['清理餐桌并洗碗', 5], ['检查超市钥匙和营业所需物品，准备出门', 5]]
+╚═════════════════════════════════════════════╝
+<determine_action> output
+['睡觉', 360]
+['起床并整理床铺', 5]
+['前往卫生间洗漱，包括刷牙、洗脸和刮胡子', 10]
+['换衣服并整理仪容', 5]
+['前往厨房准备早饭，煮粥或煎蛋', 15]
+['吃早饭并浏览手机新闻', 15]
+['清理餐桌并洗碗', 5]
+['检查超市钥匙和营业所需物品，准备出门', 5]
+['开始超市营业', 60]
+['超市营业', 240]
+['到小区内附近的饭馆吃饭', 60]
+['超市营业', 540]
+['结束营业并回家休息', 60]
+['睡觉', 60]
+<determine_action> end
+Error.
+输入指令:

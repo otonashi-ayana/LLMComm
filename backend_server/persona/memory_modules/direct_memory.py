@@ -1,11 +1,18 @@
+import sys
+
+sys.path.append("../../")
+
+import datetime
 import json
+
+from global_methods import *
 
 
 class DirectMemory:
-    def __init__(self):
+    def __init__(self, mem_path):
         """世界信息"""
         self.curr_time = None  # 感知到的世界时间
-        self.curr_tile = None  # 当前位置坐标，格式为 (x, y)
+        self.curr_cell = None  # 当前位置坐标，格式为 (x, y)
 
         """个人核心信息"""
         self.name = None
@@ -14,10 +21,16 @@ class DirectMemory:
         self.gender = None
         self.personality = None
         self.background = None
+        self.curr_thing = None
         self.living_area = None
+        self.life_style = None
+        self.daily_plan_desc = None
 
         """个人超参数"""
         self.vision_r = 5  # 视觉范围，单位为块
+        self.att_bandwidth = 3
+        self.retention = 5
+        self.latest_events = []  # 最近感知到的事件列表，格式为 (time, event)
 
         """每日计划"""
         # e.g., ['Work on her paintings for her upcoming show',
@@ -33,6 +46,7 @@ class DirectMemory:
         #         ['having lunch', 60],
         #         ['working on her painting', 180], ...]
         self.daily_schedule = []
+        self.daily_schedule_hourly = []
 
         """当前动作"""
         self.act_event = (
@@ -45,56 +59,147 @@ class DirectMemory:
         self.act_duration = None  # 动作预计持续时间 int
         self.act_description = None  # 动作描述
 
-        # self.act_obj_event = (self.name, None, None)
-        # self.act_obj_description = None
+        self.act_obj_event = (self.name, None, None)
+        self.act_obj_description = None
 
         self.chatting_with = None  # 当前对话对象
         self.chatting_end_time = None  # 对话结束时间
 
         self.chat_history = None  # 对话历史
+        self.chatting_with_buffer = dict()  # 对话历史
         # [["张三", "Hi"],
         # ["李四", "Hi"] ...]
         # 对话历史只传递内容，动作感知交给感知模块处理
+        self.chatting_end_time = None
 
-        # TODO:读取保存到本地的memory文件，恢复记忆状态
+        self.act_path_set = False
+        self.planned_path = []
+
+        if check_if_file_exists(mem_path):
+            direct_mem_json = json.load(open(mem_path, encoding="utf-8"))
+
+            self.vision_r = direct_mem_json["vision_r"]
+            self.att_bandwidth = direct_mem_json["att_bandwidth"]
+            self.retention = direct_mem_json["retention"]
+
+            if direct_mem_json["curr_time"]:
+                self.curr_time = datetime.datetime.strptime(
+                    direct_mem_json["curr_time"], "%B %d, %Y, %H:%M:%S"
+                )
+            else:
+                self.curr_time = None
+            self.curr_cell = direct_mem_json["curr_cell"]
+
+            self.name = direct_mem_json["name"]
+            self.name_en = direct_mem_json["name_en"]
+            self.age = direct_mem_json["age"]
+            self.gender = direct_mem_json["gender"]
+            self.personality = direct_mem_json["personality"]
+            self.background = direct_mem_json["background"]
+            self.curr_thing = direct_mem_json["curr_thing"]
+            self.living_area = direct_mem_json["living_area"]
+            self.life_style = direct_mem_json["life_style"]
+            self.daily_plan_desc = direct_mem_json["daily_plan_desc"]
+
+            self.daily_goals = direct_mem_json["daily_goals"]
+            self.daily_schedule = direct_mem_json["daily_schedule"]
+            self.daily_schedule_hourly = direct_mem_json["daily_schedule_hourly"]
+
+            self.act_address = direct_mem_json["act_address"]
+            if direct_mem_json["act_start_time"]:
+                self.act_start_time = datetime.datetime.strptime(
+                    direct_mem_json["act_start_time"], "%B %d, %Y, %H:%M:%S"
+                )
+            else:
+                self.curr_time = None
+            self.act_duration = direct_mem_json["act_duration"]
+            self.act_description = direct_mem_json["act_description"]
+            self.act_event = tuple(direct_mem_json["act_event"])
+
+            self.act_obj_description = direct_mem_json["act_obj_description"]
+            self.act_obj_event = tuple(direct_mem_json["act_obj_event"])
+
+            self.chatting_with = direct_mem_json["chatting_with"]
+            self.chat_history = direct_mem_json["chat_history"]
+            self.chatting_with_buffer = direct_mem_json["chatting_with_buffer"]
+            if direct_mem_json["chatting_end_time"]:
+                self.chatting_end_time = datetime.datetime.strptime(
+                    direct_mem_json["chatting_end_time"], "%B %d, %Y, %H:%M:%S"
+                )
+            else:
+                self.chatting_end_time = None
+
+            self.act_path_set = direct_mem_json["act_path_set"]
+            self.planned_path = direct_mem_json["planned_path"]
 
     def save(self, out_json):
-        scratch = dict()
-        scratch["curr_time"] = self.curr_time.strftime("%B %d, %Y, %H:%M:%S")
-        scratch["curr_tile"] = self.curr_tile
+        direct_mem = dict()
 
-        scratch["name"] = self.name
-        scratch["name_en"] = self.name_en
-        scratch["age"] = self.age
-        scratch["gender"] = self.gender
-        scratch["personality"] = self.personality
-        scratch["background"] = self.background
-        scratch["living_area"] = self.living_area
+        direct_mem["vision_r"] = self.vision_r
+        direct_mem["att_bandwidth"] = self.att_bandwidth
+        direct_mem["retention"] = self.retention
 
-        scratch["vision_r"] = self.vision_r
+        direct_mem["curr_time"] = self.curr_time.strftime("%B %d, %Y, %H:%M:%S")
+        direct_mem["curr_cell"] = self.curr_cell
 
-        scratch["daily_goals"] = self.daily_goals
-        scratch["daily_schedule"] = self.daily_schedule
+        direct_mem["name"] = self.name
+        direct_mem["name_en"] = self.name_en
+        direct_mem["age"] = self.age
+        direct_mem["gender"] = self.gender
+        direct_mem["personality"] = self.personality
+        direct_mem["background"] = self.background
+        direct_mem["curr_thing"] = self.curr_thing
+        direct_mem["living_area"] = self.living_area
+        direct_mem["life_style"] = self.life_style
+        direct_mem["daily_plan_desc"] = self.daily_plan_desc
 
-        scratch["act_event"] = self.act_event
-        scratch["act_address"] = self.act_address
-        scratch["act_start_time"] = self.act_start_time.strftime("%B %d, %Y, %H:%M:%S")
-        scratch["act_duration"] = self.act_duration
-        scratch["act_description"] = self.act_description
+        direct_mem["daily_goals"] = self.daily_goals
+        direct_mem["daily_schedule"] = self.daily_schedule
+        direct_mem["daily_schedule_hourly"] = self.daily_schedule_hourly
 
-        # scratch["act_obj_event"] = self.act_obj_event
-        # scratch["act_obj_description"] = self.act_obj_description
+        direct_mem["act_address"] = self.act_address
+        direct_mem["act_start_time"] = self.act_start_time.strftime(
+            "%B %d, %Y, %H:%M:%S"
+        )
+        direct_mem["act_duration"] = self.act_duration
+        direct_mem["act_description"] = self.act_description
+        direct_mem["act_event"] = self.act_event
 
-        scratch["chatting_with"] = self.chatting_with
+        direct_mem["act_obj_description"] = self.act_obj_description
+        direct_mem["act_obj_event"] = self.act_obj_event
+
+        direct_mem["chatting_with"] = self.chatting_with
+        direct_mem["chat_history"] = self.chat_history
+        direct_mem["chatting_with_buffer"] = self.chatting_with_buffer
         if self.chatting_end_time:
-            scratch["chatting_end_time"] = self.chatting_end_time.strftime(
+            direct_mem["chatting_end_time"] = self.chatting_end_time.strftime(
                 "%B %d, %Y, %H:%M:%S"
             )
         else:
-            scratch["chatting_end_time"] = None
+            direct_mem["chatting_end_time"] = None
 
-        with open(out_json, "w") as outfile:
-            json.dump(scratch, outfile, indent=2)
+        direct_mem["act_path_set"] = self.act_path_set
+        direct_mem["planned_path"] = self.planned_path
+
+        with open(out_json, "w", encoding="utf-8") as outfile:
+            json.dump(direct_mem, outfile, indent=2)
+
+    def act_check_finished(self):
+        if not self.act_address:
+            return True
+
+        if self.chatting_with:
+            end_time = self.chatting_end_time
+        else:
+            x = self.act_start_time
+            if x.second != 0:
+                x = x.replace(second=0)
+                x = x + datetime.timedelta(minutes=1)
+            end_time = x + datetime.timedelta(minutes=self.act_duration)
+
+        if end_time.strftime("%H:%M:%S") == self.curr_time.strftime("%H:%M:%S"):
+            return True
+        return False
 
     def get_str_mds(self):
         """
@@ -105,13 +210,86 @@ class DirectMemory:
         description += f"年龄:{self.age}\n"
         description += f"性别:{self.gender}\n"
         description += f"性格:{self.personality}\n"
-        description += f"背景:{self.background}\n"
+        description += f"个人背景:{self.background}\n"
+        description += f"近期事项:{self.curr_thing}\n"
+        description += f"生活方式:{self.life_style}\n"
         # description += f"居住区域:{self.living_area}\n"
-        description += f"日常目标:{self.daily_goals}\n"
-        description += f"当前日期:{self.curr_time.strftime('%A %B %d')}\n"
+        description += f"生活规划:{self.daily_plan_desc}\n"
+        description += f"当前日期:{self.curr_time.strftime('%A %B %d')}"
         return description
 
-    # TODO:get方法
+    def get_name(self):
+        return self.name
+
+    def get_curr_event(self):
+        if not self.act_address:  # 无当前event，返回persona,None*3
+            return (self.name, None, None, None)
+        else:
+            return (
+                self.act_event[0],
+                self.act_event[1],
+                self.act_event[2],
+                self.act_description,
+            )
+
+    def get_curr_obj_event(self):
+        if not self.act_address:  # 无当前event，没有obj被使用
+            return ("", None, None, None)
+        else:
+            return (
+                self.act_address,
+                self.act_obj_event[1],
+                self.act_obj_event[2],
+                self.act_obj_description,
+            )
+
+    def get_curr_date(self):
+        return self.curr_time.strftime("%A %B %d")
+
+    def get_daily_schedule_index(self, advance=0):
+        today_min_elapsed = 0
+        today_min_elapsed += self.curr_time.hour * 60
+        today_min_elapsed += self.curr_time.minute
+        today_min_elapsed += advance
+
+        x = 0
+        for task, duration in self.daily_schedule_hourly:
+            x += duration
+        curr_index = 0
+        elapsed = 0
+        for task, duration in self.daily_schedule:
+            elapsed += duration
+            if elapsed > today_min_elapsed:
+                return curr_index
+            curr_index += 1
+
+        return curr_index
+
+    def get_daily_schedule_hourly_index(self, advance=0):
+        """
+        We get the current index of self.f_daily_schedule_hourly_org.
+        It is otherwise the same as get_f_daily_schedule_index.
+
+        INPUT
+        advance: Integer value of the number minutes we want to look into the
+                future. This allows us to get the index of a future timeframe.
+        OUTPUT
+        an integer value for the current index of f_daily_schedule.
+        """
+        # We first calculate teh number of minutes elapsed today.
+        today_min_elapsed = 0
+        today_min_elapsed += self.curr_time.hour * 60
+        today_min_elapsed += self.curr_time.minute
+        today_min_elapsed += advance
+        # We then calculate the current index based on that.
+        curr_index = 0
+        elapsed = 0
+        for task, duration in self.daily_schedule_hourly:
+            elapsed += duration
+            if elapsed > today_min_elapsed:
+                return curr_index
+            curr_index += 1
+        return curr_index
 
     def add_new_action(
         self,

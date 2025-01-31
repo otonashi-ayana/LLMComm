@@ -1,0 +1,11 @@
+wake_up_time_v1.txt
+
+#<INPUT 0># 最小描述集合 Minimal description set
+
+<BLOCK></BLOCK>
+
+#<INPUT 0>#
+
+输出该角色的起床时间（小时制）。
+
+要求：务必仅输出整数类型的小时数值,禁止输出其他任何内容。

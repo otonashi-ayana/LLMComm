@@ -1,9 +1,0 @@
-wake_up_time_v1.txt
-
-#<INPUT 0># 最小描述集合 Minimal description set
-
-<BLOCK></BLOCK>
-
-#<INPUT 0>#
-
-该角色的起床时间为(仅输出int类型的小时结果,禁止输出其他内容)：

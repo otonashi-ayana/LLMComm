@@ -5,9 +5,9 @@
   "sec_per_step": 10,
   "maze_name": "base_comm",
   "persona_names": [
-    "lihua",
-    "wangmin",
-    "zhangsan"
+    "李华",
+    "王敏",
+    "张三"
   ],
   "step": 0
 }

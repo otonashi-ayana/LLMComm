@@ -2,7 +2,11 @@ import csv
 import shutil, errno
 
 
-def print_c(*args, sep=" ", end="\n", COLOR="\033[35m", RESET="\033[0m"):
+def print_c(*args, sep=" ", end="\n", COLOR="purple", RESET="\033[0m"):
+    if COLOR == "purple":
+        COLOR = "\033[35m"
+    elif COLOR == "blue":
+        COLOR = "\033[94m"
     print(f"{COLOR}{sep.join(map(str, args))}{RESET}", end=end)
 
 

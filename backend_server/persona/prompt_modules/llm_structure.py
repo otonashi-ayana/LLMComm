@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("../../")
 import time
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 from utils import *
 from global_methods import *
 
@@ -13,8 +13,10 @@ def temp_sleep(seconds=0.1):
 
 def LLM_request(prompt, parameter):
     temp_sleep()
+
     client = OpenAI(api_key=api_key, base_url=base_url)
     # try:
+    start_time = time.time()
     response = client.chat.completions.create(
         model=parameter["model"],
         messages=[{"role": "user", "content": prompt}],
@@ -24,9 +26,13 @@ def LLM_request(prompt, parameter):
         stream=parameter["stream"],
         # presence_penalty=parameter["presence_penalty"],
         stop=parameter["stop"],
+        # timeout=20,
     )
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"elapsed time: {elapsed_time:.2f}s")
     response_dump = response.model_dump()
-    if debug:
+    if debug and base_url == "https://api.deepseek.com":
         print_c(
             "prompt_tokens(cache hit):",
             response_dump["usage"]["prompt_cache_hit_tokens"],
@@ -37,19 +43,32 @@ def LLM_request(prompt, parameter):
         )
         print_c("completion_tokens:", response_dump["usage"]["completion_tokens"])
     return response_dump["choices"][0]["message"]["content"]
+    # except Exception as e:
+    #     print("LLM_request error:", e)
+    #     return None
+
+
+def get_embedding(text, model=emb_specify_model):
+    text = text.replace("\n", " ")
+    if not text:
+        text = "this is blank"
+    client = OpenAI(api_key=emb_api_key, base_url=emb_base_url)
+    response = client.embeddings.create(
+        model=model, input=text, dimensions=1024, encoding_format="float"
+    )
+    response_dump = response.model_dump()
+    return response_dump["data"][0]["embedding"]
 
 
 def generate_response(
-    prompt,
-    parameter,
-    func_clean=None,
-    func_valid=None,
+    prompt, parameter, func_clean=None, func_valid=None, get_fail_safe="error"
 ):
-    for i in range(3):
+    for i in range(5):
         curr_gpt_response = LLM_request(prompt, parameter)
         if func_valid(curr_gpt_response):
             return func_clean(curr_gpt_response)
-        print("\n### Wrong response repeat count: ", i, "###")
+        print_c("\n--- Wrong response repeat count:", i, "---")
         print(curr_gpt_response)
-        print("########################################")
-    return "error"
+        print_c("--------------------------------------------")
+        temp_sleep(1)
+    return get_fail_safe

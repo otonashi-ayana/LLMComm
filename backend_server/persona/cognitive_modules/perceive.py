@@ -4,6 +4,17 @@ sys.path.append("../../")
 import math
 from operator import itemgetter
 from persona.memory_modules.associate_memory import *
+from persona.prompt_modules.llm_structure import *
+from persona.prompt_modules.run_prompt import *
+
+
+def generate_poig_score(persona, event_type, description):
+    if "正在 空闲" in description:
+        return 1
+    if event_type == "event":
+        return run_prompt_event_poignancy(persona, description)[0]
+    elif event_type == "chat":
+        return run_prompt_chat_poignancy(persona, persona.direct_mem.act_description)[0]
 
 
 def perceive(persona, maze):
@@ -31,7 +42,7 @@ def perceive(persona, maze):
                 persona.spatial_mem.tree[i["world"]][i["sector"]][i["area"]] += [
                     i["object"]
                 ]
-    # print("spatial_mem_tree:", persona.spatial_mem.tree)
+    print("spatial_mem_tree:", persona.spatial_mem.tree)
     curr_area_path = maze.get_cell_path(persona.direct_mem.curr_cell, "area")
     # print("curr_area_path:", curr_area_path)
     percept_events_set = set()
@@ -58,25 +69,101 @@ def perceive(persona, maze):
     perceived_events = []
     for dist, event in percept_events_list[: persona.direct_mem.att_bandwidth]:
         # print(event)
-        perceived_events += [event]
+        perceived_events += [
+            event
+        ]  # perceived_events（list）是按照距离排序的前att_bandwidth个event
 
     ret_events = []
     for p_event in perceived_events:
         s, p, o, desc = p_event
         if not p:  # event没有事件发生
-            p = "is"
-            o = "idle"
-            desc = "idle"
-        desc = f"{s.split(':')[-1]} is {desc}"
-        p_event = (s, p, o, desc)
+            p = "正在"
+            o = "空闲"
+            desc = "空闲"
+        desc = f"{s.split(':')[-1]} 正在 {desc}"
+        # cell_info的event主语都是object?
+        p_event = (s, p, o)
 
-        latest_events = persona.direct_mem.latest_events
+        latest_events = persona.associate_mem.get_summarized_latest_events(
+            persona.direct_mem.retention
+        )  # 长记忆中前retention个事件。如果当前事件超过该冷却窗口，则作为新事件
         if p_event not in latest_events:
-            if latest_events:
-                latest_events.pop(0)
-            latest_events.append(p_event)
-            ret_events += [ConceptNode(s, p, o, desc)]
+            # step 1：关键词
+            keywords = set()
+            sub = p_event[0]
+            obj = p_event[2]
+            if ":" in p_event[0]:
+                sub = p_event[0].split(":")[-1]
+            if ":" in p_event[2]:
+                obj = p_event[2].split(":")[-1]
+            keywords.update([sub, obj])  # 提取主语和宾语"keywords":["bed","used"]
 
-    persona.direct_mem.latest_events = latest_events
-    # ret_events: a list of <ConceptNode> that are perceived and new.
+            # step 2：使用desc编码事件
+            desc_embedding_in = desc
+            if "（" in desc:
+                desc_embedding_in = (
+                    desc_embedding_in.split("（")[1].split("）")[0].strip()
+                )  # 取出（子任务内容）
+            if desc_embedding_in in persona.associate_mem.embeddings:
+                # 检查当前desc是否在缓存的{desc:[embedding]中}
+                event_embedding = persona.associate_mem.embeddings[desc_embedding_in]
+            else:
+                event_embedding = get_embedding(desc_embedding_in)
+            event_embedding_pair = (desc_embedding_in, event_embedding)
+
+            # step 3: 获得重要性打分
+            event_poignancy = generate_poig_score(persona, "event", desc_embedding_in)
+
+            # 如果perceive到人物自己相关的聊天，加入到chat记忆
+            chat_node_ids = []
+            if p_event[0] == f"{persona.name}" and p_event[1] == "聊天":
+                curr_event = persona.direct_mem.act_event  # (李华,正在,吃饭)
+                if (
+                    persona.direct_mem.act_description
+                    in persona.associate_mem.embeddings
+                ):
+                    chat_embedding = persona.associate_mem.embeddings[
+                        persona.direct_mem.act_description
+                    ]
+                else:
+                    chat_embedding = get_embedding(persona.direct_mem.act_description)
+                chat_embedding_pair = (
+                    persona.direct_mem.act_description,
+                    chat_embedding,
+                )
+                chat_poignancy = generate_poig_score(
+                    persona, "chat", persona.direct_mem.act_description
+                )
+                chat_node = persona.associate_mem.add_chat(
+                    persona.direct_mem.curr_time,
+                    None,
+                    curr_event[0],
+                    curr_event[1],
+                    curr_event[2],
+                    persona.direct_mem.act_description,
+                    keywords,
+                    chat_poignancy,
+                    chat_embedding_pair,
+                    persona.direct_mem.chat,
+                )
+                chat_node_ids = [chat_node.node_id]
+
+            # Finally, we add the current event to the agent's memory.
+            ret_events += [
+                persona.associate_mem.add_event(
+                    persona.direct_mem.curr_time,
+                    None,
+                    s,
+                    p,
+                    o,
+                    desc,
+                    keywords,
+                    event_poignancy,
+                    event_embedding_pair,
+                    chat_node_ids,
+                )
+            ]
+            persona.direct_mem.importance_trigger_curr -= event_poignancy
+            persona.direct_mem.importance_ele_n += 1
+
     return ret_events

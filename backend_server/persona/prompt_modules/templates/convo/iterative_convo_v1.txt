@@ -1,0 +1,46 @@
+iterative_convo_v1.txt
+
+Variables: 
+#<INPUT 0># -- persona ISS
+#<INPUT 1># -- persona name
+#<INPUT 2># -- retrieved memory
+#<INPUT 3># -- past context
+#<INPUT 4># -- current location
+#<INPUT 5># -- current context
+#<INPUT 6># -- persona name
+#<INPUT 7># -- target persona name
+#<INPUT 8># -- curr convo
+#<INPUT 9># -- persona name
+#<INPUT 10># -- target persona name
+#<INPUT 11># -- persona name
+#<INPUT 12># -- persona name
+#<INPUT 13># -- persona name
+<BLOCK></BLOCK>
+任务背景：
+
+第一部分：
+#<INPUT 0>#
+
+以下是#<INPUT 1>#脑海中的记忆：
+#<INPUT 2>#
+
+第二部分：
+过去背景：
+#<INPUT 3>#
+
+当前位置：#<INPUT 4>#
+
+当前背景：
+#<INPUT 5>#
+
+#<INPUT 6>#和#<INPUT 7>#正在聊天。以下是他们目前的对话：
+#<INPUT 8>#
+
+---
+任务：根据以上信息，#<INPUT 9>#应该对#<INPUT 10>#说些什么？这段对话是否就此结束？
+
+输出格式：输出以下格式的json：
+{
+"#<INPUT 11>#": "<#<INPUT 12>#的话语>",
+"对话是否以 #<INPUT 13># 的话语结束？": "<json Boolean>"
+}

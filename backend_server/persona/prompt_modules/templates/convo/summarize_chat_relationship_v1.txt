@@ -1,0 +1,12 @@
+summarize_chat_relationship_v2.txt
+
+Variables: 
+#<INPUT 0># -- Statements
+#<INPUT 1># -- curr persona name
+#<INPUT 2># -- target_persona.direct_mem.name
+
+<BLOCK></BLOCK>
+有以下背景信息信息:
+#<INPUT 0>#
+
+根据上述陈述，总结#<INPUT 1>#和#<INPUT 2>#之间的关系。他们对彼此的感受或了解是什么？(仅给出陈述，禁止添加其他任何解释、总结或附加内容)：

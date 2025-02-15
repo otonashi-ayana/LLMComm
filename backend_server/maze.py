@@ -36,20 +36,20 @@ class Maze:
 
         maze_path = f"{env_matrix}/maze"
 
-        collision_2d = []
-        sector_2d = []
-        area_2d = []
-        object_2d = []
+        self.collision_2d = []
+        self.sector_2d = []
+        self.area_2d = []
+        self.object_2d = []
         # spawning_location_2d = []
 
         _cm = maze_path + "/collision_maze.csv"
-        collision_2d = read_2d_csv_to_list(_cm)
+        self.collision_2d = read_2d_csv_to_list(_cm)
         _sm = maze_path + "/sector_maze.csv"
-        sector_2d = read_2d_csv_to_list(_sm)
+        self.sector_2d = read_2d_csv_to_list(_sm)
         _am = maze_path + "/area_maze.csv"
-        area_2d = read_2d_csv_to_list(_am)
+        self.area_2d = read_2d_csv_to_list(_am)
         _om = maze_path + "/object_maze.csv"
-        object_2d = read_2d_csv_to_list(_om)
+        self.object_2d = read_2d_csv_to_list(_om)
         # _slm = maze_path + "/spawning_location_maze.csv"
         # spawning_location_2d = read_2d_csv_to_list(_slm)
 
@@ -61,20 +61,20 @@ class Maze:
                 cell_info = dict()
                 cell_info["world"] = self.world_name
                 cell_info["sector"] = ""
-                if sector_2d[i][j] in sb_dict:
-                    cell_info["sector"] = sb_dict[sector_2d[i][j]]
+                if self.sector_2d[i][j] in sb_dict:
+                    cell_info["sector"] = sb_dict[self.sector_2d[i][j]]
                 cell_info["area"] = ""
-                if area_2d[i][j] in ab_dict:
-                    cell_info["area"] = ab_dict[area_2d[i][j]]
+                if self.area_2d[i][j] in ab_dict:
+                    cell_info["area"] = ab_dict[self.area_2d[i][j]]
                 cell_info["object"] = ""
-                if object_2d[i][j] in ob_dict:
-                    cell_info["object"] = ob_dict[object_2d[i][j]]
+                if self.object_2d[i][j] in ob_dict:
+                    cell_info["object"] = ob_dict[self.object_2d[i][j]]
                 cell_info["spawning_location"] = ""
                 # if spawning_location_2d[i][j] in slb_dict:
                 #     cell_info["spawning_location"] = slb_dict[
                 #         spawning_location_2d[i][j]
                 #     ]
-                if collision_2d[i][j] != "0":
+                if self.collision_2d[i][j] != "0":
                     cell_info["collision"] = True
                 else:
                     cell_info["collision"] = False

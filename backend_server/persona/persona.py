@@ -5,6 +5,8 @@ from persona.memory_modules.direct_memory import *
 from persona.memory_modules.spatial_memory import *
 from persona.cognitive_modules.plan import *
 from persona.cognitive_modules.perceive import *
+from persona.cognitive_modules.retrieve import *
+from persona.cognitive_modules.execute import *
 
 
 class Persona:
@@ -17,6 +19,9 @@ class Persona:
         spatial_memory_path = f"{saved_path}/spatial_memory.json"
         self.spatial_mem = MemoryTree(spatial_memory_path)
 
+        associate_memory_path = f"{saved_path}/associative_memory"
+        self.associate_mem = AssociativeMemory(associate_memory_path)
+
     def save(self, saved_path):
         self.direct_mem.save(
             f"{saved_path}/direct_memory.json"
@@ -25,8 +30,14 @@ class Persona:
     def perceive(self, maze):
         return perceive(self, maze)
 
+    def retrieve(self, perceived):
+        return retrieve(self, perceived)
+
     def plan(self, maze, personas, new_day, retrieved):
         return plan(self, maze, personas, new_day, retrieved)
+
+    def execute(self, maze, personas, plan):
+        return execute(self, maze, personas, plan)
 
     def move(self, maze, personas, curr_time):
         new_day = False
@@ -40,8 +51,7 @@ class Persona:
         self.direct_mem.curr_time = curr_time
 
         perceived = self.perceive(maze)
-        # perceived: a list of <ConceptNode> that are perceived and new.
-
-        # retrieved = self.retrieve(perceived)
-        plan = self.plan(maze, personas, new_day, perceived)
+        retrieved = self.retrieve(perceived)
+        plan = self.plan(maze, personas, new_day, retrieved)
+        # self.reflect()
         return self.execute(maze, personas, plan)

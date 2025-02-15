@@ -1,0 +1,17 @@
+generate_obj_event_v1.txt
+
+Variables: 
+#<INPUT 0># -- Object name 
+#<INPUT 1># -- Persona name
+#<INPUT 2># -- Persona action event description 
+
+<BLOCK></BLOCK>
+
+任务：描述某一对象被某人使用的状态
+---示例开始：
+Input: 张三 正在 看电视
+Output: 电视 正在 被观看
+---示例结束
+现在，要描述的对象为：#<INPUT 0>#，仅给出完整描述内容，禁止添加其他任何解释、总结或附加内容。
+Input: #<INPUT 1># 正在 #<INPUT 2>#
+Output: 

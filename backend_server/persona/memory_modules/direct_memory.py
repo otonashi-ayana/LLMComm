@@ -24,13 +24,15 @@ class DirectMemory:
         self.curr_thing = None
         self.living_area = None
         self.life_style = None
-        self.daily_plan_desc = None
+        self.daily_plan_desc = None  # =daily_plan_req
 
         """个人超参数"""
         self.vision_r = 5  # 视觉范围，单位为块
-        self.att_bandwidth = 3
-        self.retention = 5
-        self.latest_events = []  # 最近感知到的事件列表，格式为 (time, event)
+        self.att_bandwidth = 3  # 每次选择接受的事件数量
+        self.retention = 5  # 事件感知冷却step
+
+        # self.latest_events = []
+        # 是一个队列，最近感知到的事件列表，格式为 [(s, p, o, desc), ...]
 
         """每日计划"""
         # e.g., ['Work on her paintings for her upcoming show',
@@ -74,6 +76,11 @@ class DirectMemory:
 
         self.act_path_set = False
         self.planned_path = []
+
+        # reflection variables
+        self.importance_trigger_max = 150
+        self.importance_trigger_curr = self.importance_trigger_max
+        self.importance_ele_n = 0
 
         if check_if_file_exists(mem_path):
             direct_mem_json = json.load(open(mem_path, encoding="utf-8"))
@@ -132,6 +139,10 @@ class DirectMemory:
             self.act_path_set = direct_mem_json["act_path_set"]
             self.planned_path = direct_mem_json["planned_path"]
 
+            self.importance_trigger_max = direct_mem_json["importance_trigger_max"]
+            self.importance_trigger_curr = direct_mem_json["importance_trigger_curr"]
+            self.importance_ele_n = direct_mem_json["importance_ele_n"]
+
     def save(self, out_json):
         direct_mem = dict()
 
@@ -181,6 +192,10 @@ class DirectMemory:
         direct_mem["act_path_set"] = self.act_path_set
         direct_mem["planned_path"] = self.planned_path
 
+        direct_mem["importance_trigger_max"] = self.importance_trigger_max
+        direct_mem["importance_trigger_curr"] = self.importance_trigger_curr
+        direct_mem["importance_ele_n"] = self.importance_ele_n
+
         with open(out_json, "w", encoding="utf-8") as outfile:
             json.dump(direct_mem, outfile, indent=2)
 
@@ -220,6 +235,9 @@ class DirectMemory:
 
     def get_name(self):
         return self.name
+
+    def get_daily_plan_desc(self):
+        return self.daily_plan_desc
 
     def get_curr_event(self):
         if not self.act_address:  # 无当前event，返回persona,None*3
@@ -267,14 +285,14 @@ class DirectMemory:
 
     def get_daily_schedule_hourly_index(self, advance=0):
         """
-        We get the current index of self.f_daily_schedule_hourly_org.
-        It is otherwise the same as get_f_daily_schedule_index.
+        We get the current index of self.daily_schedule_hourly_org.
+        It is otherwise the same as get_daily_schedule_index.
 
         INPUT
         advance: Integer value of the number minutes we want to look into the
                 future. This allows us to get the index of a future timeframe.
         OUTPUT
-        an integer value for the current index of f_daily_schedule.
+        an integer value for the current index of daily_schedule.
         """
         # We first calculate teh number of minutes elapsed today.
         today_min_elapsed = 0
@@ -293,24 +311,36 @@ class DirectMemory:
 
     def add_new_action(
         self,
-        action_event,
-        action_address,
-        action_duration,
-        action_description,
+        act_address,
+        act_duration,
+        act_description,
+        # action_pronunciatio,
+        act_event,
         chatting_with,
         chat_history,
+        chatting_with_buffer,
         chatting_end_time,
+        act_obj_description,
+        # act_obj_pronunciatio,
+        act_obj_event,
+        act_start_time=None,
     ):
-        self.act_event = action_event
-        self.act_address = action_address
-        self.act_duration = action_duration
-        self.act_description = action_description
+        self.act_address = act_address
+        self.act_duration = act_duration
+        self.act_description = act_description
+        # self.act_pronunciatio = action_pronunciatio
+        self.act_event = act_event
 
         self.chatting_with = chatting_with
         self.chat_history = chat_history
+        if chatting_with_buffer:
+            self.chatting_with_buffer.update(chatting_with_buffer)
         self.chatting_end_time = chatting_end_time
 
-        # self.act_obj_description = act_obj_description
-        # self.act_obj_event = act_obj_event
+        self.act_obj_description = act_obj_description
+        # self.act_obj_pronunciatio = act_obj_pronunciatio
+        self.act_obj_event = act_obj_event
 
-        self.act_start_time = self.curr_time  # 动作开始时间是新的当前时间
+        self.act_start_time = self.curr_time
+
+        self.act_path_set = False

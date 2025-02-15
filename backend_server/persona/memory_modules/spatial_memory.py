@@ -29,3 +29,22 @@ class MemoryTree:
     def save(self, out_json):
         with open(out_json, "w", encoding="utf-8") as outfile:
             json.dump(self.tree, outfile)
+
+    def get_str_accessible_sectors(self, curr_world):
+        x = ", ".join(list(self.tree[curr_world].keys()))
+        return x
+
+    def get_str_accessible_sector_areas(self, sector):
+        curr_world, curr_sector = sector.split(":")
+        if not curr_sector:
+            return ""
+        x = ", ".join(list(self.tree[curr_world][curr_sector].keys()))
+        return x
+
+    def get_str_accessible_area_objects(self, area):
+        curr_world, curr_sector, curr_arena = area.split(":")
+
+        if not curr_arena:
+            return ""
+        x = ", ".join(list(self.tree[curr_world][curr_sector][curr_arena]))
+        return x

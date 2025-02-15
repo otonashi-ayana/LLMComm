@@ -1,0 +1,11 @@
+summarize_conversation_v1.txt
+
+Variables: 
+#<INPUT 0># -- init_persona_name
+
+<BLOCK></BLOCK>
+对话：
+#<INPUT 0>#
+
+用一句话总结上述对话(从“这是一个关于”开头，仅给出总结内容，禁止添加其他任何解释、总结或附加内容)：
+这是一个关于

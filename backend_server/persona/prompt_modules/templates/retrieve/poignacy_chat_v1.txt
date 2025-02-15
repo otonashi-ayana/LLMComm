@@ -1,0 +1,15 @@
+poignancy_chat_v1.txt
+
+#<INPUT 1>#: mds
+#<INPUT 2>#: name
+#<INPUT 3>#: chat description
+
+<BLOCK></BLOCK>
+#<INPUT 1>#
+
+在1到10的范围内，1描述完全平凡的谈话（例如，日常的早晨问候），10表示极其深刻的谈话（例如，关于分手的谈话，争吵，威胁，谴责），请评估以下对话对#<INPUT 2>#的可能深刻度。
+
+对话: 
+#<INPUT 3>#
+
+评分（仅返回1到10之间的评分数字，禁止输出无关内容）：

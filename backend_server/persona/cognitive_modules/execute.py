@@ -158,8 +158,9 @@ def execute(persona, maze, personas, plan):
         ret = persona.direct_mem.planned_path[0]
         persona.direct_mem.planned_path = persona.direct_mem.planned_path[1:]
 
-    description = f"{persona.direct_mem.act_description}"
-    description += f"（在 {persona.direct_mem.act_address} 位置）"
+    description = (
+        f"在 {persona.direct_mem.act_address}，{persona.direct_mem.act_description}"
+    )
 
     execution = ret, description  # persona.direct_mem.act_pronunciatio,
     return execution

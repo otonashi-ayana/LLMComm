@@ -7,6 +7,7 @@ from persona.cognitive_modules.plan import *
 from persona.cognitive_modules.perceive import *
 from persona.cognitive_modules.retrieve import *
 from persona.cognitive_modules.execute import *
+from maze import *
 
 
 class Persona:
@@ -49,7 +50,22 @@ class Persona:
             new_day = "new"
         # 否则就是同一天内，new_day = False
         self.direct_mem.curr_time = curr_time
+        if (
+            maze.get_cell_path(self.direct_mem.curr_cell, "area").split(":")[-1]
+            == "<小区外部>"
+        ):
+            if self.direct_mem.act_check_finished():
+                retrieved = dict()
+                plan = self.plan(maze, personas, new_day, retrieved)
+                # self.reflect()
+                return self.execute(maze, personas, plan)
 
+            execution = (
+                self.direct_mem.curr_cell,
+                f"在 <小区外部>，{self.direct_mem.act_description}",
+            )
+            # self.reflect()
+            return execution
         perceived = self.perceive(maze)
         retrieved = self.retrieve(perceived)
         plan = self.plan(maze, personas, new_day, retrieved)

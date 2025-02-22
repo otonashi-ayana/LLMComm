@@ -1,12 +1,14 @@
-nodes = [["October 05, 2023, 14:30:45", 1], ["January 06, 2023, 16:30:45", 2]]
-nodes = sorted(nodes, key=lambda x: x[0])
-print(nodes)
+import csv
 
-recency_vals = [0.99**i for i in range(1, len(nodes) + 1)]
-print(recency_vals)
 
-recency_out = dict()
-for count, node in enumerate(nodes):
-    recency_out[node[1]] = recency_vals[count]
+def read_2d_csv_to_list(curr_file):
+    analysis_list = []
+    with open(curr_file) as f_analysis_file:
+        data_reader = csv.reader(f_analysis_file, delimiter=",")
+        analysis_list = list(data_reader)
+    print(analysis_list)
 
-print(recency_out)
+
+read_2d_csv_to_list(
+    "environment\\assets\Comm\matrix\\new_maze\\maze\\sector_maze_2d.csv"
+)

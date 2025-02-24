@@ -1,0 +1,29 @@
+{
+  "persona": {
+    "李华": {
+      "next_cell": [
+        13,
+        32
+      ],
+      "description": "在 幸福苑小区:李华超市:货架区:超市货架，超市营业（接收新到货的商品并清点数量）",
+      "chat_history": null
+    },
+    "王敏": {
+      "next_cell": [
+        26,
+        6
+      ],
+      "description": "在 幸福苑小区:7号楼王敏业主家:厨房:<random>，完成洗漱和早饭（准备早餐食材）",
+      "chat_history": null
+    },
+    "李四": {
+      "next_cell": [
+        30,
+        31
+      ],
+      "description": "在 幸福苑小区:李四饭店:就餐区:餐桌，李四饭店开始营业（检查桌椅摆放是否整齐）",
+      "chat_history": null
+    }
+  },
+  "curr_time": "January 06, 2025, 08:20:10"
+}

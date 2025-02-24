@@ -12,9 +12,9 @@ def generate_poig_score(persona, event_type, description):
     if "正在 空闲" in description:
         return 1
     if event_type == "event":
-        return run_prompt_event_poignancy(persona, description)[0]
+        return run_prompt_event_poignancy(persona, description)
     elif event_type == "chat":
-        return run_prompt_chat_poignancy(persona, persona.direct_mem.act_description)[0]
+        return run_prompt_chat_poignancy(persona, persona.direct_mem.act_description)
 
 
 def perceive(persona, maze):
@@ -42,7 +42,6 @@ def perceive(persona, maze):
                 persona.spatial_mem.tree[i["world"]][i["sector"]][i["area"]] += [
                     i["object"]
                 ]
-    print("spatial_mem_tree:", persona.spatial_mem.tree)
     curr_area_path = maze.get_cell_path(persona.direct_mem.curr_cell, "area")
     # print("curr_area_path:", curr_area_path)
     percept_events_set = set()
@@ -75,6 +74,7 @@ def perceive(persona, maze):
 
     ret_events = []
     for p_event in perceived_events:
+        # print("<perceive> p_event:", p_event)
         s, p, o, desc = p_event
         if not p:  # event没有事件发生
             p = "正在"

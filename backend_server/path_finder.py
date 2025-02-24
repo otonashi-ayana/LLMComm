@@ -114,6 +114,7 @@ def path_finder_v2(a, start, end, collision_block_char, verbose=False):
         new_row = []
         for j in row:
             if j == collision_block_char:
+                print("got collision_block_char")
                 new_row += [1]
             else:
                 new_row += [0]

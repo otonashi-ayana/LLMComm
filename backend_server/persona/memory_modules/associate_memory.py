@@ -3,6 +3,7 @@ import datetime
 import json
 
 sys.path.append("../../")
+from global_methods import *
 
 
 class ConceptNode:
@@ -63,9 +64,11 @@ class AssociativeMemory:
         self.kw_strength_event = dict()
         self.kw_strength_thought = dict()
 
-        self.embeddings = json.load(open(f_saved + "/embeddings.json"))
+        self.embeddings = json.load(
+            open(f_saved + "/embeddings.json", encoding="utf-8")
+        )
 
-        nodes_load = json.load(open(f_saved + "/nodes.json"))
+        nodes_load = json.load(open(f_saved + "/nodes.json", encoding="utf-8"))
         for count in range(len(nodes_load.keys())):
             node_id = f"node_{str(count+1)}"
             node_details = nodes_load[node_id]
@@ -137,7 +140,9 @@ class AssociativeMemory:
                     filling,
                 )
 
-        kw_strength_load = json.load(open(f_saved + "/kw_strength.json"))
+        kw_strength_load = json.load(
+            open(f_saved + "/kw_strength.json", encoding="utf-8")
+        )
         if kw_strength_load["kw_strength_event"]:
             self.kw_strength_event = kw_strength_load["kw_strength_event"]
         if kw_strength_load["kw_strength_thought"]:
@@ -170,17 +175,19 @@ class AssociativeMemory:
             r[node_id]["keywords"] = list(node.keywords)
             r[node_id]["filling"] = node.filling
 
-        with open(out_json + "/nodes.json", "w") as outfile:
-            json.dump(r, outfile)
+        with open(out_json + "/nodes.json", "w", encoding="utf-8") as outfile:
+            json.dump(r, outfile, ensure_ascii=False, cls=MyEncoder, indent=2)
 
         r = dict()
         r["kw_strength_event"] = self.kw_strength_event
         r["kw_strength_thought"] = self.kw_strength_thought
-        with open(out_json + "/kw_strength.json", "w") as outfile:
-            json.dump(r, outfile)
+        with open(out_json + "/kw_strength.json", "w", encoding="utf-8") as outfile:
+            json.dump(r, outfile, ensure_ascii=False, cls=MyEncoder, indent=2)
 
-        with open(out_json + "/embeddings.json", "w") as outfile:
-            json.dump(self.embeddings, outfile)
+        with open(out_json + "/embeddings.json", "w", encoding="utf-8") as outfile:
+            json.dump(
+                self.embeddings, outfile, ensure_ascii=False, cls=MyEncoder, indent=2
+            )
 
     def add_event(
         self,

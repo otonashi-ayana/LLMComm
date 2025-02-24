@@ -1,7 +1,7 @@
 import sys
 import re
 
-# import logging
+from utils import *
 
 
 class Logger(object):
@@ -26,6 +26,6 @@ class Logger(object):
 
 
 def init_logger(
-    log_file="D:\Code\Workspace\LLMComm\LLMComm\environment\storage\output.log",
+    log_file=log_file,
 ):
     sys.stdout = Logger(log_file)

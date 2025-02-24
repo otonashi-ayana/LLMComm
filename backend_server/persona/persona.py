@@ -24,9 +24,9 @@ class Persona:
         self.associate_mem = AssociativeMemory(associate_memory_path)
 
     def save(self, saved_path):
-        self.direct_mem.save(
-            f"{saved_path}/direct_memory.json"
-        )  # 调用direct_mem的保存方法，保存到角色的文件夹
+        self.direct_mem.save(f"{saved_path}/direct_memory.json")
+        self.spatial_mem.save(f"{saved_path}/spatial_memory.json")
+        self.associate_mem.save(f"{saved_path}/associative_memory")
 
     def perceive(self, maze):
         return perceive(self, maze)
@@ -50,15 +50,20 @@ class Persona:
             new_day = "new"
         # 否则就是同一天内，new_day = False
         self.direct_mem.curr_time = curr_time
-        if (
-            maze.get_cell_path(self.direct_mem.curr_cell, "area").split(":")[-1]
-            == "<小区外部>"
-        ):
-            if self.direct_mem.act_check_finished():
-                retrieved = dict()
-                plan = self.plan(maze, personas, new_day, retrieved)
+        if self.direct_mem.curr_cell == outing_cell:
+            # 如果当前cell是小区外部
+            print(f"当前cell在outing_cell，{self.direct_mem.act_description}")
+
+            if (
+                self.direct_mem.act_check_finished()
+            ):  # 如果当前动作已经完成(则进行新的规划，不perceive和retrieve)
+                self.direct_mem.curr_cell == backing_cell
+                print("已经返回小区,恢复到backing_cell")
+                plan = self.plan(maze, personas, new_day, retrieved=dict())
                 # self.reflect()
                 return self.execute(maze, personas, plan)
+
+            print("尚未返回小区")
 
             execution = (
                 self.direct_mem.curr_cell,

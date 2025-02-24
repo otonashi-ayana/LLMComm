@@ -1,13 +1,13 @@
 poignancy_event_v1.txt
 
 #<INPUT 0>#: mds
-#<INPUT 2>#: name
-#<INPUT 3>#: event description
+#<INPUT 1>#: name
+#<INPUT 2>#: event description
 
 <BLOCK></BLOCK>
-#<INPUT 1>#
+#<INPUT 0>#
 
-在1到10的范围内，1描述完全平凡的事情（例如，刷牙、整理床铺），10描述极其深刻的事情（例如，分手、大学录取、重大突发事件），请评估以下事件对#<INPUT 2>#的可能深刻度。
+在1到10的范围内，1描述完全平凡的事情（例如，刷牙、整理床铺），10描述极其深刻的事情（例如，分手、大学录取、重大突发事件），请评估以下事件对#<INPUT 1>#的可能深刻度。
 
-事件: #<INPUT 3>#
+事件: #<INPUT 2>#
 评分（仅返回1到10之间的评分数字，禁止输出无关内容）：

@@ -1,0 +1,12 @@
+{
+  "fork_sim_code": "base_comm",
+  "start_date": "January 06, 2025, 00:00:00",
+  "curr_time": "January 06, 2025, 05:33:20",
+  "sec_per_step": 10,
+  "persona_names": [
+    "李华",
+    "王敏",
+    "李四"
+  ],
+  "step": 2000
+}

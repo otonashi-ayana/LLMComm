@@ -28,7 +28,7 @@ class MemoryTree:
 
     def save(self, out_json):
         with open(out_json, "w", encoding="utf-8") as outfile:
-            json.dump(self.tree, outfile)
+            json.dump(self.tree, outfile, indent=2, ensure_ascii=False, cls=MyEncoder)
 
     def get_str_accessible_sectors(self, curr_world):
         x = ", ".join(list(self.tree[curr_world].keys()))

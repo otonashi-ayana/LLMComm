@@ -53,51 +53,23 @@ def generate_hourly_schedule(persona, wake_up_time):
         "23:00",
     ]
     hourly_activity = []
-    if develop and persona.name != "李华":
-        diversity_repeat_count = 3
-        for i in range(diversity_repeat_count):
-            print("diversity_repeat_count:", i)
-            hourly_activity_set = set(hourly_activity)
-            if len(hourly_activity_set) < 5:
-                hourly_activity = []
-                wake_up_time_tmp = wake_up_time
-                for count, curr_hour_str in enumerate(hour_str):
-                    if wake_up_time_tmp > 0:
-                        hourly_activity += ["睡觉"]
-                        wake_up_time_tmp -= 1
-                    else:
-                        hourly_activity += [
-                            run_prompt_generate_hourly_schedule(
-                                persona, curr_hour_str, hourly_activity, hour_str
-                            )
-                        ]
-    else:
-        hourly_activity = [
-            "睡觉",
-            "睡觉",
-            "睡觉",
-            "睡觉",
-            "睡觉",
-            "睡觉",
-            "起床并完成洗漱和早饭",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "去小区饭馆吃饭",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "营业超市",
-            "结束营业并回家休息",
-        ]
+    diversity_repeat_count = 3
+    for i in range(diversity_repeat_count):
+        print("diversity_repeat_count:", i)
+        hourly_activity_set = set(hourly_activity)
+        if len(hourly_activity_set) < 5:
+            hourly_activity = []
+            wake_up_time_tmp = wake_up_time
+            for count, curr_hour_str in enumerate(hour_str):
+                if wake_up_time_tmp > 0:
+                    hourly_activity += ["睡觉"]
+                    wake_up_time_tmp -= 1
+                else:
+                    hourly_activity += [
+                        run_prompt_generate_hourly_schedule(
+                            persona, curr_hour_str, hourly_activity, hour_str
+                        )
+                    ]
     hourly_compressed = []
     prev = None
     prev_count = 0
@@ -117,6 +89,71 @@ def generate_hourly_schedule(persona, wake_up_time):
     return hourly_compressed_min
 
 
+def simple_generate_hourly_schedule(persona, wake_up_time):
+    hour_str = [
+        "00:00",
+        "01:00",
+        "02:00",
+        "03:00",
+        "04:00",
+        "05:00",
+        "06:00",
+        "07:00",
+        "08:00",
+        "09:00",
+        "10:00",
+        "11:00",
+        "12:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+        "18:00",
+        "19:00",
+        "20:00",
+        "21:00",
+        "22:00",
+        "23:00",
+    ]
+    diversity_repeat_count = 3
+    for i in range(diversity_repeat_count):
+        print("diversity_repeat_count:", i + 1)
+        hourly_activity = []
+        for _ in range(wake_up_time):
+            hourly_activity += ["睡觉"]
+        hourly_activity_response = run_prompt_simple_generate_hourly_schedule(
+            persona, hour_str, wake_up_time
+        ).split("\n")
+
+        hourly_activity += [
+            activity.split("正在")[-1].strip() for activity in hourly_activity_response
+        ]
+        hourly_activity_set = set(hourly_activity)
+        if len(hourly_activity_set) > 4:
+            break
+    # print("hourly_activity", hourly_activity)
+
+    hourly_compressed = []
+    prev = None
+    prev_count = 0
+    for i in hourly_activity:
+        if i != prev:
+            prev_count = 1
+            hourly_compressed += [[i, prev_count]]
+            prev = i
+        else:
+            if hourly_compressed:
+                hourly_compressed[-1][1] += 1
+
+    hourly_compressed_min = []
+    for task, duration in hourly_compressed:
+        hourly_compressed_min += [[task, duration * 60]]
+    # print("hourly_compressed_min", hourly_compressed_min)
+
+    return hourly_compressed_min
+
+
 def _new_day_planning(persona, new_day):
     wake_up_time = generate_wake_up_time(persona)
     if new_day == "first":
@@ -126,7 +163,9 @@ def _new_day_planning(persona, new_day):
     elif new_day == "new":
         # TODO
         pass
-    persona.direct_mem.daily_schedule = generate_hourly_schedule(persona, wake_up_time)
+    persona.direct_mem.daily_schedule = simple_generate_hourly_schedule(
+        persona, wake_up_time
+    )
     persona.direct_mem.daily_schedule_hourly = persona.direct_mem.daily_schedule[:]
 
     thought = f"这是 {persona.direct_mem.name} 在 {persona.direct_mem.curr_time.strftime('%A %B %d')}的计划:"
@@ -365,20 +404,17 @@ def determine_action(persona, maze):
         print_c("<determine_action> output")
         for i in persona.direct_mem.daily_schedule:
             print(i)
-        # print(curr_index)
-        # print(len(persona.direct_mem.daily_schedule))
-        # print(persona.direct_mem.name)
         print_c("<determine_action> end")
 
     # 1440
-    x_emergency = 0
+    total_time = 0
     for i in persona.direct_mem.daily_schedule:
-        x_emergency += i[1]
-    # print ("x_emergency", x_emergency)
+        total_time += i[1]
+    # print ("total_time", total_time)
 
-    if 1440 - x_emergency > 0:
-        print("x_emergency__AAA", x_emergency)
-    persona.direct_mem.daily_schedule += [["sleeping", 1440 - x_emergency]]
+    if 1440 - total_time > 0:
+        print("total_time", total_time)
+        persona.direct_mem.daily_schedule += [["睡觉", 1440 - total_time]]
 
     act_desp, act_dura = persona.direct_mem.daily_schedule[curr_index]
 
@@ -386,7 +422,10 @@ def determine_action(persona, maze):
     # variables.
     act_world = maze.access_cell(persona.direct_mem.curr_cell)["world"]
     # act_sector = maze.access_cell(persona.direct_mem.curr_cell)["sector"]
-    act_sector = generate_action_sector(act_desp, persona, maze)
+    if act_desp == "外出":
+        act_sector = "小区大门"
+    else:
+        act_sector = generate_action_sector(act_desp, persona, maze)
     act_area = generate_action_area(act_desp, persona, maze, act_world, act_sector)
     act_address = f"{act_world}:{act_sector}:{act_area}"
     act_object = generate_action_object(act_desp, act_address, persona, maze)
@@ -740,16 +779,18 @@ def plan(persona, maze, personas, new_day, retrieved):
         print_c("determine_action done", COLOR="blue")
 
     # 决定要关注哪个事件（有且有多个events被检索到）
-    print_c("_choose_retrieved start", COLOR="blue")
-    focused_event = _choose_retrieved(persona, retrieved)
-    print_c("_choose_retrieved done", COLOR="blue")
+    # print_c("_choose_retrieved start", COLOR="blue")
+    focused_event = False
+    if retrieved.keys():
+        focused_event = _choose_retrieved(persona, retrieved)
+    # print_c("_choose_retrieved done", COLOR="blue")
 
     # 决定对事件作什么反应
     if focused_event:
-        print_c("_should_react start", COLOR="blue")
+        # print_c("_should_react start", COLOR="blue")
         reaction_mode = _should_react(persona, focused_event, personas)
         print("reaction_mode:", reaction_mode)
-        print_c("_should_react done", COLOR="blue")
+        # print_c("_should_react done", COLOR="blue")
         if reaction_mode:
             if reaction_mode[0] == "chat":  # ("chat", persona name)
                 _chat_react(maze, persona, reaction_mode[1], personas)

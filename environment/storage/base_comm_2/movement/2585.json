@@ -1,0 +1,29 @@
+{
+  "persona": {
+    "李华": {
+      "next_cell": [
+        19,
+        31
+      ],
+      "description": "在 幸福苑小区:李华超市:收银区:收银台，超市营业（打开超市大门并检查店内安全）",
+      "chat_history": null
+    },
+    "王敏": {
+      "next_cell": [
+        29,
+        7
+      ],
+      "description": "在 幸福苑小区:7号楼王敏业主家:卧室:床，睡觉",
+      "chat_history": null
+    },
+    "李四": {
+      "next_cell": [
+        54,
+        4
+      ],
+      "description": "在 幸福苑小区:6号楼李四业主家:卫生间:洗漱池，起床并完成洗漱（拿起牙刷挤牙膏并刷牙）",
+      "chat_history": null
+    }
+  },
+  "curr_time": "January 06, 2025, 07:10:50"
+}

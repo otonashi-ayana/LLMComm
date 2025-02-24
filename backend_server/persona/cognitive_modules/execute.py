@@ -99,9 +99,11 @@ def execute(persona, maze, personas, plan):
             # coordinates.
             if plan not in maze.cells_of_addr:
                 print("plan not in maze.cells_of_addr", plan)
-                maze.cells_of_addr["Johnson Park:park:park garden"]  # ERRORRRRRRR
+                raise Exception("<execute>: Plan not in maze.cells_of_addr")
+                # maze.cells_of_addr["Johnson Park:park:park garden"]
             else:
                 target_cells = maze.cells_of_addr[plan]
+                # print("target_cells:", target_cells)
 
         # There are sometimes more than one cell returned from this (e.g., a tabe
         # may stretch many coordinates). So, we sample a few here. And from that

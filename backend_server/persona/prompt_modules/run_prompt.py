@@ -82,8 +82,8 @@ def run_prompt_wake_up_time(persona):
     prompt_file_path = f"{prompt_path}/plan/wake_up_time_v1.txt"
     prompt_input = create_prompt_input(persona)
     prompt = generate_prompt(prompt_input, prompt_file_path)
-    if debug:
-        print("\n")
+    if not simple_log and debug:
+
         print_c("╔═════<run_prompt_wake_up_time> prompt═════╗")
         print(prompt)
         print_c(
@@ -96,7 +96,7 @@ def run_prompt_wake_up_time(persona):
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
+    if not simple_log and debug:
         print_c("╔═════<run_prompt_wake_up_time> output═════╗")
         print(output)
         print_c("╚══════════════════════════════════════════╝")
@@ -161,7 +161,7 @@ def run_prompt_daily_goals(persona, wake_up_time):
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 100,
+        "max_tokens": 250,
         "temperature": 1.3,
         "top_p": 1,
         "stream": False,
@@ -170,8 +170,8 @@ def run_prompt_daily_goals(persona, wake_up_time):
     prompt_file_path = f"{prompt_path}/plan/daily_planning_v1.txt"
     prompt_input = create_prompt_input(persona, wake_up_time)
     prompt = generate_prompt(prompt_input, prompt_file_path)
-    if debug:
-        print("\n")
+    if not simple_log and debug:
+
         print_c("╔═════<run_prompt_daily_goals> prompt═════╗")
         print(prompt)
         print_c("╚═════════════════════════════════════════╝")
@@ -183,7 +183,7 @@ def run_prompt_daily_goals(persona, wake_up_time):
         get_fail_safe=get_fail_safe(),
     )
     output = [f"{wake_up_time}点起床"] + output
-    if debug:
+    if not simple_log and debug:
         print_c("╔═════<run_prompt_daily_goals> output═════╗")
         print(output)
         print_c("╚═════════════════════════════════════════╝")
@@ -263,7 +263,7 @@ def run_prompt_generate_hourly_schedule(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_generate_hourly_schedule> prompt══╗")
         print(prompt)
         print_c("╚════════════════════════════════════════════════╝")
@@ -278,6 +278,75 @@ def run_prompt_generate_hourly_schedule(
         print_c("╔══<run_prompt_generate_hourly_schedule> output══╗")
         print(output)
         print_c("╚════════════════════════════════════════════════╝")
+    return output
+
+
+def run_prompt_simple_generate_hourly_schedule(persona, hour_str, wake_up_time):
+    def create_prompt_input(persona, hour_str, wake_up_time):
+        schedule_format = ""
+        for idx, i in enumerate(hour_str[:-1]):
+            if idx > wake_up_time - 1:
+                schedule_format += f"[{hour_str[idx]} - {hour_str[idx+1]}]"
+                schedule_format += f" 活动: 待填入\n"
+
+        schedule_format += "[23:00 - 24:00] 活动: 待填入"
+
+        daily_plan_intro = f"以下为{persona.direct_mem.get_name()}的大致日程:"
+        for count, goal in enumerate(persona.direct_mem.daily_goals):
+            daily_plan_intro += f"{str(count+1)}) {goal},"
+        daily_plan_intro = daily_plan_intro[:-1]
+
+        prompt_input = []
+        prompt_input += [schedule_format]
+        prompt_input += [persona.direct_mem.get_str_mds()]
+        prompt_input += [daily_plan_intro]
+
+        return prompt_input
+
+    def response_clean(response):
+        if response[0] != "[":
+            raise ValueError()
+        else:
+            return response
+
+    def response_validate(response):
+        try:
+            response_clean(response)
+        except:
+            return False
+        return True
+
+    def get_fail_safe():
+        fs = "Failure"
+        return fs
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 800,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+    prompt_template = f"{prompt_path}/plan/hourly_schedule_Sv1.txt"
+    prompt_input = create_prompt_input(persona, hour_str, wake_up_time)
+    prompt = generate_prompt(prompt_input, prompt_template)
+    if debug:
+
+        print_c("╔══<run_prompt_simple_generate_hourly_schedule> prompt══╗")
+        print(prompt)
+        print_c("╚══════════════════╝")
+    output = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+    if debug:
+        print_c("╔══<run_prompt_simple_generate_hourly_schedule> output══╗")
+        print(output)
+        print_c("╚══════════════════╝")
     return output
 
 
@@ -390,8 +459,8 @@ def run_prompt_task_decomp(persona, task, duration):
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 700,
-        "temperature": 1,
+        "max_tokens": 1000,
+        "temperature": 0,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -400,7 +469,7 @@ def run_prompt_task_decomp(persona, task, duration):
     prompt_input = create_prompt_input(persona, task, duration)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔═════<run_prompt_task_decomp> prompt═════╗")
         print(prompt)
         print_c("╚═════════════════════════════════════════════╝")
@@ -465,7 +534,12 @@ def run_prompt_action_sector(act_desp, persona, maze):
 
     def response_validate(response):
         try:
-            response_clean(response)
+            cleaned_up = response_clean(response)
+            act_world = f"{maze.access_cell(persona.direct_mem.curr_cell)['world']}"
+            if cleaned_up not in persona.spatial_mem.get_str_accessible_sectors(
+                act_world
+            ):
+                return False
         except:
             return False
         return True
@@ -476,8 +550,8 @@ def run_prompt_action_sector(act_desp, persona, maze):
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 5,
-        "temperature": 0.8,
+        "max_tokens": 20,
+        "temperature": 0,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -486,7 +560,7 @@ def run_prompt_action_sector(act_desp, persona, maze):
     prompt_input = create_prompt_input(act_desp, persona, maze)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_action_sector> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -551,8 +625,8 @@ def run_prompt_action_area(
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 5,
-        "temperature": 0.8,
+        "max_tokens": 20,
+        "temperature": 0,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -563,7 +637,7 @@ def run_prompt_action_area(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_action_area> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -584,8 +658,8 @@ def run_prompt_action_area(
 def run_prompt_action_object(action_desc, persona, maze, temp_address):
     def create_prompt_input(action_desc, persona, temp_address):
         prompt_input = []
-        if "(" in action_desc:
-            action_desc = action_desc.split("(")[-1][:-1]
+        if "（" in action_desc:
+            action_desc = action_desc.split("（")[-1][:-1]
 
         prompt_input += [action_desc]
         prompt_input += [
@@ -608,8 +682,8 @@ def run_prompt_action_object(action_desc, persona, maze, temp_address):
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 5,
-        "temperature": 0.8,
+        "max_tokens": 20,
+        "temperature": 0.3,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -618,7 +692,7 @@ def run_prompt_action_object(action_desc, persona, maze, temp_address):
     prompt_input = create_prompt_input(action_desc, persona, temp_address)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_action_object> prompt══╗")
         print(prompt)
         print_c("╚═════════════════════════════════════╝")
@@ -672,7 +746,7 @@ def run_prompt_event_triple(action_desc, persona):
     model_param = {
         "model": specify_model,
         "max_tokens": 20,
-        "temperature": 0.8,
+        "temperature": 0.3,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -680,8 +754,8 @@ def run_prompt_event_triple(action_desc, persona):
     prompt_template = f"{prompt_path}/plan/generate_event_triple_v1.txt"
     prompt_input = create_prompt_input(action_desc, persona)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-        print("\n")
+    if not simple_log and debug:
+
         print_c("╔══<run_prompt_event_triple> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -717,7 +791,7 @@ def run_prompt_act_obj_desc(
         return prompt_input
 
     def response_clean(response):
-        cr = response.strip()
+        cr = response.split("正在")[-1].strip()
         if cr[-1] == "。":
             cr = cr[:-1]
         return cr
@@ -730,13 +804,13 @@ def run_prompt_act_obj_desc(
         return True
 
     def get_fail_safe():
-        fs = f"{act_object} 正在 空闲"
+        fs = f"空闲"
         return fs
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 10,
-        "temperature": 0.5,
+        "max_tokens": 20,
+        "temperature": 0.3,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -748,8 +822,8 @@ def run_prompt_act_obj_desc(
         persona,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-        print("\n")
+    if not simple_log and debug:
+
         print_c("╔══<run_prompt_act_obj_desc> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -799,7 +873,7 @@ def run_prompt_act_obj_event_triple(
     model_param = {
         "model": specify_model,
         "max_tokens": 20,
-        "temperature": 0.8,
+        "temperature": 0.3,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -812,7 +886,7 @@ def run_prompt_act_obj_event_triple(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_act_obj_event_triple> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -896,7 +970,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         return prompt_input
 
     def response_clean(response):
-        return response.split("回答是或否：")[-1]
+        return response.split("回答是或否：")[-1][0]
 
     def response_validate(response):
         try:
@@ -922,7 +996,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
     prompt_input = create_prompt_input(init_persona, target_persona, retrieved)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_decide_to_talk> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1040,7 +1114,7 @@ def run_prompt_decide_to_react(init_persona, target_persona, retrieved):
     prompt_input = create_prompt_input(init_persona, target_persona, retrieved)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_decide_to_react> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1075,6 +1149,7 @@ def run_prompt_event_poignancy(
 
     def response_clean(response):
         response = int(response.strip())
+        return response
 
     def response_validate(response):
         try:
@@ -1089,8 +1164,8 @@ def run_prompt_event_poignancy(
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 5,
-        "temperature": 0.8,
+        "max_tokens": 10,
+        "temperature": 0.3,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -1102,7 +1177,7 @@ def run_prompt_event_poignancy(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_event_poignancy> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1152,8 +1227,8 @@ def run_prompt_chat_poignancy(
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 5,
-        "temperature": 0.8,
+        "max_tokens": 10,
+        "temperature": 0.3,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -1165,7 +1240,7 @@ def run_prompt_chat_poignancy(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_chat_poignancy> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1335,7 +1410,7 @@ def run_prompt_new_decomp_schedule(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_new_decomp_schedule> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1367,14 +1442,10 @@ def run_prompt_agent_chat_summarize_relationship(
         return prompt_input
 
     def response_clean(response):
-        return True
+        return response
 
     def response_validate(response):
-        try:
-            response_clean(response)
-            return True
-        except:
-            return False
+        return True
 
     def get_fail_safe():
         fs = "..."
@@ -1382,7 +1453,7 @@ def run_prompt_agent_chat_summarize_relationship(
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 20,
+        "max_tokens": 25,
         "temperature": 0.5,
         "top_p": 1,
         "stream": False,
@@ -1392,7 +1463,7 @@ def run_prompt_agent_chat_summarize_relationship(
     prompt_input = create_prompt_input(persona, target_persona, statements)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_agent_chat_summarize_relationship> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1526,7 +1597,7 @@ def run_generate_iterative_chat_utt(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_generate_iterative_chat_utt> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1588,7 +1659,7 @@ def run_prompt_summarize_conversation(
     )
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
-        print("\n")
+
         print_c("╔══<run_prompt_summarize_conversation> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")

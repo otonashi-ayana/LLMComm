@@ -26,7 +26,7 @@ def LLM_request(prompt, parameter):
         stream=parameter["stream"],
         # presence_penalty=parameter["presence_penalty"],
         stop=parameter["stop"],
-        # timeout=20,
+        # timeout=60,
     )
     end_time = time.time()
     elapsed_time = end_time - start_time

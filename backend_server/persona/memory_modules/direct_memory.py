@@ -78,6 +78,11 @@ class DirectMemory:
         self.planned_path = []
 
         # reflection variables
+        self.recency_w = 1
+        self.relevance_w = 1
+        self.importance_w = 1
+        self.recency_decay = 0.99
+
         self.importance_trigger_max = 150
         self.importance_trigger_curr = self.importance_trigger_max
         self.importance_ele_n = 0
@@ -139,6 +144,11 @@ class DirectMemory:
             self.act_path_set = direct_mem_json["act_path_set"]
             self.planned_path = direct_mem_json["planned_path"]
 
+            self.recency_w = direct_mem_json["recency_w"]
+            self.relevance_w = direct_mem_json["relevance_w"]
+            self.importance_w = direct_mem_json["importance_w"]
+            self.recency_decay = direct_mem_json["recency_decay"]
+
             self.importance_trigger_max = direct_mem_json["importance_trigger_max"]
             self.importance_trigger_curr = direct_mem_json["importance_trigger_curr"]
             self.importance_ele_n = direct_mem_json["importance_ele_n"]
@@ -192,12 +202,17 @@ class DirectMemory:
         direct_mem["act_path_set"] = self.act_path_set
         direct_mem["planned_path"] = self.planned_path
 
+        direct_mem["recency_w"] = self.recency_w
+        direct_mem["relevance_w"] = self.relevance_w
+        direct_mem["importance_w"] = self.importance_w
+        direct_mem["recency_decay"] = self.recency_decay
+
         direct_mem["importance_trigger_max"] = self.importance_trigger_max
         direct_mem["importance_trigger_curr"] = self.importance_trigger_curr
         direct_mem["importance_ele_n"] = self.importance_ele_n
 
         with open(out_json, "w", encoding="utf-8") as outfile:
-            json.dump(direct_mem, outfile, indent=2)
+            json.dump(direct_mem, outfile, indent=2, ensure_ascii=False, cls=MyEncoder)
 
     def act_check_finished(self):
         if not self.act_address:

@@ -12,7 +12,7 @@
   "background": "居家办公。家中有孩子上高中，工作日她较为忙碌，但晚上会准备晚饭和家人一起度过。周末她会和家人出门放松、尝试新的餐馆。", 
   "curr_thing": "", 
   "living_area": "幸福苑小区:7号楼王敏业主家",
-  "life_style": "王敏每天早晨8:00醒来，晚上10:30睡觉。",
+  "life_style": "王敏每天早晨8:00醒来，晚上22:30睡觉。",
   "daily_plan_desc": "王敏每天早晨9:00在家中打卡上班，中午12:00下班，下午14:00上班，18:00下班。",
 
   "daily_goals": [], 
@@ -35,6 +35,11 @@
   
   "act_path_set": false, 
   "planned_path": [],
+
+  "recency_w":1,
+  "relevance_w":1,
+  "importance_w":1,
+  "recency_decay":0.99,
   
   "importance_trigger_max":150,
   "importance_trigger_curr":150,

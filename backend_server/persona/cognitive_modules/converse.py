@@ -21,7 +21,7 @@ def generate_summarize_agent_relationship(init_persona, target_persona, retrieve
 
     summarized_relationship = run_prompt_agent_chat_summarize_relationship(
         init_persona, target_persona, all_embedding_key_str
-    )[0]
+    )
     return summarized_relationship
 
 
@@ -42,7 +42,7 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
 
     x = run_generate_iterative_chat_utt(
         maze, init_persona, target_persona, retrieved, curr_context, curr_chat
-    )[0]
+    )
 
     return x["utterance"], x["end"]
 

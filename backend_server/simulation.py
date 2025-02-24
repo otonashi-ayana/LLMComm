@@ -11,6 +11,7 @@ from maze import *
 from utils import *
 import os
 from logger import init_logger
+from concurrent.futures import ThreadPoolExecutor
 
 os.system("cls")
 
@@ -148,21 +149,32 @@ class SimulationServer:
 
                     movements = {"persona": dict(), "curr_time": ""}
                     # 执行move,输出movements
-                    for persona_name, persona in self.personas.items():
-                        next_cell, desc = persona.move(
-                            self.maze,
-                            self.personas,
-                            self.curr_time,
-                        )
-                        movements["persona"][persona_name] = {}
-                        movements["persona"][persona_name]["next_cell"] = next_cell
-                        movements["persona"][persona_name]["description"] = desc
-                        movements["persona"][persona_name][
-                            "chat_history"
-                        ] = persona.direct_mem.chat_history
+
+                    with ThreadPoolExecutor(max_workers=len(self.personas)) as executor:
+                        future_to_name = {
+                            executor.submit(
+                                persona.move, self.maze, self.personas, self.curr_time
+                            ): persona_name
+                            for persona_name, persona in self.personas.items()
+                        }
+                        for future in future_to_name:
+                            persona_name = future_to_name[future]
+                            try:
+                                next_cell, desc = future.result()
+                            except Exception as exc:
+                                print(f"{persona_name} 的 move() 发生异常: {exc}")
+                                next_cell, desc = None, ""
+                            movements["persona"][persona_name] = {
+                                "next_cell": next_cell,
+                                "description": desc,
+                                "chat_history": self.personas[
+                                    persona_name
+                                ].direct_mem.chat_history,
+                            }
                     movements["curr_time"] = self.curr_time.strftime(
                         "%B %d, %Y, %H:%M:%S"
                     )
+
                     with open(
                         f"{self.curr_path}/movement/{self.step}.json",
                         "w",

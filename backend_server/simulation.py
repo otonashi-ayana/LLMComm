@@ -159,11 +159,11 @@ class SimulationServer:
                         }
                         for future in future_to_name:
                             persona_name = future_to_name[future]
-                            try:
-                                next_cell, desc = future.result()
-                            except Exception as exc:
-                                print(f"{persona_name} 的 move() 发生异常: {exc}")
-                                next_cell, desc = None, ""
+                            # try:
+                            next_cell, desc = future.result()
+                            # except Exception as exc:
+                            # print(f"{persona_name} 的 move() 发生异常: {exc}")
+                            # next_cell, desc = None, ""
                             movements["persona"][persona_name] = {
                                 "next_cell": next_cell,
                                 "description": desc,

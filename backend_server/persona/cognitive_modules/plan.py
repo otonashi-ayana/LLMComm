@@ -423,33 +423,32 @@ def determine_action(persona, maze):
     act_world = maze.access_cell(persona.direct_mem.curr_cell)["world"]
     # act_sector = maze.access_cell(persona.direct_mem.curr_cell)["sector"]
     if act_desp == "外出":
-        act_sector = "小区大门"
+        new_address = f"{act_world}:小区大门:小区大门:<小区外部>"
+
+        act_obj_desp = "<小区外部>"
+        act_obj_event = (None, None, None)
     else:
         act_sector = generate_action_sector(act_desp, persona, maze)
-    act_area = generate_action_area(act_desp, persona, maze, act_world, act_sector)
-    act_address = f"{act_world}:{act_sector}:{act_area}"
-    act_object = generate_action_object(act_desp, act_address, persona, maze)
-    new_address = f"{act_world}:{act_sector}:{act_area}:{act_object}"
-    # act_pron = generate_action_pronunciatio(act_desp, persona)
-    act_event = generate_action_event_triple(act_desp, persona)
-    # Persona's actions also influence the object states. We set those up here.
-    act_obj_desp = generate_act_obj_desc(act_object, act_desp, persona)
-    # act_obj_pron = generate_action_pronunciatio(act_obj_desp, persona)
-    act_obj_event = generate_act_obj_event_triple(act_object, act_obj_desp)
+        act_area = generate_action_area(act_desp, persona, maze, act_world, act_sector)
+        act_address = f"{act_world}:{act_sector}:{act_area}"
+        act_object = generate_action_object(act_desp, act_address, persona, maze)
+        new_address = f"{act_world}:{act_sector}:{act_area}:{act_object}"
 
-    # Adding the action to persona's queue.
+        act_obj_desp = generate_act_obj_desc(act_object, act_desp, persona)
+        act_obj_event = generate_act_obj_event_triple(act_object, act_obj_desp)
+
+    act_event = generate_action_event_triple(act_desp, persona)
+
     persona.direct_mem.add_new_action(
         new_address,
         int(act_dura),
         act_desp,
-        # act_pron,
         act_event,
         None,
         None,
         None,
         None,
         act_obj_desp,
-        # act_obj_pron,
         act_obj_event,
     )
 

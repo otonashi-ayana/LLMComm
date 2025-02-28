@@ -281,14 +281,20 @@ def run_prompt_generate_hourly_schedule(
     return output
 
 
-def run_prompt_simple_generate_hourly_schedule(persona, hour_str, wake_up_time):
-    def create_prompt_input(persona, hour_str, wake_up_time):
+def run_prompt_simple_generate_hourly_schedule(
+    persona, hour_str, wake_up_time, outing_time
+):
+    def create_prompt_input(persona, hour_str, wake_up_time, outing_time):
         schedule_format = ""
         for idx, i in enumerate(hour_str[:-1]):
             if idx > wake_up_time - 1:
                 schedule_format += f"[{hour_str[idx]} - {hour_str[idx+1]}]"
-                schedule_format += f" 活动: 待填入\n"
-
+                if outing_time and idx in outing_time:
+                    schedule_format += (
+                        f" 活动: {persona.direct_mem.name} 正在 离开小区中\n"
+                    )
+                else:
+                    schedule_format += f" 活动: 待填入\n"
         schedule_format += "[23:00 - 24:00] 活动: 待填入"
 
         daily_plan_intro = f"以下为{persona.direct_mem.get_name()}的大致日程:"
@@ -329,7 +335,7 @@ def run_prompt_simple_generate_hourly_schedule(persona, hour_str, wake_up_time):
         "stop": None,
     }
     prompt_template = f"{prompt_path}/plan/hourly_schedule_Sv1.txt"
-    prompt_input = create_prompt_input(persona, hour_str, wake_up_time)
+    prompt_input = create_prompt_input(persona, hour_str, wake_up_time, outing_time)
     prompt = generate_prompt(prompt_input, prompt_template)
     if debug:
 
@@ -361,8 +367,10 @@ def run_prompt_task_decomp(persona, task, duration):
             all_indices += [curr_f_org_index + 1]
         if curr_f_org_index + 2 <= len(persona.direct_mem.daily_schedule_hourly):
             all_indices += [curr_f_org_index + 2]
+        print("<run_prompt_task_decomp> all_indices:", all_indices)
 
         curr_time_range = ""
+        curr_task = ""
 
         summ_str = f'今天日期是 {persona.direct_mem.curr_time.strftime("%A %B %d")}. '
         summ_str += f"从 "
@@ -382,17 +390,20 @@ def run_prompt_task_decomp(persona, task, duration):
                 start_time_str = start_time.strftime("%H:%M")
                 end_time_str = end_time.strftime("%H:%M")
                 summ_str += f"{start_time_str} ~ {end_time_str}点, {persona.direct_mem.name} 计划 {persona.direct_mem.daily_schedule_hourly[index][0]}, "
-                if curr_f_org_index + 1 == index:
+                if curr_f_org_index + 1 == index:  # 当前index是下一个任务的index
                     curr_time_range = f"{start_time_str} ~ {end_time_str}"
+                    curr_task = persona.direct_mem.daily_schedule_hourly[index][0]
         summ_str = summ_str[:-2] + "."
 
         prompt_input = []
         prompt_input += [persona.direct_mem.get_str_mds()]
         prompt_input += [summ_str]
-        # prompt_input += [persona.direct_mem.get_curr_date_str()]
         prompt_input += [persona.direct_mem.name]
         prompt_input += [curr_time_range]
-        prompt_input += [task]
+
+        prompt_input += [task]  # TODO: task为什么有时候会错位？
+        # prompt_input += [curr_task]
+
         prompt_input += [duration]
         prompt_input += [persona.direct_mem.name]
         return prompt_input
@@ -459,7 +470,7 @@ def run_prompt_task_decomp(persona, task, duration):
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 1000,
+        "max_tokens": 2000,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -508,7 +519,11 @@ def run_prompt_action_sector(act_desp, persona, maze):
             f"{maze.access_cell(persona.direct_mem.curr_cell)['sector']}"
         ]  # 5
         x = f"{act_world}:{maze.access_cell(persona.direct_mem.curr_cell)['sector']}"
-        prompt_input += [persona.spatial_mem.get_str_accessible_sector_areas(x)]
+        print("<run_prompt_action_sector>", x)
+        if maze.access_cell(persona.direct_mem.curr_cell)["sector"] != "小区大门":
+            prompt_input += [persona.spatial_mem.get_str_accessible_sector_areas(x)]
+        else:
+            prompt_input += ["小区大门"]
 
         if persona.direct_mem.get_daily_plan_desc() != "":  # 7
             prompt_input += [f"\n{persona.direct_mem.get_daily_plan_desc()}"]
@@ -1176,8 +1191,7 @@ def run_prompt_event_poignancy(
         event_description,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
+    if not simple_log and debug:
         print_c("╔══<run_prompt_event_poignancy> prompt══╗")
         print(prompt)
         print_c("╚══════════════════╝")
@@ -1188,7 +1202,7 @@ def run_prompt_event_poignancy(
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
+    if not simple_log and debug:
         print_c("╔══<run_prompt_event_poignancy> output══╗")
         print(output)
         print_c("╚══════════════════╝")

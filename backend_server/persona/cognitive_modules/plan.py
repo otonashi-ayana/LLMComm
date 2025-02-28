@@ -116,6 +116,7 @@ def simple_generate_hourly_schedule(persona, wake_up_time):
         "22:00",
         "23:00",
     ]
+    outing_time = persona.direct_mem.outing_time
     diversity_repeat_count = 3
     for i in range(diversity_repeat_count):
         print("diversity_repeat_count:", i + 1)
@@ -123,7 +124,7 @@ def simple_generate_hourly_schedule(persona, wake_up_time):
         for _ in range(wake_up_time):
             hourly_activity += ["睡觉"]
         hourly_activity_response = run_prompt_simple_generate_hourly_schedule(
-            persona, hour_str, wake_up_time
+            persona, hour_str, wake_up_time, outing_time
         ).split("\n")
 
         hourly_activity += [
@@ -366,39 +367,45 @@ def determine_action(persona, maze):
     def determine_decomp(act_desp, act_dura):
         if "睡觉" in act_desp:
             return False
-        if act_desp == "外出":
-            return False
+        # if act_desp == "离开小区中":
+        #     return False
+
         # elif "sleep" in act_desp or "bed" in act_desp:
         #     if act_dura > 60:
         #         return False
         return True
 
     curr_index = persona.direct_mem.get_daily_schedule_index()
+    # 返回当前时间下所属任务所在的index
     curr_index_60 = persona.direct_mem.get_daily_schedule_index(advance=60)
+    # 返回当前时间+60分钟后所属任务所在的index（可能和当前任务相同）
 
+    # 若为首次分解，分解当前时间任务
     if curr_index == 0:
         act_desp, act_dura = persona.direct_mem.daily_schedule[curr_index]
-        if act_dura >= 60:
-            if determine_decomp(act_desp, act_dura):
-                persona.direct_mem.daily_schedule[curr_index : curr_index + 1] = (
-                    generate_task_decomp(persona, act_desp, act_dura)
-                )
+        if act_dura >= 60 and determine_decomp(act_desp, act_dura):
+            persona.direct_mem.daily_schedule[curr_index : curr_index + 1] = (
+                generate_task_decomp(persona, act_desp, act_dura)
+            )
         if curr_index_60 + 1 < len(persona.direct_mem.daily_schedule):
+            # 分解一小时后的任务 的 下一个任务
             act_desp, act_dura = persona.direct_mem.daily_schedule[curr_index_60 + 1]
-            if act_dura >= 60:
-                if determine_decomp(act_desp, act_dura):
-                    persona.direct_mem.daily_schedule[
-                        curr_index_60 + 1 : curr_index_60 + 2
-                    ] = generate_task_decomp(persona, act_desp, act_dura)
+            if act_dura >= 60 and determine_decomp(act_desp, act_dura):
+                persona.direct_mem.daily_schedule[
+                    curr_index_60 + 1 : curr_index_60 + 2
+                ] = generate_task_decomp(persona, act_desp, act_dura)
 
+    # 分解一小时后的任务
     if curr_index_60 < len(persona.direct_mem.daily_schedule):
-        if persona.direct_mem.curr_time.hour < 23:
+        if persona.direct_mem.curr_time.hour < 23:  # 如果23:00之前
             act_desp, act_dura = persona.direct_mem.daily_schedule[curr_index_60]
-            if act_dura >= 60:
-                if determine_decomp(act_desp, act_dura):
-                    persona.direct_mem.daily_schedule[
-                        curr_index_60 : curr_index_60 + 1
-                    ] = generate_task_decomp(persona, act_desp, act_dura)
+            # 一小时后的任务
+            if act_dura >= 60 and determine_decomp(act_desp, act_dura):
+                # 如果一小时后的任务时长大于60分钟（应该一般都不低于一小时）
+                persona.direct_mem.daily_schedule[
+                    curr_index_60 : curr_index_60
+                    + 1  # 替换的只有一小时后的任务（分解成分钟任务）
+                ] = generate_task_decomp(persona, act_desp, act_dura)
 
     if debug:
         print_c("<determine_action> output")
@@ -422,7 +429,7 @@ def determine_action(persona, maze):
     # variables.
     act_world = maze.access_cell(persona.direct_mem.curr_cell)["world"]
     # act_sector = maze.access_cell(persona.direct_mem.curr_cell)["sector"]
-    if act_desp == "外出":
+    if act_desp == "离开小区中":
         new_address = f"{act_world}:小区大门:小区大门:<小区外部>"
 
         act_obj_desp = "<小区外部>"

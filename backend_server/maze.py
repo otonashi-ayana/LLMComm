@@ -198,7 +198,10 @@ class Maze:
                 self.cells[cell[1]][cell[0]]["events"].remove(curr_event)
 
     def remove_subject_event_from_cell(self, subject, cell):
-        curr_cell_ev_cp = self.cells[cell[1]][cell[0]]["events"].copy()
+        try:
+            curr_cell_ev_cp = self.cells[cell[1]][cell[0]]["events"].copy()
+        except:
+            print("<remove_subject_event_from_cell> cell:", cell)
         # print("subject:", subject, "curr_cell_ev_cp:", curr_cell_ev_cp)
         for event in curr_cell_ev_cp:
             # print("event:", event)

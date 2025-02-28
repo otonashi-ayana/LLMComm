@@ -52,18 +52,20 @@ class Persona:
         self.direct_mem.curr_time = curr_time
         if self.direct_mem.curr_cell == outing_cell:
             # 如果当前cell是小区外部
-            print(f"当前cell在outing_cell，{self.direct_mem.act_description}")
+            print(
+                f"<move> 当前cell在outing_cell,act_description:{self.direct_mem.act_description}"
+            )
 
             if (
                 self.direct_mem.act_check_finished()
             ):  # 如果当前动作已经完成(则进行新的规划，不perceive和retrieve)
-                self.direct_mem.curr_cell == backing_cell
-                print("已经返回小区,恢复到backing_cell")
+                self.direct_mem.curr_cell = backing_cell
+                print("<move> 已经返回小区,恢复到backing_cell")
                 plan = self.plan(maze, personas, new_day, retrieved=dict())
                 # self.reflect()
                 return self.execute(maze, personas, plan)
 
-            print("尚未返回小区")
+            print("<move> 尚未返回小区")
 
             execution = (
                 self.direct_mem.curr_cell,

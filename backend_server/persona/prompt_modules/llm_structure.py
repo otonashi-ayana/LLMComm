@@ -15,19 +15,23 @@ def LLM_request(prompt, parameter):
     temp_sleep()
 
     client = OpenAI(api_key=api_key, base_url=base_url)
-    # try:
-    start_time = time.time()
-    response = client.chat.completions.create(
-        model=parameter["model"],
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=parameter["max_tokens"],
-        temperature=parameter["temperature"],
-        top_p=parameter["top_p"],
-        stream=parameter["stream"],
-        # presence_penalty=parameter["presence_penalty"],
-        stop=parameter["stop"],
-        # timeout=60,
-    )
+    for i in range(5):
+        try:
+            start_time = time.time()
+            response = client.chat.completions.create(
+                model=parameter["model"],
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=parameter["max_tokens"],
+                temperature=parameter["temperature"],
+                top_p=parameter["top_p"],
+                stream=parameter["stream"],
+                # presence_penalty=parameter["presence_penalty"],
+                stop=parameter["stop"],
+                # timeout=60,
+            )
+            break
+        except OpenAIError as e:
+            print(f"tried times({i}) LLM_request error:", e)
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"elapsed time: {elapsed_time:.2f}s")

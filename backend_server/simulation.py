@@ -26,7 +26,7 @@ class SimulationServer:
         self.curr_path = f"{storage_path}/{self.sim_code}"
         copyanything(self.fork_path, self.curr_path)
 
-        init_logger()
+        init_logger(f"{storage_path}/{sim_code}/output.log")
 
         with open(f"{self.curr_path}/meta.json", "r+", encoding="utf-8") as json_file:
             reverie_meta = json.load(json_file)
@@ -58,9 +58,10 @@ class SimulationServer:
             curr_persona = Persona(persona_name, persona_path)
             self.personas[persona_name] = curr_persona
             self.personas_cell[persona_name] = (p_x, p_y)
-            self.maze.cells[p_y][p_x]["events"].add(
-                curr_persona.direct_mem.get_curr_event()
-            )  # 从加载的persona中恢复direct_mem的event记忆
+            if (p_x, p_y) != outing_cell:
+                self.maze.cells[p_y][p_x]["events"].add(
+                    curr_persona.direct_mem.get_curr_event()
+                )  # 从加载的persona中恢复direct_mem的event记忆
 
         # temp_storage_path包含模拟当前的sim_code和当前step，用于传递给前端s
         curr_sim_code = dict()
@@ -108,8 +109,10 @@ class SimulationServer:
                     for persona_name, persona in self.personas.items():
                         # step 1：根据new_env更新personas_cell信息
                         curr_cell = self.personas_cell[persona_name]
-                        if (
-                            self.maze.get_cell_path(curr_cell, "object").split(":")[-1]
+                        if self.personas[persona_name].direct_mem.act_address and (
+                            self.personas[persona_name].direct_mem.act_address.split(
+                                ":"
+                            )[-1]
                             == "<小区外部>"
                         ):
                             print(
@@ -125,27 +128,30 @@ class SimulationServer:
                         # step 2：更新direct_mem的curr_cell
                         self.personas[persona_name].direct_mem.curr_cell = new_cell
                         # step 3：去除旧cell与该persona相关的event，添加到新cell
-                        self.maze.remove_subject_event_from_cell(
-                            persona.name, curr_cell
-                        )
-                        self.maze.add_event_to_cell(
-                            persona.direct_mem.get_curr_event(), new_cell
-                        )
-                        # step 4：
-                        if not persona.direct_mem.planned_path:
-                            obj_clean[persona.direct_mem.get_curr_obj_event] = new_cell
-                            # key:event的四元组，value:cell实例
+                        if curr_cell != outing_cell and new_cell != outing_cell:
+                            self.maze.remove_subject_event_from_cell(
+                                persona.name, curr_cell
+                            )
                             self.maze.add_event_to_cell(
-                                persona.direct_mem.get_curr_obj_event(), new_cell
+                                persona.direct_mem.get_curr_event(), new_cell
                             )
+                            # step 4：
+                            if not persona.direct_mem.planned_path:
+                                obj_clean[persona.direct_mem.get_curr_obj_event] = (
+                                    new_cell
+                                )
+                                # key:event的四元组，value:cell实例
+                                self.maze.add_event_to_cell(
+                                    persona.direct_mem.get_curr_obj_event(), new_cell
+                                )
 
-                            blank = (
-                                persona.direct_mem.get_curr_obj_event()[0],
-                                None,
-                                None,
-                                None,
-                            )
-                            self.maze.remove_event_from_cell(blank, new_cell)
+                                blank = (
+                                    persona.direct_mem.get_curr_obj_event()[0],
+                                    None,
+                                    None,
+                                    None,
+                                )
+                                self.maze.remove_event_from_cell(blank, new_cell)
 
                     movements = {"persona": dict(), "curr_time": ""}
                     # 执行move,输出movements
@@ -238,11 +244,14 @@ class SimulationServer:
                     int_steps = int(command.split()[-1])
                     server.start_simulation(int_steps)
                 elif command in ["q", "quit"]:
-                    shutil.rmtree(self.curr_path)
+                    shutil.rmtree(self.curr_path, ignore_errors=True)
                     break
                 elif command in ["f", "finish"]:
                     self.save()
                     break
+                elif command in ["m", "maze"]:
+                    print(self.maze.cells_of_addr.keys())
+                    print(self.maze.cells_of_addr)
             except:
                 traceback.print_exc()
                 print("Error.")

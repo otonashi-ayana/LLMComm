@@ -14,7 +14,7 @@ def detect_encoding(file_path):
 
 
 # 读取各层次属性文件
-maze_path = "environment\\assets\Comm\matrix\\curr_maze"
+maze_path = "environment\\assets\\Comm\\matrix\\curr_maze"
 
 sector_encoding = detect_encoding(f"{maze_path}\\blocks\\sector_blocks.csv")
 sector_df = pd.read_csv(

@@ -25,6 +25,7 @@ class DirectMemory:
         self.living_area = None
         self.life_style = None
         self.daily_plan_desc = None  # =daily_plan_req
+        self.outing_time = None
 
         """个人超参数"""
         self.vision_r = 5  # 视觉范围，单位为块
@@ -48,7 +49,7 @@ class DirectMemory:
         #         ['having lunch', 60],
         #         ['working on her painting', 180], ...]
         self.daily_schedule = []
-        self.daily_schedule_hourly = []
+        self.daily_schedule_hourly = []  # 未细分的daily_schedule（整小时单位）
 
         """当前动作"""
         self.act_event = (
@@ -112,6 +113,7 @@ class DirectMemory:
             self.living_area = direct_mem_json["living_area"]
             self.life_style = direct_mem_json["life_style"]
             self.daily_plan_desc = direct_mem_json["daily_plan_desc"]
+            self.outing_time = direct_mem_json["outing_time"]
 
             self.daily_goals = direct_mem_json["daily_goals"]
             self.daily_schedule = direct_mem_json["daily_schedule"]
@@ -173,6 +175,7 @@ class DirectMemory:
         direct_mem["living_area"] = self.living_area
         direct_mem["life_style"] = self.life_style
         direct_mem["daily_plan_desc"] = self.daily_plan_desc
+        direct_mem["outing_time"] = self.outing_time
 
         direct_mem["daily_goals"] = self.daily_goals
         direct_mem["daily_schedule"] = self.daily_schedule
@@ -285,15 +288,12 @@ class DirectMemory:
         today_min_elapsed += self.curr_time.minute
         today_min_elapsed += advance
 
-        x = 0
-        for task, duration in self.daily_schedule_hourly:
-            x += duration
         curr_index = 0
         elapsed = 0
         for task, duration in self.daily_schedule:
             elapsed += duration
             if elapsed > today_min_elapsed:
-                return curr_index
+                return curr_index  # 返回当前时间下所属任务所在的index
             curr_index += 1
 
         return curr_index

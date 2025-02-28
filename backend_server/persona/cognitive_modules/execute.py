@@ -98,9 +98,12 @@ def execute(persona, maze, personas, plan):
             # string form. <maze.cells_of_addr> takes this and returns candidate
             # coordinates.
             if plan not in maze.cells_of_addr:
-                print("plan not in maze.cells_of_addr", plan)
-                raise Exception("<execute>: Plan not in maze.cells_of_addr")
-                # maze.cells_of_addr["Johnson Park:park:park garden"]
+                print("<execute> - plan not in maze.cells_of_addr", plan)
+                print("<execute> - maze.cells_of_addr:", maze.cells_of_addr.keys())
+                # raise Exception("<execute>: Plan not in maze.cells_of_addr")
+                target_cells = maze.cells_of_addr[
+                    "幸福苑小区:社区公园:社区公园:公园空地"
+                ]
             else:
                 target_cells = maze.cells_of_addr[plan]
                 # print("target_cells:", target_cells)
@@ -166,3 +169,7 @@ def execute(persona, maze, personas, plan):
 
     execution = ret, description  # persona.direct_mem.act_pronunciatio,
     return execution
+
+
+if __name__ == "__main__":
+    pass

@@ -1,0 +1,29 @@
+{
+  "persona": {
+    "李华": {
+      "next_cell": [
+        19,
+        31
+      ],
+      "description": "在 幸福苑小区:李华超市:收银区:收银台，在超市内与顾客交流并管理工作（与进店顾客打招呼）",
+      "chat_history": null
+    },
+    "王敏": {
+      "next_cell": [
+        27,
+        15
+      ],
+      "description": "在 幸福苑小区:7号楼王敏业主家:主厅:主厅桌子，在家中打卡开始工作（打开电脑并登录工作账号）",
+      "chat_history": null
+    },
+    "李四": {
+      "next_cell": [
+        31,
+        31
+      ],
+      "description": "在 幸福苑小区:李四饭店:就餐区:餐桌，在李四饭店工作（检查店内卫生情况）",
+      "chat_history": null
+    }
+  },
+  "curr_time": "January 06, 2025, 09:00:20"
+}

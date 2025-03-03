@@ -26,7 +26,7 @@ def execute(persona, maze, personas, plan):
       maze: An instance of current <Maze>.
       personas: A dictionary of all personas in the world.
       plan: This is a string address of the action we need to execute.
-         It comes in the form of "{world}:{sector}:{arena}:{game_objects}".
+         It comes in the form of "{world}:{sector}:{area}:{game_objects}".
          It is important that you access this without doing negative
          indexing (e.g., [-1]) because the latter address elements may not be
          present in some cases.
@@ -98,19 +98,13 @@ def execute(persona, maze, personas, plan):
             # string form. <maze.cells_of_addr> takes this and returns candidate
             # coordinates.
             if plan not in maze.cells_of_addr:
-                print("<execute> - plan not in maze.cells_of_addr", plan)
-                print("<execute> - maze.cells_of_addr:", maze.cells_of_addr.keys())
-                # raise Exception("<execute>: Plan not in maze.cells_of_addr")
-                target_cells = maze.cells_of_addr[
-                    "幸福苑小区:社区公园:社区公园:公园空地"
-                ]
+                print("<execute> - Wrong: plan not in maze.cells_of_addr", plan)
+                raise ValueError()
+                # target_cells = maze.cells_of_addr[
+                #     "幸福苑小区:社区公园:社区公园:公园空地"
+                # ]
             else:
                 target_cells = maze.cells_of_addr[plan]
-                # print("target_cells:", target_cells)
-
-        # There are sometimes more than one cell returned from this (e.g., a tabe
-        # may stretch many coordinates). So, we sample a few here. And from that
-        # random sample, we will take the closest ones.
         if len(target_cells) < 4:
             target_cells = random.sample(list(target_cells), len(target_cells))
         else:

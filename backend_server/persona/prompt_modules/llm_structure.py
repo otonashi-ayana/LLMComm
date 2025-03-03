@@ -34,9 +34,8 @@ def LLM_request(prompt, parameter):
             print(f"tried times({i}) LLM_request error:", e)
     end_time = time.time()
     elapsed_time = end_time - start_time
-    print(f"elapsed time: {elapsed_time:.2f}s")
     response_dump = response.model_dump()
-    if debug and base_url == "https://api.deepseek.com":
+    if base_url == "https://api.deepseek.com":
         print_c(
             "prompt_tokens(cache hit):",
             response_dump["usage"]["prompt_cache_hit_tokens"],
@@ -46,10 +45,7 @@ def LLM_request(prompt, parameter):
             response_dump["usage"]["prompt_cache_miss_tokens"],
         )
         print_c("completion_tokens:", response_dump["usage"]["completion_tokens"])
-    return response_dump["choices"][0]["message"]["content"]
-    # except Exception as e:
-    #     print("LLM_request error:", e)
-    #     return None
+    return response_dump["choices"][0]["message"]["content"], elapsed_time
 
 
 def get_embedding(text, model=emb_specify_model):
@@ -65,14 +61,18 @@ def get_embedding(text, model=emb_specify_model):
 
 
 def generate_response(
-    prompt, parameter, func_clean=None, func_valid=None, get_fail_safe="error"
+    prompt,
+    parameter,
+    func_clean=None,
+    func_valid=None,
+    get_fail_safe="error",
 ):
-    for i in range(5):
-        curr_gpt_response = LLM_request(prompt, parameter)
+    for i in range(4):
+        curr_gpt_response, elapsed_time = LLM_request(prompt, parameter)
         if func_valid(curr_gpt_response):
-            return func_clean(curr_gpt_response)
+            return func_clean(curr_gpt_response), elapsed_time
         print_c("\n--- Wrong response repeat count:", i, "---")
         print(curr_gpt_response)
         print_c("--------------------------------------------")
         temp_sleep(1)
-    return get_fail_safe
+    return get_fail_safe, 0

@@ -176,18 +176,16 @@ class AssociativeMemory:
             r[node_id]["filling"] = node.filling
 
         with open(out_json + "/nodes.json", "w", encoding="utf-8") as outfile:
-            json.dump(r, outfile, ensure_ascii=False, cls=MyEncoder, indent=2)
+            json.dump(r, outfile, ensure_ascii=False, indent=2)
 
         r = dict()
         r["kw_strength_event"] = self.kw_strength_event
         r["kw_strength_thought"] = self.kw_strength_thought
         with open(out_json + "/kw_strength.json", "w", encoding="utf-8") as outfile:
-            json.dump(r, outfile, ensure_ascii=False, cls=MyEncoder, indent=2)
+            json.dump(r, outfile, ensure_ascii=False, indent=2)
 
         with open(out_json + "/embeddings.json", "w", encoding="utf-8") as outfile:
-            json.dump(
-                self.embeddings, outfile, ensure_ascii=False, cls=MyEncoder, indent=2
-            )
+            json.dump(self.embeddings, outfile, ensure_ascii=False, indent=2)
 
     def add_event(
         self,
@@ -202,6 +200,7 @@ class AssociativeMemory:
         embedding_pair,
         filling,
     ):
+        print_c("<add_event>:s,p,o,description:", s, p, o, "##", description)
         # Setting up the node ID and counts.
         node_count = len(self.id_to_node.keys()) + 1
         type_count = len(self.seq_event) + 1

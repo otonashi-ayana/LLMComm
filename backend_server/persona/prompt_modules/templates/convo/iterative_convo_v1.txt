@@ -16,18 +16,18 @@ Variables:
 #<INPUT 12># -- persona name
 #<INPUT 13># -- persona name
 <BLOCK></BLOCK>
-任务背景：
+任务：根据信息生成两人的对话内容。两人都是中国本地社区居民，他们的用语要符合日常实际交流风格
 
-第一部分：
+任务背景：
+1. 第一部分：
 #<INPUT 0>#
 
-以下是#<INPUT 1>#脑海中的记忆：
+以下是#<INPUT 1>#脑海中过去的记忆：
 #<INPUT 2>#
 
-第二部分：
+2. 第二部分：
 过去背景：
 #<INPUT 3>#
-
 当前位置：#<INPUT 4>#
 
 当前背景：
@@ -39,8 +39,8 @@ Variables:
 ---
 任务：根据以上信息，#<INPUT 9>#应该对#<INPUT 10>#说些什么？这段对话是否就此结束？
 
-输出格式：输出以下格式的json：
+务必输出以下格式的json (其中，end字段的值表示对话是否以 #<INPUT 11># 的话语结束)：
 {
-"#<INPUT 11>#": "<#<INPUT 12>#的话语>",
-"对话是否以 #<INPUT 13># 的话语结束？": "<json Boolean>"
+"utterance": "<#<INPUT 12>#的话语>",
+"end": "<json Boolean>"
 }

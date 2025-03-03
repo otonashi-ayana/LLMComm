@@ -9,6 +9,12 @@ sys.path.append("../../")
 
 from persona.prompt_modules.run_prompt import *
 from persona.cognitive_modules.converse import *
+from converse import (
+    register_convo,
+    update_convo_status_from_map,
+    get_convo_status_from_map,
+    remove_convo_from_map,
+)
 
 
 def generate_wake_up_time(persona):
@@ -155,6 +161,60 @@ def simple_generate_hourly_schedule(persona, wake_up_time):
     return hourly_compressed_min
 
 
+def revise_identity(persona):
+    p_name = persona.scratch.name
+
+    focal_points = [
+        f"{p_name}在{persona.scratch.get_str_curr_date_str()}当天的计划。",
+        f"关于{p_name}生活的重要近期事件。",
+    ]
+    retrieved = new_retrieve(persona, focal_points)
+
+    # 构建陈述记录
+    statements = "[陈述记录]\n"
+    for key, val in retrieved.items():
+        for i in val:
+            statements += (
+                f"{i.created.strftime('%A %B %d -- %H:%M %p')}: {i.embedding_key}\n"
+            )
+
+    # 生成计划笔记
+    plan_prompt = statements + "\n"
+    plan_prompt += f"根据上述陈述，{p_name}在制定*{persona.scratch.curr_time.strftime('%A %B %d')}*计划时，有哪些需要特别注意的事项？"
+    plan_prompt += f"如果包含日程安排信息，请尽可能具体（若陈述中提及，需包含日期、时间和地点）\n\n"
+    plan_prompt += f"请以{p_name}的第一视角进行回答。"
+    plan_note = ChatGPT_single_request(plan_prompt)
+
+    # 生成情感总结
+    thought_prompt = statements + "\n"
+    thought_prompt += f"基于上述陈述，如何总结{p_name}迄今为止的日常情绪感受？\n\n"
+    thought_prompt += f"请以{p_name}的第一视角进行回答。"
+    thought_note = ChatGPT_single_request(thought_prompt)
+
+    # 生成当前状态
+    currently_prompt = f"{p_name}在{(persona.scratch.curr_time - datetime.timedelta(days=1)).strftime('%A %B %d')}的状态：\n"
+    currently_prompt += f"{persona.scratch.currently}\n\n"
+    currently_prompt += f"{p_name}在{(persona.scratch.curr_time - datetime.timedelta(days=1)).strftime('%A %B %d')}结束时的思考：\n"
+    currently_prompt += (plan_note + thought_note).replace("\n", "") + "\n\n"
+    currently_prompt += f"当前时间为{persona.scratch.curr_time.strftime('%A %B %d')}。根据以上信息，请用第三人称撰写{p_name}当天的状态描述，需反映其前一天的思考内容。"
+    currently_prompt += f"若包含日程安排，请提供完整细节（日期、时间、地点）。\n\n"
+    currently_prompt += "请严格遵循格式：\n状态：<新状态>"
+    new_currently = ChatGPT_single_request(currently_prompt)
+
+    persona.scratch.currently = new_currently
+
+    # 生成每日计划
+    daily_req_prompt = persona.scratch.get_str_iss() + "\n"
+    daily_req_prompt += f"今天是{persona.scratch.curr_time.strftime('%A %B %d')}。请列出{p_name}当日的概略计划（需包含时间段，例如：中午12:00用餐，19:00-20:00观看电视）。\n\n"
+    daily_req_prompt += f"格式要求（列表项4~6条）：\n"
+    daily_req_prompt += f"1. 在<时间>起床并完成早晨例行活动，2. ..."
+
+    new_daily_req = ChatGPT_single_request(daily_req_prompt)
+    new_daily_req = new_daily_req.replace("\n", " ")
+    print("生成结果：", new_daily_req)
+    persona.scratch.daily_plan_req = new_daily_req
+
+
 def _new_day_planning(persona, new_day):
     wake_up_time = generate_wake_up_time(persona)
     if new_day == "first":
@@ -164,6 +224,8 @@ def _new_day_planning(persona, new_day):
     elif new_day == "new":
         # TODO
         pass
+        # revise_identity(persona)
+
     persona.direct_mem.daily_schedule = simple_generate_hourly_schedule(
         persona, wake_up_time
     )
@@ -342,7 +404,7 @@ def generate_new_decomp_schedule(
 
 
 def generate_convo(maze, init_persona, target_persona):
-    curr_loc = maze.access_cell(init_persona.direct_mem.curr_cell)
+    # curr_loc = maze.access_cell(init_persona.direct_mem.curr_cell)
 
     # convo = run_gpt_prompt_create_conversation(init_persona, target_persona, curr_loc)[0]
     # convo = agent_chat_v1(maze, init_persona, target_persona)
@@ -367,7 +429,7 @@ def determine_action(persona, maze):
     def determine_decomp(act_desp, act_dura):
         if "睡觉" in act_desp:
             return False
-        # if act_desp == "离开小区中":
+        # if act_desp == "离开小区":
         #     return False
 
         # elif "sleep" in act_desp or "bed" in act_desp:
@@ -407,11 +469,12 @@ def determine_action(persona, maze):
                     + 1  # 替换的只有一小时后的任务（分解成分钟任务）
                 ] = generate_task_decomp(persona, act_desp, act_dura)
 
-    if debug:
-        print_c("<determine_action> output")
-        for i in persona.direct_mem.daily_schedule:
-            print(i)
-        print_c("<determine_action> end")
+    # print_c("<determine_action> output")
+    # determine_action_output = ""
+    # for i in persona.direct_mem.daily_schedule:
+    #     determine_action_output += str(i) + "\n"
+    # print_c(determine_action_output)
+    # print_c("<determine_action> end")
 
     # 1440
     total_time = 0
@@ -429,7 +492,7 @@ def determine_action(persona, maze):
     # variables.
     act_world = maze.access_cell(persona.direct_mem.curr_cell)["world"]
     # act_sector = maze.access_cell(persona.direct_mem.curr_cell)["sector"]
-    if act_desp == "离开小区中":
+    if act_desp == "离开小区":
         new_address = f"{act_world}:小区大门:小区大门:<小区外部>"
 
         act_obj_desp = "<小区外部>"
@@ -569,10 +632,12 @@ def _should_react(persona, retrieved, personas):
     curr_event = retrieved["curr_event"]
 
     if ":" not in curr_event.subject:  # 只处理persona事件
-        if lets_talk(persona, personas[curr_event.subject], retrieved):  # 决定是否talk
+        target_persona = personas[curr_event.subject]
+        if lets_talk(persona, target_persona, retrieved):  # 决定是否talk
             react_mode = ("chat", curr_event.subject)
             return react_mode  # ("chat", persona name)
-        react_mode = lets_react(persona, personas[curr_event.subject], retrieved)
+        react_mode = lets_react(persona, target_persona, retrieved)
+        # 如果不决定talk，才判断是否等待对方的行为（主要是避免使用对象冲突）
         return react_mode  # ("wait", wait_until)
     return False
 
@@ -774,15 +839,15 @@ def _wait_react(persona, wait_time):
 def plan(persona, maze, personas, new_day, retrieved):
     # plan小时计划（min单位）
     if new_day:  # 如果是同一天内，new_day=False
-        print_c("_new_day_planning start", COLOR="blue")
+        # print_c("_new_day_planning start", COLOR="blue")
         _new_day_planning(persona, new_day)
-        print_c("_new_day_planning done", COLOR="blue")
+        # print_c("_new_day_planning done", COLOR="blue")
 
     # 如果当前时间下的action已到期，新建一个action
     if persona.direct_mem.act_check_finished():
-        print_c("determine_action start", COLOR="blue")
+        # print_c("determine_action start", COLOR="blue")
         determine_action(persona, maze)
-        print_c("determine_action done", COLOR="blue")
+        # print_c("determine_action done", COLOR="blue")
 
     # 决定要关注哪个事件（有且有多个events被检索到）
     # print_c("_choose_retrieved start", COLOR="blue")

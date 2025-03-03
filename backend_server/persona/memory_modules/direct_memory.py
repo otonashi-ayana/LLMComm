@@ -57,7 +57,7 @@ class DirectMemory:
             None,
             None,
         )  # 三元组表示正在执行的动作，格式为 (主体, 动作, 目标)
-        self.act_address = None  # "{world}:{sector}:{arena}:{game_objects}"
+        self.act_address = None  # "{world}:{sector}:{area}:{game_objects}"
         self.act_start_time = None  # 动作开始时间
         self.act_duration = None  # 动作预计持续时间 int
         self.act_description = None  # 动作描述
@@ -215,7 +215,7 @@ class DirectMemory:
         direct_mem["importance_ele_n"] = self.importance_ele_n
 
         with open(out_json, "w", encoding="utf-8") as outfile:
-            json.dump(direct_mem, outfile, indent=2, ensure_ascii=False, cls=MyEncoder)
+            json.dump(direct_mem, outfile, indent=2, ensure_ascii=False)
 
     def act_check_finished(self):
         if not self.act_address:

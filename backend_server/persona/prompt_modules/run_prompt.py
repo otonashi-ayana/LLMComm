@@ -8,12 +8,32 @@ import string
 import re
 import sys
 import json
+import inspect
 
 sys.path.append("../../")
 from persona.prompt_modules.llm_structure import *
 from global_methods import *
 
 from utils import *
+
+
+import inspect
+
+
+def print_prompt_output(persona_name, prompt, output, elapsed_time, simple_log=False):
+    func_name = inspect.stack()[1].function
+    if not simple_log:
+        output_str = (
+            f"╔═════{persona_name}:<{func_name}>═════╗\n"
+            + "  prompt: \n"
+            + str(prompt)
+            + "\n═══════════════════════════════════════════\n"
+            + "  output: \n"
+            + str(output)
+            + f"\n  elapsed_time: {elapsed_time:.2f}s"
+            + "\n╚═════════════════════════════════════════╝"
+        )
+        print_c(output_str)
 
 
 def get_random_alphanumeric(i=6, j=6):
@@ -82,24 +102,14 @@ def run_prompt_wake_up_time(persona):
     prompt_file_path = f"{prompt_path}/plan/wake_up_time_v1.txt"
     prompt_input = create_prompt_input(persona)
     prompt = generate_prompt(prompt_input, prompt_file_path)
-    if not simple_log and debug:
-
-        print_c("╔═════<run_prompt_wake_up_time> prompt═════╗")
-        print(prompt)
-        print_c(
-            "╚══════════════════════════════════════════╝",
-        )
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if not simple_log and debug:
-        print_c("╔═════<run_prompt_wake_up_time> output═════╗")
-        print(output)
-        print_c("╚══════════════════════════════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time, True)
     return output
 
 
@@ -170,12 +180,7 @@ def run_prompt_daily_goals(persona, wake_up_time):
     prompt_file_path = f"{prompt_path}/plan/daily_planning_v1.txt"
     prompt_input = create_prompt_input(persona, wake_up_time)
     prompt = generate_prompt(prompt_input, prompt_file_path)
-    if not simple_log and debug:
-
-        print_c("╔═════<run_prompt_daily_goals> prompt═════╗")
-        print(prompt)
-        print_c("╚═════════════════════════════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
@@ -183,10 +188,7 @@ def run_prompt_daily_goals(persona, wake_up_time):
         get_fail_safe=get_fail_safe(),
     )
     output = [f"{wake_up_time}点起床"] + output
-    if not simple_log and debug:
-        print_c("╔═════<run_prompt_daily_goals> output═════╗")
-        print(output)
-        print_c("╚═════════════════════════════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time, True)
     return output
 
 
@@ -262,22 +264,14 @@ def run_prompt_generate_hourly_schedule(
         persona, curr_hour_str, hourly_activity, hour_str
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_generate_hourly_schedule> prompt══╗")
-        print(prompt)
-        print_c("╚════════════════════════════════════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_generate_hourly_schedule> output══╗")
-        print(output)
-        print_c("╚════════════════════════════════════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -291,7 +285,7 @@ def run_prompt_simple_generate_hourly_schedule(
                 schedule_format += f"[{hour_str[idx]} - {hour_str[idx+1]}]"
                 if outing_time and idx in outing_time:
                     schedule_format += (
-                        f" 活动: {persona.direct_mem.name} 正在 离开小区中\n"
+                        f" 活动: {persona.direct_mem.name} 计划 离开小区\n"
                     )
                 else:
                     schedule_format += f" 活动: 待填入\n"
@@ -337,22 +331,14 @@ def run_prompt_simple_generate_hourly_schedule(
     prompt_template = f"{prompt_path}/plan/hourly_schedule_Sv1.txt"
     prompt_input = create_prompt_input(persona, hour_str, wake_up_time, outing_time)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_simple_generate_hourly_schedule> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_simple_generate_hourly_schedule> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -401,8 +387,7 @@ def run_prompt_task_decomp(persona, task, duration):
         prompt_input += [persona.direct_mem.name]
         prompt_input += [curr_time_range]
 
-        prompt_input += [task]  # TODO: task为什么有时候会错位？
-        # prompt_input += [curr_task]
+        prompt_input += [task]
 
         prompt_input += [duration]
         prompt_input += [persona.direct_mem.name]
@@ -479,12 +464,7 @@ def run_prompt_task_decomp(persona, task, duration):
     prompt_template = f"{prompt_path}/plan/task_decomp_v2.txt"
     prompt_input = create_prompt_input(persona, task, duration)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔═════<run_prompt_task_decomp> prompt═════╗")
-        print(prompt)
-        print_c("╚═════════════════════════════════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
@@ -496,10 +476,7 @@ def run_prompt_task_decomp(persona, task, duration):
     for decomp_task, duration in task_decomp:
         ret += [[f"{task}（{decomp_task}）", duration]]
     output = ret
-    if debug:
-        print_c("╔═════<run_prompt_task_decomp> output═════╗")
-        print(output)
-        print_c("╚═════════════════════════════════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -519,7 +496,6 @@ def run_prompt_action_sector(act_desp, persona, maze):
             f"{maze.access_cell(persona.direct_mem.curr_cell)['sector']}"
         ]  # 5
         x = f"{act_world}:{maze.access_cell(persona.direct_mem.curr_cell)['sector']}"
-        print("<run_prompt_action_sector>", x)
         if maze.access_cell(persona.direct_mem.curr_cell)["sector"] != "小区大门":
             prompt_input += [persona.spatial_mem.get_str_accessible_sector_areas(x)]
         else:
@@ -574,22 +550,14 @@ def run_prompt_action_sector(act_desp, persona, maze):
     prompt_template = f"{prompt_path}/plan/action_location_sector_v1.txt"
     prompt_input = create_prompt_input(act_desp, persona, maze)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_action_sector> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_action_sector> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -606,8 +574,8 @@ def run_prompt_action_area(
         x = f"{act_world}:{act_sector}"
         prompt_input += [act_sector]
 
-        accessible_arena_str = persona.spatial_mem.get_str_accessible_sector_areas(x)
-        prompt_input += [accessible_arena_str]
+        accessible_area_str = persona.spatial_mem.get_str_accessible_sector_areas(x)
+        prompt_input += [accessible_area_str]
 
         action_desc_1 = action_desc
         action_desc_2 = action_desc
@@ -621,7 +589,7 @@ def run_prompt_action_area(
         prompt_input += [persona.direct_mem.get_name()]
 
         prompt_input += [act_sector]
-        prompt_input += [accessible_arena_str]
+        prompt_input += [accessible_area_str]
         return prompt_input
 
     def response_clean(response):
@@ -629,7 +597,11 @@ def run_prompt_action_area(
 
     def response_validate(response):
         try:
-            response_clean(response)
+            cleaned_up = response_clean(response)
+            if cleaned_up not in persona.spatial_mem.get_str_accessible_sector_areas(
+                f"{act_world}:{act_sector}"
+            ):
+                return False
         except:
             return False
         return True
@@ -651,22 +623,14 @@ def run_prompt_action_area(
         action_desc, persona, maze, act_world, act_sector
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_action_area> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_action_area> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -683,17 +647,21 @@ def run_prompt_action_object(action_desc, persona, maze, temp_address):
         return prompt_input
 
     def response_clean(response):
-        cleaned_response = response.strip()
-        return cleaned_response
+        return response
 
     def response_validate(response):
-        if len(response.strip()) < 1:
+        try:
+            cleaned_up = response_clean(response)
+            if cleaned_up not in persona.spatial_mem.get_str_accessible_area_objects(
+                temp_address
+            ):
+                return False
+        except:
             return False
         return True
 
     def get_fail_safe():
-        fs = "床"
-        return fs
+        return None
 
     model_param = {
         "model": specify_model,
@@ -706,22 +674,13 @@ def run_prompt_action_object(action_desc, persona, maze, temp_address):
     prompt_template = f"{prompt_path}/plan/action_object_v1.txt"
     prompt_input = create_prompt_input(action_desc, persona, temp_address)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_action_object> prompt══╗")
-        print(prompt)
-        print_c("╚═════════════════════════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_action_object> output══╗")
-        print(output)
-        print_c("╚═════════════════════════════════════╝")
     x = [
         i.strip()
         for i in persona.spatial_mem.get_str_accessible_area_objects(
@@ -730,6 +689,7 @@ def run_prompt_action_object(action_desc, persona, maze, temp_address):
     ]
     if output not in x:
         output = random.choice(x)
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -769,22 +729,14 @@ def run_prompt_event_triple(action_desc, persona):
     prompt_template = f"{prompt_path}/plan/generate_event_triple_v1.txt"
     prompt_input = create_prompt_input(action_desc, persona)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if not simple_log and debug:
-
-        print_c("╔══<run_prompt_event_triple> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_event_triple> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time, True)
     return output
 
 
@@ -837,22 +789,14 @@ def run_prompt_act_obj_desc(
         persona,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if not simple_log and debug:
-
-        print_c("╔══<run_prompt_act_obj_desc> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_act_obj_desc> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time, True)
     return output
 
 
@@ -900,35 +844,27 @@ def run_prompt_act_obj_event_triple(
         persona,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_act_obj_event_triple> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_act_obj_event_triple> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
-    # output = (output)
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
 def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
     def create_prompt_input(init_persona, target_persona, retrieved):
+        prompt_input = []
+
         last_chat = init_persona.associate_mem.get_last_chat(target_persona.name)
-        last_chatted_time = ""
-        last_chat_about = ""
+        about_last_chat = ""
         if last_chat:
             last_chatted_time = last_chat.created.strftime("%B %d, %Y, %H:%M:%S")
             last_chat_about = last_chat.description
-        prompt_input = []
+            about_last_chat = f"{init_persona.name} 和 {target_persona.name} 最后一次在 {last_chatted_time} 讨论了 {last_chat_about}。"
 
         context = ""
         for c_node in retrieved["events"]:
@@ -954,7 +890,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         elif "等待" in init_act_desc:
             init_p_desc = f"{init_persona.name} 正在 {init_act_desc}"  # is
         else:
-            init_p_desc = f"{init_persona.name} 正在去 {init_act_desc} 的路上"
+            init_p_desc = f"{init_persona.name} 正在 {init_act_desc}"
 
         target_act_desc = target_persona.direct_mem.act_description
         if "（" in target_act_desc:
@@ -967,16 +903,13 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         elif "等待" in init_act_desc:
             target_p_desc = f"{init_persona.name} 正在 {init_act_desc}"
         else:
-            target_p_desc = f"{target_persona.name} 正在去 {target_act_desc} 的路上"
+            target_p_desc = f"{target_persona.name} 正在 {target_act_desc}"
 
         prompt_input = []
         prompt_input += [context]
         prompt_input += [curr_time]
 
-        prompt_input += [init_persona.name]
-        prompt_input += [target_persona.name]
-        prompt_input += [last_chatted_time]
-        prompt_input += [last_chat_about]
+        prompt_input += [about_last_chat]
 
         prompt_input += [init_p_desc]
         prompt_input += [target_p_desc]
@@ -985,6 +918,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         return prompt_input
 
     def response_clean(response):
+        print("<run_prompt_decide_to_talk> response:", response)
         return response.split("回答是或否：")[-1][0]
 
     def response_validate(response):
@@ -1002,7 +936,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
     model_param = {
         "model": specify_model,
         "max_tokens": 100,
-        "temperature": 0.3,
+        "temperature": 0,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -1010,22 +944,14 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
     prompt_template = f"{prompt_path}/plan/decide_to_talk_v1.txt"
     prompt_input = create_prompt_input(init_persona, target_persona, retrieved)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_decide_to_talk> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_decide_to_talk> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(init_persona.name, prompt, output, elapsed_time)
     return True if output == "是" else False
 
 
@@ -1128,22 +1054,14 @@ def run_prompt_decide_to_react(init_persona, target_persona, retrieved):
     prompt_template = f"{prompt_path}/plan/decide_to_react_v1.txt"
     prompt_input = create_prompt_input(init_persona, target_persona, retrieved)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_decide_to_react> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_decide_to_react> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(init_persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -1191,21 +1109,14 @@ def run_prompt_event_poignancy(
         event_description,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if not simple_log and debug:
-        print_c("╔══<run_prompt_event_poignancy> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if not simple_log and debug:
-        print_c("╔══<run_prompt_event_poignancy> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time, True)
     return output
 
 
@@ -1253,22 +1164,14 @@ def run_prompt_chat_poignancy(
         event_description,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_chat_poignancy> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_chat_poignancy> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time, True)
     return output
 
 
@@ -1423,22 +1326,14 @@ def run_prompt_new_decomp_schedule(
         inserted_act_dur,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_new_decomp_schedule> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(main_act_dur, truncated_act_dur),
     )
-    if debug:
-        print_c("╔══<run_prompt_new_decomp_schedule> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -1467,7 +1362,7 @@ def run_prompt_agent_chat_summarize_relationship(
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 25,
+        "max_tokens": 50,
         "temperature": 0.5,
         "top_p": 1,
         "stream": False,
@@ -1476,22 +1371,14 @@ def run_prompt_agent_chat_summarize_relationship(
     prompt_template = f"{prompt_path}/convo/summarize_chat_relationship_v1.txt"
     prompt_input = create_prompt_input(persona, target_persona, statements)
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_prompt_agent_chat_summarize_relationship> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_agent_chat_summarize_relationship> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -1537,8 +1424,8 @@ def run_generate_iterative_chat_utt(
                 prev_convo_insert = ""
 
         curr_sector = f"{maze.access_cell(persona.direct_mem.curr_cell)['sector']}"
-        curr_arena = f"{maze.access_cell(persona.direct_mem.curr_cell)['arena']}"
-        curr_location = f"{curr_sector} 中的 {curr_arena}"
+        curr_area = f"{maze.access_cell(persona.direct_mem.curr_cell)['area']}"
+        curr_location = f"{curr_sector} 中的 {curr_area}"
 
         retrieved_str = ""
         for key, vals in retrieved.items():
@@ -1551,7 +1438,7 @@ def run_generate_iterative_chat_utt(
         if convo_str == "":
             convo_str = "[对话尚未开始 -- 请你开始他吧！]"
 
-        init_iss = f"以下是对 {init_persona.direct_mem.name} 的简要描述\n{init_persona.direct_mem.get_str_iss()}"
+        init_iss = f"以下是对 {init_persona.direct_mem.name} 的简要描述\n{init_persona.direct_mem.get_str_mds()}"
         prompt_input = [
             init_iss,
             init_persona.direct_mem.name,
@@ -1564,7 +1451,6 @@ def run_generate_iterative_chat_utt(
             convo_str,
             init_persona.direct_mem.name,
             target_persona.direct_mem.name,
-            init_persona.direct_mem.name,
             init_persona.direct_mem.name,
             init_persona.direct_mem.name,
         ]
@@ -1610,22 +1496,14 @@ def run_generate_iterative_chat_utt(
         maze, init_persona, target_persona, retrieved, curr_context, curr_chat
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
-
-        print_c("╔══<run_generate_iterative_chat_utt> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_generate_iterative_chat_utt> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(init_persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -1672,22 +1550,15 @@ def run_prompt_summarize_conversation(
         conversation,
     )
     prompt = generate_prompt(prompt_input, prompt_template)
-    if debug:
 
-        print_c("╔══<run_prompt_summarize_conversation> prompt══╗")
-        print(prompt)
-        print_c("╚══════════════════╝")
-    output = generate_response(
+    output, elapsed_time = generate_response(
         prompt,
         model_param,
         func_clean=response_clean,
         func_valid=response_validate,
         get_fail_safe=get_fail_safe(),
     )
-    if debug:
-        print_c("╔══<run_prompt_summarize_conversation> output══╗")
-        print(output)
-        print_c("╚══════════════════╝")
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 

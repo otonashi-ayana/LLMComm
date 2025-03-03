@@ -74,13 +74,14 @@ def perceive(persona, maze):
 
     ret_events = []
     for p_event in perceived_events:
-        # print("<perceive> p_event:", p_event)
         s, p, o, desc = p_event
+        print_c("<perceive> p_event:", s, p, o, desc)
         if not p:  # event没有事件发生
             p = "正在"
             o = "空闲"
             desc = "空闲"
         desc = f"{s.split(':')[-1]} 正在 {desc}"
+        print_c("<perceive> edited desc:", desc)
         # cell_info的event主语都是object?
         p_event = (s, p, o)
 

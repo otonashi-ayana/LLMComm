@@ -13,8 +13,8 @@
   "curr_thing": "", 
   "living_area": "幸福苑小区:7号楼李华业主家",
   "life_style": "李华每天早晨6:00醒来，晚上23:00睡觉。",
-  "daily_plan_desc": "李华每天早晨7:00一个人开始超市营业，在超市到21:00关门。中午12:00会到小区内的饭馆吃饭。",
-  "outing_time":[12,13],
+  "daily_plan_desc": "李华每天早晨8:00一个人开始超市营业，在超市到21:00关门。中午12:00会到小区内的 李四饭店 吃饭。",
+  "outing_time":null,
 
   "daily_goals": [], 
   "daily_schedule": [],

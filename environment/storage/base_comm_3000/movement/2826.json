@@ -1,0 +1,29 @@
+{
+  "persona": {
+    "李华": {
+      "next_cell": [
+        7,
+        16
+      ],
+      "description": "在 幸福苑小区:7号楼李华业主家:厨房:冰箱，继续个人准备活动（享用早餐同时思考一天的工作计划）",
+      "chat_history": null
+    },
+    "王敏": {
+      "next_cell": [
+        29,
+        7
+      ],
+      "description": "在 幸福苑小区:7号楼王敏业主家:卧室:床，睡觉",
+      "chat_history": null
+    },
+    "李四": {
+      "next_cell": [
+        46,
+        10
+      ],
+      "description": "在 幸福苑小区:6号楼李四业主家:厨房:厨房水槽，起床并完成洗漱（喝一杯温开水）",
+      "chat_history": null
+    }
+  },
+  "curr_time": "January 06, 2025, 07:51:00"
+}

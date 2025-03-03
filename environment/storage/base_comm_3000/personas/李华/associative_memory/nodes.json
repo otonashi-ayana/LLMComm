@@ -1,0 +1,2813 @@
+{
+  "node_148": {
+    "node_count": 148,
+    "type_count": 147,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:16:30",
+    "expiration": null,
+    "subject": "幸福苑小区:李华超市:货架区:超市货架",
+    "predicate": "正在",
+    "object": "被检查清洁情况",
+    "description": "超市货架 正在 被检查清洁情况",
+    "embedding_key": "超市货架 正在 被检查清洁情况",
+    "poignancy": 2,
+    "keywords": [
+      "超市货架",
+      "被检查清洁情况"
+    ],
+    "filling": []
+  },
+  "node_147": {
+    "node_count": 147,
+    "type_count": 146,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:15:30",
+    "expiration": null,
+    "subject": "幸福苑小区:李华超市:货架区:超市货架",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "超市货架 正在 空闲",
+    "embedding_key": "超市货架 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "超市货架",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_146": {
+    "node_count": 146,
+    "type_count": 145,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:15:20",
+    "expiration": null,
+    "subject": "幸福苑小区:李华超市:结账区:结账区",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "结账区 正在 空闲",
+    "embedding_key": "结账区 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "结账区"
+    ],
+    "filling": []
+  },
+  "node_145": {
+    "node_count": 145,
+    "type_count": 144,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:15:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "检查店内清洁情况",
+    "description": "李华 正在 开始李华超市的营业工作（检查店内清洁情况） 检查店内清洁情况",
+    "embedding_key": "检查店内清洁情况",
+    "poignancy": 2,
+    "keywords": [
+      "检查店内清洁情况",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_144": {
+    "node_count": 144,
+    "type_count": 143,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:10:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "开启超市大门并检查门锁安全",
+    "description": "李华 正在 开始李华超市的营业工作（开启超市大门并检查门锁安全） 开启超市大门并检查门锁安全",
+    "embedding_key": "开启超市大门并检查门锁安全",
+    "poignancy": 2,
+    "keywords": [
+      "开启超市大门并检查门锁安全",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_143": {
+    "node_count": 143,
+    "type_count": 142,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:04:20",
+    "expiration": null,
+    "subject": "幸福苑小区:李华超市:收银区:收银台",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "收银台 正在 空闲",
+    "embedding_key": "收银台 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "收银台",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_142": {
+    "node_count": 142,
+    "type_count": 141,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:04:20",
+    "expiration": null,
+    "subject": "幸福苑小区:李华超市:收银区:收银台",
+    "predicate": "正在",
+    "object": "被准备用于接待顾客",
+    "description": "收银台 正在 被准备用于接待顾客",
+    "embedding_key": "收银台 正在 被准备用于接待顾客",
+    "poignancy": 1,
+    "keywords": [
+      "被准备用于接待顾客",
+      "收银台"
+    ],
+    "filling": []
+  },
+  "node_141": {
+    "node_count": 141,
+    "type_count": 140,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:01:50",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "从住处步行至超市",
+    "description": "李华 正在 开始李华超市的营业工作（从住处步行至超市） 从住处步行至超市",
+    "embedding_key": "从住处步行至超市",
+    "poignancy": 1,
+    "keywords": [
+      "从住处步行至超市",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_140": {
+    "node_count": 140,
+    "type_count": 139,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:01:40",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼王敏业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_139": {
+    "node_count": 139,
+    "type_count": 138,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:01:40",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼王敏业主家:主厅:冰箱",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "冰箱 正在 空闲",
+    "embedding_key": "冰箱 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_138": {
+    "node_count": 138,
+    "type_count": 137,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_137": {
+    "node_count": 137,
+    "type_count": 136,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "被用来享用早餐",
+    "description": "主厅桌子 正在 被用来享用早餐",
+    "embedding_key": "主厅桌子 正在 被用来享用早餐",
+    "poignancy": 1,
+    "keywords": [
+      "主厅桌子",
+      "被用来享用早餐"
+    ],
+    "filling": []
+  },
+  "node_136": {
+    "node_count": 136,
+    "type_count": 135,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来取食物和饮料",
+    "description": "冰箱 正在 被用来取食物和饮料",
+    "embedding_key": "冰箱 正在 被用来取食物和饮料",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来取食物和饮料"
+    ],
+    "filling": []
+  },
+  "node_135": {
+    "node_count": 135,
+    "type_count": 134,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_134": {
+    "node_count": 134,
+    "type_count": 133,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_133": {
+    "node_count": 133,
+    "type_count": 132,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来准备早餐",
+    "description": "烹饪区域 正在 被用来准备早餐",
+    "embedding_key": "烹饪区域 正在 被用来准备早餐",
+    "poignancy": 1,
+    "keywords": [
+      "被用来准备早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_132": {
+    "node_count": 132,
+    "type_count": 131,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来存放食物",
+    "description": "冰箱 正在 被用来存放食物",
+    "embedding_key": "冰箱 正在 被用来存放食物",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来存放食物"
+    ],
+    "filling": []
+  },
+  "node_131": {
+    "node_count": 131,
+    "type_count": 130,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 08:00:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "从住处步行至超市",
+    "description": "李华 正在 开始李华超市的营业工作（从住处步行至超市） 从住处步行至超市",
+    "embedding_key": "从住处步行至超市",
+    "poignancy": 2,
+    "keywords": [
+      "从住处步行至超市",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_130": {
+    "node_count": 130,
+    "type_count": 129,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_129": {
+    "node_count": 129,
+    "type_count": 128,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来做早餐",
+    "description": "烹饪区域 正在 被用来做早餐",
+    "embedding_key": "烹饪区域 正在 被用来做早餐",
+    "poignancy": 2,
+    "keywords": [
+      "被用来做早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_128": {
+    "node_count": 128,
+    "type_count": 127,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:50",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "享用早餐并思考工作计划",
+    "description": "李华 正在 继续个人准备活动（享用早餐同时思考一天的工作计划） 享用早餐同时思考一天的工作计划",
+    "embedding_key": "享用早餐同时思考一天的工作计划",
+    "poignancy": 3,
+    "keywords": [
+      "享用早餐并思考工作计划",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_127": {
+    "node_count": 127,
+    "type_count": 126,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来取食物和饮料",
+    "description": "冰箱 正在 被用来取食物和饮料",
+    "embedding_key": "冰箱 正在 被用来取食物和饮料",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来取食物和饮料"
+    ],
+    "filling": []
+  },
+  "node_126": {
+    "node_count": 126,
+    "type_count": 125,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:40",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_125": {
+    "node_count": 125,
+    "type_count": 124,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:40",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_124": {
+    "node_count": 124,
+    "type_count": 123,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来准备早餐",
+    "description": "烹饪区域 正在 被用来准备早餐",
+    "embedding_key": "烹饪区域 正在 被用来准备早餐",
+    "poignancy": 1,
+    "keywords": [
+      "被用来准备早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_123": {
+    "node_count": 123,
+    "type_count": 122,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来存放食物",
+    "description": "冰箱 正在 被用来存放食物",
+    "embedding_key": "冰箱 正在 被用来存放食物",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来存放食物"
+    ],
+    "filling": []
+  },
+  "node_122": {
+    "node_count": 122,
+    "type_count": 121,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "厨房水槽 正在 空闲",
+    "embedding_key": "厨房水槽 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_121": {
+    "node_count": 121,
+    "type_count": 120,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_120": {
+    "node_count": 120,
+    "type_count": 119,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来做早餐",
+    "description": "烹饪区域 正在 被用来做早餐",
+    "embedding_key": "烹饪区域 正在 被用来做早餐",
+    "poignancy": 2,
+    "keywords": [
+      "被用来做早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_119": {
+    "node_count": 119,
+    "type_count": 118,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:50:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "享用早餐并思考工作计划",
+    "description": "李华 正在 继续个人准备活动（享用早餐同时思考一天的工作计划） 享用早餐同时思考一天的工作计划",
+    "embedding_key": "享用早餐同时思考一天的工作计划",
+    "poignancy": 2,
+    "keywords": [
+      "享用早餐并思考工作计划",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_118": {
+    "node_count": 118,
+    "type_count": 117,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:42:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来取食物和饮料",
+    "description": "冰箱 正在 被用来取食物和饮料",
+    "embedding_key": "冰箱 正在 被用来取食物和饮料",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来取食物和饮料"
+    ],
+    "filling": []
+  },
+  "node_117": {
+    "node_count": 117,
+    "type_count": 116,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:42:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_116": {
+    "node_count": 116,
+    "type_count": 115,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:42:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_115": {
+    "node_count": 115,
+    "type_count": 114,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:42:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来准备早餐",
+    "description": "烹饪区域 正在 被用来准备早餐",
+    "embedding_key": "烹饪区域 正在 被用来准备早餐",
+    "poignancy": 2,
+    "keywords": [
+      "被用来准备早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_114": {
+    "node_count": 114,
+    "type_count": 113,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:40",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "泡茶和热牛奶",
+    "description": "李华 正在 继续个人准备活动（准备一份简单的早餐（如泡茶、热牛奶）） 如泡茶、热牛奶）",
+    "embedding_key": "准备一份简单的早餐",
+    "poignancy": 2,
+    "keywords": [
+      "泡茶和热牛奶",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_113": {
+    "node_count": 113,
+    "type_count": 112,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "烹饪区域 正在 空闲",
+    "embedding_key": "烹饪区域 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_112": {
+    "node_count": 112,
+    "type_count": 111,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_111": {
+    "node_count": 111,
+    "type_count": 110,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来做早餐",
+    "description": "烹饪区域 正在 被用来做早餐",
+    "embedding_key": "烹饪区域 正在 被用来做早餐",
+    "poignancy": 2,
+    "keywords": [
+      "被用来做早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_110": {
+    "node_count": 110,
+    "type_count": 109,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "厨房水槽 正在 空闲",
+    "embedding_key": "厨房水槽 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_109": {
+    "node_count": 109,
+    "type_count": 108,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来取食物和饮料",
+    "description": "冰箱 正在 被用来取食物和饮料",
+    "embedding_key": "冰箱 正在 被用来取食物和饮料",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来取食物和饮料"
+    ],
+    "filling": []
+  },
+  "node_108": {
+    "node_count": 108,
+    "type_count": 107,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_107": {
+    "node_count": 107,
+    "type_count": 106,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:41:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_106": {
+    "node_count": 106,
+    "type_count": 105,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:40:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "被用来享用早餐",
+    "description": "主厅桌子 正在 被用来享用早餐",
+    "embedding_key": "主厅桌子 正在 被用来享用早餐",
+    "poignancy": 1,
+    "keywords": [
+      "主厅桌子",
+      "被用来享用早餐"
+    ],
+    "filling": []
+  },
+  "node_105": {
+    "node_count": 105,
+    "type_count": 104,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:40:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_104": {
+    "node_count": 104,
+    "type_count": 103,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:40:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_103": {
+    "node_count": 103,
+    "type_count": 102,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:40:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "泡茶和热牛奶",
+    "description": "李华 正在 继续个人准备活动（准备一份简单的早餐（如泡茶、热牛奶）） 如泡茶、热牛奶）",
+    "embedding_key": "准备一份简单的早餐",
+    "poignancy": 2,
+    "keywords": [
+      "泡茶和热牛奶",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_102": {
+    "node_count": 102,
+    "type_count": 101,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:30:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_101": {
+    "node_count": 101,
+    "type_count": 100,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:30:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被整理",
+    "description": "床 正在 被整理",
+    "embedding_key": "床 正在 被整理",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被整理"
+    ],
+    "filling": []
+  },
+  "node_100": {
+    "node_count": 100,
+    "type_count": 99,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:30:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "被用来放置手机并进行充电或检查电量",
+    "description": "书桌 正在 被用来放置手机并进行充电或检查电量",
+    "embedding_key": "书桌 正在 被用来放置手机并进行充电或检查电量",
+    "poignancy": 1,
+    "keywords": [
+      "被用来放置手机并进行充电或检查电量",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_99": {
+    "node_count": 99,
+    "type_count": 98,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:30:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "浏览社交媒体或新闻了解最新信息",
+    "description": "李华 正在 继续个人准备活动（浏览社交媒体或新闻了解最新信息） 浏览社交媒体或新闻了解最新信息",
+    "embedding_key": "浏览社交媒体或新闻了解最新信息",
+    "poignancy": 2,
+    "keywords": [
+      "浏览社交媒体或新闻了解最新信息",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_98": {
+    "node_count": 98,
+    "type_count": 97,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:30:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "被用来整理个人物品",
+    "description": "书桌 正在 被用来整理个人物品",
+    "embedding_key": "书桌 正在 被用来整理个人物品",
+    "poignancy": 1,
+    "keywords": [
+      "被用来整理个人物品",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_97": {
+    "node_count": 97,
+    "type_count": 96,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:30:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "被用来浏览社交媒体或新闻",
+    "description": "书桌 正在 被用来浏览社交媒体或新闻",
+    "embedding_key": "书桌 正在 被用来浏览社交媒体或新闻",
+    "poignancy": 1,
+    "keywords": [
+      "被用来浏览社交媒体或新闻",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_96": {
+    "node_count": 96,
+    "type_count": 95,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "被用来挑选衣服",
+    "description": "衣柜 正在 被用来挑选衣服",
+    "embedding_key": "衣柜 正在 被用来挑选衣服",
+    "poignancy": 1,
+    "keywords": [
+      "被用来挑选衣服",
+      "衣柜"
+    ],
+    "filling": []
+  },
+  "node_95": {
+    "node_count": 95,
+    "type_count": 94,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_94": {
+    "node_count": 94,
+    "type_count": 93,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "衣柜 正在 空闲",
+    "embedding_key": "衣柜 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "衣柜",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_93": {
+    "node_count": 93,
+    "type_count": 92,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_92": {
+    "node_count": 92,
+    "type_count": 91,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被整理",
+    "description": "床 正在 被整理",
+    "embedding_key": "床 正在 被整理",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被整理"
+    ],
+    "filling": []
+  },
+  "node_91": {
+    "node_count": 91,
+    "type_count": 90,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "给手机充电或检查手机电量",
+    "description": "李华 正在 继续个人准备活动（给手机充电或检查手机电量以确保通讯顺畅） 给手机充电或检查手机电量以确保通讯顺畅",
+    "embedding_key": "给手机充电或检查手机电量以确保通讯顺畅",
+    "poignancy": 1,
+    "keywords": [
+      "给手机充电或检查手机电量",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_90": {
+    "node_count": 90,
+    "type_count": 89,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:25:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "被用来放置手机并进行充电或检查电量",
+    "description": "书桌 正在 被用来放置手机并进行充电或检查电量",
+    "embedding_key": "书桌 正在 被用来放置手机并进行充电或检查电量",
+    "poignancy": 1,
+    "keywords": [
+      "被用来放置手机并进行充电或检查电量",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_89": {
+    "node_count": 89,
+    "type_count": 88,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:20:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "被用来整理个人物品",
+    "description": "书桌 正在 被用来整理个人物品",
+    "embedding_key": "书桌 正在 被用来整理个人物品",
+    "poignancy": 1,
+    "keywords": [
+      "被用来整理个人物品",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_88": {
+    "node_count": 88,
+    "type_count": 87,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:20:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "确认随身物品无遗漏",
+    "description": "李华 正在 继续个人准备活动（确认超市钥匙、钱包等随身物品无遗漏） 确认超市钥匙、钱包等随身物品无遗漏",
+    "embedding_key": "确认超市钥匙、钱包等随身物品无遗漏",
+    "poignancy": 1,
+    "keywords": [
+      "确认随身物品无遗漏",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_87": {
+    "node_count": 87,
+    "type_count": 86,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "被用来挑选衣服",
+    "description": "衣柜 正在 被用来挑选衣服",
+    "embedding_key": "衣柜 正在 被用来挑选衣服",
+    "poignancy": 1,
+    "keywords": [
+      "被用来挑选衣服",
+      "衣柜"
+    ],
+    "filling": []
+  },
+  "node_86": {
+    "node_count": 86,
+    "type_count": 85,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_85": {
+    "node_count": 85,
+    "type_count": 84,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "书桌 正在 空闲",
+    "embedding_key": "书桌 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_84": {
+    "node_count": 84,
+    "type_count": 83,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_83": {
+    "node_count": 83,
+    "type_count": 82,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被整理",
+    "description": "床 正在 被整理",
+    "embedding_key": "床 正在 被整理",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被整理"
+    ],
+    "filling": []
+  },
+  "node_82": {
+    "node_count": 82,
+    "type_count": 81,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "衣柜 正在 空闲",
+    "embedding_key": "衣柜 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "衣柜",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_81": {
+    "node_count": 81,
+    "type_count": 80,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:15:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "检查天气并选择外出服装",
+    "description": "李华 正在 继续个人准备活动（检查今日天气并选择合适的外出服装） 检查今日天气并选择合适的外出服装",
+    "embedding_key": "检查今日天气并选择合适的外出服装",
+    "poignancy": 1,
+    "keywords": [
+      "检查天气并选择外出服装",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_80": {
+    "node_count": 80,
+    "type_count": 79,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:06:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来清理个人卫生",
+    "description": "洗漱池 正在 被用来清理个人卫生",
+    "embedding_key": "洗漱池 正在 被用来清理个人卫生",
+    "poignancy": 1,
+    "keywords": [
+      "洗漱池",
+      "被用来清理个人卫生"
+    ],
+    "filling": []
+  },
+  "node_79": {
+    "node_count": 79,
+    "type_count": 78,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:马桶",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "马桶 正在 空闲",
+    "embedding_key": "马桶 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "马桶",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_78": {
+    "node_count": 78,
+    "type_count": 77,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:淋浴间",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "淋浴间 正在 空闲",
+    "embedding_key": "淋浴间 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "淋浴间",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_77": {
+    "node_count": 77,
+    "type_count": 76,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来洗脸",
+    "description": "洗漱池 正在 被用来洗脸",
+    "embedding_key": "洗漱池 正在 被用来洗脸",
+    "poignancy": 1,
+    "keywords": [
+      "洗漱池",
+      "被用来洗脸"
+    ],
+    "filling": []
+  },
+  "node_76": {
+    "node_count": 76,
+    "type_count": 75,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来进行个人清洁准备",
+    "description": "洗漱池 正在 被用来进行个人清洁准备",
+    "embedding_key": "洗漱池 正在 被用来进行个人清洁准备",
+    "poignancy": 1,
+    "keywords": [
+      "洗漱池",
+      "被用来进行个人清洁准备"
+    ],
+    "filling": []
+  },
+  "node_75": {
+    "node_count": 75,
+    "type_count": 74,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来刷牙洗脸",
+    "description": "洗漱池 正在 被用来刷牙洗脸",
+    "embedding_key": "洗漱池 正在 被用来刷牙洗脸",
+    "poignancy": 1,
+    "keywords": [
+      "被用来刷牙洗脸",
+      "洗漱池"
+    ],
+    "filling": []
+  },
+  "node_74": {
+    "node_count": 74,
+    "type_count": 73,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:05:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "清理个人卫生",
+    "description": "李华 正在 继续个人准备活动（清理个人卫生，包括洗脸刷牙等） 清理个人卫生，包括洗脸刷牙等",
+    "embedding_key": "清理个人卫生，包括洗脸刷牙等",
+    "poignancy": 1,
+    "keywords": [
+      "清理个人卫生",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_73": {
+    "node_count": 73,
+    "type_count": 72,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:01:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "衣柜 正在 空闲",
+    "embedding_key": "衣柜 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "衣柜",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_72": {
+    "node_count": 72,
+    "type_count": 71,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:01:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_71": {
+    "node_count": 71,
+    "type_count": 70,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:01:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_70": {
+    "node_count": 70,
+    "type_count": 69,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:01:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被整理",
+    "description": "床 正在 被整理",
+    "embedding_key": "床 正在 被整理",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被整理"
+    ],
+    "filling": []
+  },
+  "node_69": {
+    "node_count": 69,
+    "type_count": 68,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:01:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "书桌 正在 空闲",
+    "embedding_key": "书桌 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_68": {
+    "node_count": 68,
+    "type_count": 67,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:00:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_67": {
+    "node_count": 67,
+    "type_count": 66,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:00:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "被用来享用早餐",
+    "description": "主厅桌子 正在 被用来享用早餐",
+    "embedding_key": "主厅桌子 正在 被用来享用早餐",
+    "poignancy": 1,
+    "keywords": [
+      "主厅桌子",
+      "被用来享用早餐"
+    ],
+    "filling": []
+  },
+  "node_66": {
+    "node_count": 66,
+    "type_count": 65,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 07:00:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "整理床铺",
+    "description": "李华 正在 继续个人准备活动（整理床铺） 整理床铺",
+    "embedding_key": "整理床铺",
+    "poignancy": 1,
+    "keywords": [
+      "整理床铺",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_65": {
+    "node_count": 65,
+    "type_count": 64,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_64": {
+    "node_count": 64,
+    "type_count": 63,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "被用来取食物和饮料",
+    "description": "冰箱 正在 被用来取食物和饮料",
+    "embedding_key": "冰箱 正在 被用来取食物和饮料",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "被用来取食物和饮料"
+    ],
+    "filling": []
+  },
+  "node_63": {
+    "node_count": 63,
+    "type_count": 62,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "烹饪区域 正在 空闲",
+    "embedding_key": "烹饪区域 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_62": {
+    "node_count": 62,
+    "type_count": 61,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_61": {
+    "node_count": 61,
+    "type_count": 60,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来做早餐",
+    "description": "烹饪区域 正在 被用来做早餐",
+    "embedding_key": "烹饪区域 正在 被用来做早餐",
+    "poignancy": 2,
+    "keywords": [
+      "被用来做早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_60": {
+    "node_count": 60,
+    "type_count": 59,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "厨房水槽 正在 空闲",
+    "embedding_key": "厨房水槽 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_59": {
+    "node_count": 59,
+    "type_count": 58,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:56:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_58": {
+    "node_count": 58,
+    "type_count": 57,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:55:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "吃早餐并喝茶",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（吃早餐并喝茶） 吃早餐并喝茶",
+    "embedding_key": "吃早餐并喝茶",
+    "poignancy": 2,
+    "keywords": [
+      "吃早餐并喝茶",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_57": {
+    "node_count": 57,
+    "type_count": 56,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:52:00",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "将早餐端至餐桌享用",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（将早餐端至餐桌享用） 将早餐端至餐桌享用",
+    "embedding_key": "将早餐端至餐桌享用",
+    "poignancy": 2,
+    "keywords": [
+      "将早餐端至餐桌享用",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_56": {
+    "node_count": 56,
+    "type_count": 55,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:51:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "被用来享用早餐",
+    "description": "主厅桌子 正在 被用来享用早餐",
+    "embedding_key": "主厅桌子 正在 被用来享用早餐",
+    "poignancy": 2,
+    "keywords": [
+      "主厅桌子",
+      "被用来享用早餐"
+    ],
+    "filling": []
+  },
+  "node_55": {
+    "node_count": 55,
+    "type_count": 54,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_54": {
+    "node_count": 54,
+    "type_count": 53,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_53": {
+    "node_count": 53,
+    "type_count": 52,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "烹饪区域 正在 空闲",
+    "embedding_key": "烹饪区域 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_52": {
+    "node_count": 52,
+    "type_count": 51,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_51": {
+    "node_count": 51,
+    "type_count": 50,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "冰箱 正在 空闲",
+    "embedding_key": "冰箱 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_50": {
+    "node_count": 50,
+    "type_count": 49,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "厨房水槽 正在 空闲",
+    "embedding_key": "厨房水槽 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_49": {
+    "node_count": 49,
+    "type_count": 48,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_48": {
+    "node_count": 48,
+    "type_count": 47,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:50:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "将早餐端至餐桌享用",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（将早餐端至餐桌享用） 将早餐端至餐桌享用",
+    "embedding_key": "将早餐端至餐桌享用",
+    "poignancy": 2,
+    "keywords": [
+      "将早餐端至餐桌享用",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_47": {
+    "node_count": 47,
+    "type_count": 46,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:40:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来做早餐",
+    "description": "烹饪区域 正在 被用来做早餐",
+    "embedding_key": "烹饪区域 正在 被用来做早餐",
+    "poignancy": 1,
+    "keywords": [
+      "被用来做早餐",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_46": {
+    "node_count": 46,
+    "type_count": 45,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:40:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "吃鸡蛋和粥",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（开始做早餐（鸡蛋和粥）） 鸡蛋和粥）",
+    "embedding_key": "开始做早餐",
+    "poignancy": 2,
+    "keywords": [
+      "吃鸡蛋和粥",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_45": {
+    "node_count": 45,
+    "type_count": 44,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:37:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来取水",
+    "description": "厨房水槽 正在 被用来取水",
+    "embedding_key": "厨房水槽 正在 被用来取水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来取水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_44": {
+    "node_count": 44,
+    "type_count": 43,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:37:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "烹饪区域 正在 空闲",
+    "embedding_key": "烹饪区域 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_43": {
+    "node_count": 43,
+    "type_count": 42,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:37:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_42": {
+    "node_count": 42,
+    "type_count": 41,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:37:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "冰箱 正在 空闲",
+    "embedding_key": "冰箱 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_41": {
+    "node_count": 41,
+    "type_count": 40,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:37:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "厨房水槽 正在 空闲",
+    "embedding_key": "厨房水槽 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_40": {
+    "node_count": 40,
+    "type_count": 39,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:37:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_39": {
+    "node_count": 39,
+    "type_count": 38,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:35:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "回到厨房泡茶",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（回到厨房泡茶） 回到厨房泡茶",
+    "embedding_key": "回到厨房泡茶",
+    "poignancy": 2,
+    "keywords": [
+      "回到厨房泡茶",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_38": {
+    "node_count": 38,
+    "type_count": 37,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:32:30",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被整理",
+    "description": "床 正在 被整理",
+    "embedding_key": "床 正在 被整理",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被整理"
+    ],
+    "filling": []
+  },
+  "node_37": {
+    "node_count": 37,
+    "type_count": 36,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:31:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "衣柜 正在 空闲",
+    "embedding_key": "衣柜 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "衣柜",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_36": {
+    "node_count": 36,
+    "type_count": 35,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:31:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_35": {
+    "node_count": 35,
+    "type_count": 34,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:31:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_34": {
+    "node_count": 34,
+    "type_count": 33,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:31:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "书桌 正在 空闲",
+    "embedding_key": "书桌 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_33": {
+    "node_count": 33,
+    "type_count": 32,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:30:50",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_32": {
+    "node_count": 32,
+    "type_count": 31,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:30:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "整理床铺",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（整理床铺） 整理床铺",
+    "embedding_key": "整理床铺",
+    "poignancy": 1,
+    "keywords": [
+      "整理床铺",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_31": {
+    "node_count": 31,
+    "type_count": 30,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:25:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "被用来烧水准备泡茶",
+    "description": "烹饪区域 正在 被用来烧水准备泡茶",
+    "embedding_key": "烹饪区域 正在 被用来烧水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "被用来烧水准备泡茶",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_30": {
+    "node_count": 30,
+    "type_count": 29,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:25:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "烧开水准备泡茶",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（烧开水准备泡茶） 烧开水准备泡茶",
+    "embedding_key": "烧开水准备泡茶",
+    "poignancy": 1,
+    "keywords": [
+      "烧开水准备泡茶",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_29": {
+    "node_count": 29,
+    "type_count": 28,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:23:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "用水杯接水喝",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（用水杯接水喝） 用水杯接水喝",
+    "embedding_key": "用水杯接水喝",
+    "poignancy": 1,
+    "keywords": [
+      "用水杯接水喝",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_28": {
+    "node_count": 28,
+    "type_count": 27,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:23:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "被用来接水",
+    "description": "厨房水槽 正在 被用来接水",
+    "embedding_key": "厨房水槽 正在 被用来接水",
+    "poignancy": 1,
+    "keywords": [
+      "被用来接水",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_27": {
+    "node_count": 27,
+    "type_count": 26,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:23:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:烹饪区域",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "烹饪区域 正在 空闲",
+    "embedding_key": "烹饪区域 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "烹饪区域"
+    ],
+    "filling": []
+  },
+  "node_26": {
+    "node_count": 26,
+    "type_count": 25,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:23:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:冰箱",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "冰箱 正在 空闲",
+    "embedding_key": "冰箱 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "冰箱",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_25": {
+    "node_count": 25,
+    "type_count": 24,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:23:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:厨房:厨房水槽",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "厨房水槽 正在 空闲",
+    "embedding_key": "厨房水槽 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "厨房水槽"
+    ],
+    "filling": []
+  },
+  "node_24": {
+    "node_count": 24,
+    "type_count": 23,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:22:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:主厅:主厅桌子",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "主厅桌子 正在 空闲",
+    "embedding_key": "主厅桌子 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "主厅桌子"
+    ],
+    "filling": []
+  },
+  "node_23": {
+    "node_count": 23,
+    "type_count": 22,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:20:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_22": {
+    "node_count": 22,
+    "type_count": 21,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:20:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "书桌 正在 空闲",
+    "embedding_key": "书桌 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_21": {
+    "node_count": 21,
+    "type_count": 20,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:20:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_20": {
+    "node_count": 20,
+    "type_count": 19,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:20:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "衣柜 正在 空闲",
+    "embedding_key": "衣柜 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "衣柜",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_19": {
+    "node_count": 19,
+    "type_count": 18,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:20:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "用水杯接水喝",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（用水杯接水喝） 用水杯接水喝",
+    "embedding_key": "用水杯接水喝",
+    "poignancy": 1,
+    "keywords": [
+      "用水杯接水喝",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_18": {
+    "node_count": 18,
+    "type_count": 17,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:15:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "刷牙",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（刷牙） 刷牙",
+    "embedding_key": "刷牙",
+    "poignancy": 1,
+    "keywords": [
+      "刷牙",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_17": {
+    "node_count": 17,
+    "type_count": 16,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:15:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来刷牙洗脸",
+    "description": "洗漱池 正在 被用来刷牙洗脸",
+    "embedding_key": "洗漱池 正在 被用来刷牙洗脸",
+    "poignancy": 1,
+    "keywords": [
+      "被用来刷牙洗脸",
+      "洗漱池"
+    ],
+    "filling": []
+  },
+  "node_16": {
+    "node_count": 16,
+    "type_count": 15,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:10:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来洗脸",
+    "description": "洗漱池 正在 被用来洗脸",
+    "embedding_key": "洗漱池 正在 被用来洗脸",
+    "poignancy": 1,
+    "keywords": [
+      "洗漱池",
+      "被用来洗脸"
+    ],
+    "filling": []
+  },
+  "node_15": {
+    "node_count": 15,
+    "type_count": 14,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:10:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "洗脸",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（洗脸） 洗脸",
+    "embedding_key": "洗脸",
+    "poignancy": 1,
+    "keywords": [
+      "洗脸",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_14": {
+    "node_count": 14,
+    "type_count": 13,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:06:20",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "被用来进行个人清洁准备",
+    "description": "洗漱池 正在 被用来进行个人清洁准备",
+    "embedding_key": "洗漱池 正在 被用来进行个人清洁准备",
+    "poignancy": 1,
+    "keywords": [
+      "洗漱池",
+      "被用来进行个人清洁准备"
+    ],
+    "filling": []
+  },
+  "node_13": {
+    "node_count": 13,
+    "type_count": 12,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:马桶",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "马桶 正在 空闲",
+    "embedding_key": "马桶 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "马桶",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_12": {
+    "node_count": 12,
+    "type_count": 11,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:淋浴间",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "淋浴间 正在 空闲",
+    "embedding_key": "淋浴间 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "淋浴间",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_11": {
+    "node_count": 11,
+    "type_count": 10,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:06:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卫生间:洗漱池",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "洗漱池 正在 空闲",
+    "embedding_key": "洗漱池 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "洗漱池",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_10": {
+    "node_count": 10,
+    "type_count": 9,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:05:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "前往卫生间准备洗漱",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（前往卫生间准备洗漱） 前往卫生间准备洗漱",
+    "embedding_key": "前往卫生间准备洗漱",
+    "poignancy": 1,
+    "keywords": [
+      "前往卫生间准备洗漱",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_9": {
+    "node_count": 9,
+    "type_count": 8,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:00:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被离开",
+    "description": "床 正在 被离开",
+    "embedding_key": "床 正在 被离开",
+    "poignancy": 1,
+    "keywords": [
+      "被离开",
+      "床"
+    ],
+    "filling": []
+  },
+  "node_8": {
+    "node_count": 8,
+    "type_count": 7,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 06:00:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "从床上起来",
+    "description": "李华 正在 起床并进行个人准备如洗漱和吃早饭（从床上起来） 从床上起来",
+    "embedding_key": "从床上起来",
+    "poignancy": 1,
+    "keywords": [
+      "从床上起来",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_7": {
+    "node_count": 7,
+    "type_count": 6,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 00:00:10",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "睡觉",
+    "description": "李华 正在 睡觉",
+    "embedding_key": "李华 正在 睡觉",
+    "poignancy": 1,
+    "keywords": [
+      "睡觉",
+      "李华"
+    ],
+    "filling": []
+  },
+  "node_6": {
+    "node_count": 6,
+    "type_count": 5,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 00:00:10",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "被使用",
+    "description": "床 正在 被使用",
+    "embedding_key": "床 正在 被使用",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "被使用"
+    ],
+    "filling": []
+  },
+  "node_5": {
+    "node_count": 5,
+    "type_count": 1,
+    "type": "thought",
+    "depth": 1,
+    "created": "2025-01-06 00:00:00",
+    "expiration": "2025-02-05 00:00:00",
+    "subject": "李华",
+    "predicate": "计划",
+    "object": "Monday January 06",
+    "description": "这是 李华 在 Monday January 06的计划: 6点起床， 6点起床，7点到8点进行个人准备如洗漱和早饭， 8点开始在李华超市营业直至21点关门， 中午12点至13点前往李四饭店用餐， 21点结束超市工作后回家， 23点上床休息。",
+    "embedding_key": "这是 李华 在 Monday January 06的计划: 6点起床， 6点起床，7点到8点进行个人准备如洗漱和早饭， 8点开始在李华超市营业直至21点关门， 中午12点至13点前往李四饭店用餐， 21点结束超市工作后回家， 23点上床休息。",
+    "poignancy": 5,
+    "keywords": [
+      "计划"
+    ],
+    "filling": null
+  },
+  "node_4": {
+    "node_count": 4,
+    "type_count": 4,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 00:00:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:衣柜",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "衣柜 正在 空闲",
+    "embedding_key": "衣柜 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "衣柜",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_3": {
+    "node_count": 3,
+    "type_count": 3,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 00:00:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:书桌",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "书桌 正在 空闲",
+    "embedding_key": "书桌 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "书桌"
+    ],
+    "filling": []
+  },
+  "node_2": {
+    "node_count": 2,
+    "type_count": 2,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 00:00:00",
+    "expiration": null,
+    "subject": "幸福苑小区:7号楼李华业主家:卧室:床",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "床 正在 空闲",
+    "embedding_key": "床 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "床",
+      "空闲"
+    ],
+    "filling": []
+  },
+  "node_1": {
+    "node_count": 1,
+    "type_count": 1,
+    "type": "event",
+    "depth": 0,
+    "created": "2025-01-06 00:00:00",
+    "expiration": null,
+    "subject": "李华",
+    "predicate": "正在",
+    "object": "空闲",
+    "description": "李华 正在 空闲",
+    "embedding_key": "李华 正在 空闲",
+    "poignancy": 1,
+    "keywords": [
+      "空闲",
+      "李华"
+    ],
+    "filling": []
+  }
+}

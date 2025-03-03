@@ -12,6 +12,7 @@ from utils import *
 import os
 from logger import init_logger
 from concurrent.futures import ThreadPoolExecutor
+import shutil  # 添加导入shutil模块
 
 os.system("cls")
 
@@ -24,6 +25,11 @@ class SimulationServer:
 
         self.fork_path = f"{storage_path}/{self.fork_sim_code}"
         self.curr_path = f"{storage_path}/{self.sim_code}"
+
+        # 如果目标目录存在，清除该目录的文件
+        if os.path.exists(self.curr_path):
+            shutil.rmtree(self.curr_path)
+
         copyanything(self.fork_path, self.curr_path)
 
         init_logger(f"{storage_path}/{sim_code}/output.log")

@@ -207,23 +207,23 @@ def new_retrieve(persona, focal_points, n_count=10):
         nodes = [
             [i.last_accessed, i]  # i=ConceptNode
             for i in persona.associate_mem.seq_event + persona.associate_mem.seq_thought
-            if "idle" not in i.embedding_key
+            if "空闲" not in i.embedding_key
         ]
         nodes = sorted(
             nodes, key=lambda x: x[0], reverse=True
         )  # 按照上次retrieve时间排序，sorted默认升序，数字升序，时间升序从旧到新。这里应该是从新到旧，似乎有问题？？？？应该加reverse=True
-        print(
-            "new_retrieve nodes sorted() DEBUG -- created:",
-            [created for created, node in nodes],
-        )
+        # print(
+        #     "new_retrieve nodes sorted() DEBUG -- created:",
+        #     [created for created, node in nodes],
+        # )
         nodes = [i for created, i in nodes]
 
         # Calculating the component dictionaries and normalizing them.
         recency_out = extract_recency(persona, nodes)
-        print(
-            "new_retrieve nodes sorted() DEBUG -- recency_out:",
-            recency_out,
-        )
+        # print(
+        #     "new_retrieve nodes sorted() DEBUG -- recency_out:",
+        #     recency_out,
+        # )
         recency_out = normalize_dict_floats(recency_out, 0, 1)
         importance_out = extract_importance(persona, nodes)
         importance_out = normalize_dict_floats(importance_out, 0, 1)
@@ -236,7 +236,7 @@ def new_retrieve(persona, focal_points, n_count=10):
         # perhaps through an RL-like process.
         # gw = [1, 1, 1]
         # gw = [1, 2, 1]
-        gw = [1, 1, 1]
+        gw = [1, 2, 2]
         master_out = dict()
         for key in recency_out.keys():
             master_out[key] = (
@@ -246,13 +246,13 @@ def new_retrieve(persona, focal_points, n_count=10):
             )
 
         master_out = top_highest_x_values(master_out, len(master_out.keys()))
-        for key, val in master_out.items():
-            print(persona.associate_mem.id_to_node[key].embedding_key, val)
-            print(
-                persona.direct_mem.recency_w * recency_out[key] * 1,
-                persona.direct_mem.relevance_w * relevance_out[key] * 1,
-                persona.direct_mem.importance_w * importance_out[key] * 1,
-            )
+        # for key, val in master_out.items():
+        #     print(persona.associate_mem.id_to_node[key].embedding_key, val)
+        #     print(
+        #         persona.direct_mem.recency_w * recency_out[key] * 1,
+        #         persona.direct_mem.relevance_w * relevance_out[key] * 1,
+        #         persona.direct_mem.importance_w * importance_out[key] * 1,
+        #     )
 
         # Extracting the highest x values.
         # <master_out> has the key of node.id and value of float. Once we get the

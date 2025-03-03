@@ -8,19 +8,68 @@ from persona.memory_modules.associate_memory import *
 from persona.memory_modules.direct_memory import *
 from persona.cognitive_modules.retrieve import *
 from persona.prompt_modules.run_prompt import *
+import threading
+
+convo_lock = threading.Lock()
+
+# convo_map: 记录多个对话提案
+# key: frozenset({A_name, B_name})
+# value: {
+#   'status': 'WAITING' | 'IN_PROGRESS' | 'DONE' | 'CANCELLED',
+#   'participants': set([A_name, B_name]),
+#   'convo_info': {...}  # 存储具体对话数据, 例如对话内容、时间、摘要等
+# }
+convo_map = {}
+
+
+def register_convo(persona_name, target_name):
+    """在对话管理器中注册一个新的对话提案"""
+    pair = frozenset({persona_name, target_name})
+    with convo_lock:
+        if pair not in convo_map:
+            convo_map[pair] = {
+                "status": "IN_PROGRESS",
+                "participants": set([persona_name, target_name]),
+                "convo_info": {},
+            }
+        return convo_map[pair]
+
+
+def update_convo_status_from_map(pair, new_status):
+    """修改对话状态 (WAITING → IN_PROGRESS / DONE / CANCELLED)"""
+    with convo_lock:
+        if pair in convo_map:
+            convo_map[pair]["status"] = new_status
+            convo_map[pair]["cond"].notify_all()  # 唤醒所有等待线程
+
+
+def get_convo_status_from_map(pair):
+    """获取对话状态"""
+    with convo_lock:
+        return convo_map.get(pair, {}).get("status", None)
+
+
+def remove_convo_from_map(pair):
+    """对话完成后，从管理器中移除"""
+    with convo_lock:
+        if pair in convo_map:
+            del convo_map[pair]
 
 
 def generate_summarize_agent_relationship(init_persona, target_persona, retrieved):
-    all_embedding_keys = list()
+    description = list()
     for key, val in retrieved.items():
         for i in val:
-            all_embedding_keys += [i.embedding_key]
-    all_embedding_key_str = ""
-    for i in all_embedding_keys:
-        all_embedding_key_str += f"{i}\n"
+            if i.predicate == "正在":
+                description += [i.description.replace("正在 ", "")]
+            else:
+                description += [i.description]
+    description_str = ""
+    for i in description:
+        description_str += f"{i}\n"
 
     summarized_relationship = run_prompt_agent_chat_summarize_relationship(
-        init_persona, target_persona, all_embedding_key_str
+        init_persona, target_persona, description_str
     )
     return summarized_relationship
 
@@ -50,7 +99,7 @@ def generate_one_utterance(maze, init_persona, target_persona, retrieved, curr_c
 def agent_chat_v2(maze, init_persona, target_persona):
     curr_chat = []
 
-    for i in range(1):
+    for i in range(4):
         focal_points = [f"{target_persona.direct_mem.name}"]
         retrieved = new_retrieve(init_persona, focal_points, 20)
         relationship = generate_summarize_agent_relationship(

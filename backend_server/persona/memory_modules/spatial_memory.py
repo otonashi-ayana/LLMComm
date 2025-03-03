@@ -28,7 +28,7 @@ class MemoryTree:
 
     def save(self, out_json):
         with open(out_json, "w", encoding="utf-8") as outfile:
-            json.dump(self.tree, outfile, indent=2, ensure_ascii=False, cls=MyEncoder)
+            json.dump(self.tree, outfile, indent=2, ensure_ascii=False)
 
     def get_str_accessible_sectors(self, curr_world):
         x = ", ".join(list(self.tree[curr_world].keys()))
@@ -42,9 +42,9 @@ class MemoryTree:
         return x
 
     def get_str_accessible_area_objects(self, area):
-        curr_world, curr_sector, curr_arena = area.split(":")
+        curr_world, curr_sector, curr_area = area.split(":")
 
-        if not curr_arena:
+        if not curr_area:
             return ""
-        x = ", ".join(list(self.tree[curr_world][curr_sector][curr_arena]))
+        x = ", ".join(list(self.tree[curr_world][curr_sector][curr_area]))
         return x

@@ -7,6 +7,8 @@ from persona.cognitive_modules.plan import *
 from persona.cognitive_modules.perceive import *
 from persona.cognitive_modules.retrieve import *
 from persona.cognitive_modules.execute import *
+from persona.cognitive_modules.reflect import *
+from persona.cognitive_modules.converse import *
 from maze import *
 
 
@@ -37,6 +39,9 @@ class Persona:
     def plan(self, maze, personas, new_day, retrieved):
         return plan(self, maze, personas, new_day, retrieved)
 
+    def reflect(self):
+        reflect(self)
+
     def execute(self, maze, personas, plan):
         return execute(self, maze, personas, plan)
 
@@ -62,7 +67,7 @@ class Persona:
                 self.direct_mem.curr_cell = backing_cell
                 print("<move> 已经返回小区,恢复到backing_cell")
                 plan = self.plan(maze, personas, new_day, retrieved=dict())
-                # self.reflect()
+                self.reflect()
                 return self.execute(maze, personas, plan)
 
             print("<move> 尚未返回小区")
@@ -71,10 +76,13 @@ class Persona:
                 self.direct_mem.curr_cell,
                 f"在 <小区外部>，{self.direct_mem.act_description}",
             )
-            # self.reflect()
+            self.reflect()
             return execution
         perceived = self.perceive(maze)
         retrieved = self.retrieve(perceived)
         plan = self.plan(maze, personas, new_day, retrieved)
-        # self.reflect()
+        self.reflect()
         return self.execute(maze, personas, plan)
+
+    def open_convo_session(self, convo_mode):
+        open_convo_session(self, convo_mode)

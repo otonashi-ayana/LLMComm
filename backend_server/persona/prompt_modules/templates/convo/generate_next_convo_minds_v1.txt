@@ -1,0 +1,26 @@
+generate_next_convo_minds_v1.txt
+
+Variables: 
+#<INPUT 0># -- agent name
+#<INPUT 1># -- agent iss
+#<INPUT 2># -- agent name
+#<INPUT 3># -- interlocutor name and description
+#<INPUT 4># -- prev convo
+#<INPUT 5># -- retrieve summary
+#<INPUT 6># -- agent name
+
+<BLOCK></BLOCK>
+以下是关于#<INPUT 0>#的一些基本信息。
+#<INPUT 1>#
+
+=== 
+以下是#<INPUT 2>#和#<INPUT 3>#之间的对话,其中[内心想法]包含了#<INPUT 2>#出于各方面原因未说出的关于问题的内心想法:
+[
+#<INPUT 4>#
+]
+注意，以下是#<INPUT 5>#唯一了解的相关信息，严格参考以下信息：
+[
+#<INPUT 6>#
+]
+现在，请给出#<INPUT 5>#的[内心想法]，符合一个中国小区社区居民的内心所想：
+[内心想法]: "

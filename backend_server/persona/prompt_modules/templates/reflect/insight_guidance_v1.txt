@@ -1,0 +1,20 @@
+insight_evidence_v1.txt
+
+Variables: 
+#<INPUT 0># -- Numbered list of event/thought statements
+#<INPUT 1># -- target persona name or "the conversation"
+
+<BLOCK></BLOCK>
+#<INPUT 0>#
+#<INPUT 1>#
+#<INPUT 2>#
+#<INPUT 3>#
+#<INPUT 4>#
+相关陈述：
+#<INPUT 5>#
+
+请从上述陈述中推断 #<INPUT 6># 的 #<INPUT 7># 条关键认识，每条不超过30字。
+严格按以下格式回答：
+1. 见解内容 (依据：1, 3...)
+
+注意：依据编号对应输入列表序号，这部分仅需返回编号无需复述原文。仅返回要求的内容，禁止其他多余解释内容。

@@ -3,10 +3,12 @@ Author: Joon Sung Park (joonspk@stanford.edu)
 
 File: path_finder.py
 Description: Implements various path finding functions for generative agents.
-Some of the functions are defunct. 
+Some of the functions are defunct.
 """
 
 import numpy as np
+import random
+from global_methods import *
 
 
 def print_maze(maze):
@@ -114,7 +116,6 @@ def path_finder_v2(a, start, end, collision_block_char, verbose=False):
         new_row = []
         for j in row:
             if j == collision_block_char:
-                print("got collision_block_char")
                 new_row += [1]
             else:
                 new_row += [0]
@@ -164,7 +165,150 @@ def path_finder_v2(a, start, end, collision_block_char, verbose=False):
     return the_path
 
 
-def path_finder(maze, start, end, collision_block_char, verbose=False):
+def generate_walk_around_path(
+    maze, start, collision_block_char, max_steps=15, min_steps=5
+):
+    """
+    生成一个随机散步路径，可能是来回踱步、环形或其他自然走动模式
+
+    参数:
+        maze: 2D地图数组
+        start: 起点坐标 (x, y)
+        collision_block_char: 碰撞检测使用的字符
+        max_steps: 最大步数
+        min_steps: 最小步数
+
+    返回:
+        随机散步路径坐标列表，包括起点
+    """
+    # 获取地图尺寸
+    height = len(maze)
+    width = len(maze[0]) if height > 0 else 0
+
+    # 定义方向: 上、右、下、左
+    directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+
+    # 初始化路径，包含起点
+    path = [start]
+    current = start
+
+    # 随机决定步数，在min_steps和max_steps之间
+    steps = random.randint(min_steps, max_steps)
+
+    # 随机选择路径类型: 0=来回踱步, 1=环形, 2=随机走动
+    path_type = random.randint(0, 2)
+
+    # 为环形路径存储方向历史
+    direction_history = []
+
+    for _ in range(steps):
+        valid_moves = []
+
+        # 根据不同的路径类型生成下一步
+        if path_type == 0:  # 来回踱步
+            # 主要在两个方向上来回走动
+            main_dirs = random.sample(directions, 2)
+            for dx, dy in main_dirs:
+                nx, ny = current[0] + dx, current[1] + dy
+                # 检查新位置是否有效
+                if (
+                    0 <= nx < width
+                    and 0 <= ny < height
+                    and maze[ny][nx] != collision_block_char
+                ):
+                    valid_moves.append((nx, ny))
+
+        elif path_type == 1:  # 环形路径
+            if not direction_history:
+                # 第一步，随机选择方向
+                dir_idx = random.randint(0, 3)
+                direction_history.append(dir_idx)
+            else:
+                # 尝试保持相同或邻近方向，形成环形
+                last_dir = direction_history[-1]
+                # 更倾向于选择相同或相邻方向
+                dir_options = [(last_dir - 1) % 4, last_dir, (last_dir + 1) % 4]
+                weights = [0.2, 0.6, 0.2]
+                dir_idx = random.choices(dir_options, weights=weights)[0]
+                direction_history.append(dir_idx)
+
+            dx, dy = directions[dir_idx]
+            nx, ny = current[0] + dx, current[1] + dy
+
+            # 如果这个方向不可行，尝试其他方向
+            if (
+                0 <= nx < width
+                and 0 <= ny < height
+                and maze[ny][nx] != collision_block_char
+            ):
+                valid_moves.append((nx, ny))
+            else:
+                # 所有方向都试一遍
+                for dx, dy in directions:
+                    nx, ny = current[0] + dx, current[1] + dy
+                    if (
+                        0 <= nx < width
+                        and 0 <= ny < height
+                        and maze[ny][nx] != collision_block_char
+                    ):
+                        valid_moves.append((nx, ny))
+
+        else:  # 随机走动
+            # 尝试所有四个方向
+            for dx, dy in directions:
+                nx, ny = current[0] + dx, current[1] + dy
+                if (
+                    0 <= nx < width
+                    and 0 <= ny < height
+                    and maze[ny][nx] != collision_block_char
+                ):
+                    valid_moves.append((nx, ny))
+
+        # 如果没有有效的移动，结束路径
+        if not valid_moves:
+            break
+
+        # 随机选择下一个位置
+        next_pos = random.choice(valid_moves)
+        path.append(next_pos)
+        current = next_pos
+
+    # 确保路径结束后回到起点附近或可以回到起点
+    if len(path) > 1 and random.random() > 0.3:  # 70%的概率尝试回到起点附近
+        # 尝试找到从当前位置到起点的路径
+        try:
+            return_path = path_finder_v2(maze, current, start, collision_block_char)
+            if return_path and len(return_path) > 1:
+                # 移除重复的当前位置
+                path.extend(return_path[1:])
+        except:
+            # 如果寻路失败，就不添加返回路径
+            pass
+
+    return path
+
+
+def path_finder(
+    maze, start, end, collision_block_char, verbose=False, walk_around=False
+):
+    """
+    寻找从起点到终点的路径，或生成随机散步路径
+
+    参数:
+        maze: 2D地图数组
+        start: 起点坐标 (x, y)
+        end: 终点坐标 (x, y)
+        collision_block_char: 碰撞检测使用的字符
+        verbose: 是否打印详细信息
+        walk_around: 是否生成随机散步路径
+
+    返回:
+        路径坐标列表
+    """
+    # 如果是随处走动模式
+    if walk_around:
+        return generate_walk_around_path(maze, start, collision_block_char)
+
     # EMERGENCY PATCH
     start = (start[1], start[0])
     end = (end[1], end[0])
@@ -240,6 +384,7 @@ def path_finder_3(maze, start, end, collision_block_char, verbose=False):
     else:
         a_path = curr_path[: int(len(curr_path) / 2)]
         b_path = curr_path[int(len(curr_path) / 2) - 1 :]
+
     b_path.reverse()
 
     print(a_path)

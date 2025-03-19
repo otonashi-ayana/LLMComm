@@ -2,7 +2,7 @@
 Author: Joon Sung Park (joonspk@stanford.edu)
 
 File: execute.py
-Description: This defines the "Act" module for generative agents. 
+Description: This defines the "Act" module for generative agents.
 """
 
 import sys
@@ -90,6 +90,31 @@ def execute(persona, maze, personas, plan):
             plan = ":".join(plan.split(":")[:-1])
             target_cells = maze.cells_of_addr[plan]
             target_cells = random.sample(list(target_cells), 1)
+            # TODO: plan中使用<random>调用随机散步
+
+            # 生成随机散步路径
+            walk_path = path_finder(
+                maze.collision_2d,
+                persona.direct_mem.curr_cell,
+                target_cells[0],  # 目标位置
+                collision_block_id,
+                walk_around=True,  # 启用随机散步模式
+            )
+
+            # 设置随机散步路径
+            persona.direct_mem.planned_path = walk_path[1:] if walk_path else []
+            persona.direct_mem.act_path_set = True
+
+            # 设置下一步位置
+            ret = persona.direct_mem.curr_cell
+            if persona.direct_mem.planned_path:
+                ret = persona.direct_mem.planned_path[0]
+                persona.direct_mem.planned_path = persona.direct_mem.planned_path[1:]
+
+            description = f"在 {persona.direct_mem.act_address}，{persona.direct_mem.act_description}"
+
+            execution = ret, description
+            return execution
 
         else:
             # This is our default execution. We simply take the persona to the

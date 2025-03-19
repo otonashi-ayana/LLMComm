@@ -19,5 +19,6 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#1857a4",
-  "commentTranslate.hover.enabled": true
+  "commentTranslate.hover.enabled": true,
+  "git.ignoreLimitWarning": true
 }

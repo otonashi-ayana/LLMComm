@@ -200,7 +200,7 @@ class AssociativeMemory:
         embedding_pair,
         filling,
     ):
-        print_c("<add_event>:s,p,o,description:", s, p, o, "##", description)
+        # print_c("<add_event>:s,p,o,description:", s, p, o, "##", description)
         # Setting up the node ID and counts.
         node_count = len(self.id_to_node.keys()) + 1
         type_count = len(self.seq_event) + 1
@@ -211,7 +211,7 @@ class AssociativeMemory:
         # Node type specific clean up.
         if "（" in description:
             description = (
-                " ".join(description.split()[:3])
+                " ".join(description.split()[:2])
                 + " "
                 + description.split("（")[-1][:-1]
             )

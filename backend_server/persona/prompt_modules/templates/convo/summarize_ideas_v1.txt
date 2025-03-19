@@ -1,0 +1,15 @@
+summarize_ideas_v1.txt
+
+Variables: 
+#<INPUT 0># -- Statements
+#<INPUT 1># -- agent name
+#<INPUT 2># -- interviewer question
+
+<BLOCK></BLOCK>
+[相关陈述]: 
+#<INPUT 0>#
+
+一位采访者对#<INPUT 1>#说：
+"#<INPUT 2>#"
+
+总结与采访者提问最相关的陈述（仅返回陈述本身内容，禁止添加解释、附加性内容）：

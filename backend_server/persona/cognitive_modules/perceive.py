@@ -11,7 +11,7 @@ from persona.prompt_modules.run_prompt import *
 def generate_poig_score(persona, event_type, description):
     if "正在 空闲" in description:
         return 1
-    if event_type == "event":
+    if event_type == "event" or event_type == "thought":
         return run_prompt_event_poignancy(persona, description)
     elif event_type == "chat":
         return run_prompt_chat_poignancy(persona, persona.direct_mem.act_description)
@@ -75,13 +75,13 @@ def perceive(persona, maze):
     ret_events = []
     for p_event in perceived_events:
         s, p, o, desc = p_event
-        print_c("<perceive> p_event:", s, p, o, desc)
+        # print_c("<perceive> p_event:", s, p, o, desc)
         if not p:  # event没有事件发生
             p = "正在"
             o = "空闲"
             desc = "空闲"
         desc = f"{s.split(':')[-1]} 正在 {desc}"
-        print_c("<perceive> edited desc:", desc)
+        # print_c("<perceive> edited desc:", desc)
         # cell_info的event主语都是object?
         p_event = (s, p, o)
 
@@ -145,7 +145,7 @@ def perceive(persona, maze):
                     keywords,
                     chat_poignancy,
                     chat_embedding_pair,
-                    persona.direct_mem.chat,
+                    persona.direct_mem.chat_history,
                 )
                 chat_node_ids = [chat_node.node_id]
 

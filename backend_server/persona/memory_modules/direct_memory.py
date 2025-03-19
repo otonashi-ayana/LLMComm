@@ -16,12 +16,11 @@ class DirectMemory:
 
         """个人核心信息"""
         self.name = None
-        self.name_en = None
         self.age = None
         self.gender = None
         self.personality = None
         self.background = None
-        self.curr_thing = None
+        self.currently = None
         self.living_area = None
         self.life_style = None
         self.daily_plan_desc = None  # =daily_plan_req
@@ -41,17 +40,23 @@ class DirectMemory:
         #        'Make lunch for herself',
         #        'Work on her paintings some more',
         #        'Go to bed early']
-        self.daily_goals = []
+        self.daily_goals = []  # =daily_req
         # e.g., [['sleeping', 360],
         #         ['wakes up and ... (wakes up and stretches ...)', 5],
         #         ['wakes up and starts her morning routine (out of bed )', 10],
         #         ...
         #         ['having lunch', 60],
         #         ['working on her painting', 180], ...]
-        self.daily_schedule = []
-        self.daily_schedule_hourly = []  # 未细分的daily_schedule（整小时单位）
+        self.daily_schedule = []  # =f_daily_schedule
+        self.daily_schedule_hourly = (
+            []
+        )  # =f_daily_schedule_hourly_org 未细分的daily_schedule（整小时单位）
+        self.ordered_minds = []
+        # [["张三每天中午都会去公园散步", 30],...]
 
         """当前动作"""
+        self.specify_action = []
+        # ["随手乱扔垃圾到地上",1]
         self.act_event = (
             self.name,
             None,
@@ -104,12 +109,11 @@ class DirectMemory:
             self.curr_cell = direct_mem_json["curr_cell"]
 
             self.name = direct_mem_json["name"]
-            self.name_en = direct_mem_json["name_en"]
             self.age = direct_mem_json["age"]
             self.gender = direct_mem_json["gender"]
             self.personality = direct_mem_json["personality"]
             self.background = direct_mem_json["background"]
-            self.curr_thing = direct_mem_json["curr_thing"]
+            self.currently = direct_mem_json["currently"]
             self.living_area = direct_mem_json["living_area"]
             self.life_style = direct_mem_json["life_style"]
             self.daily_plan_desc = direct_mem_json["daily_plan_desc"]
@@ -118,6 +122,8 @@ class DirectMemory:
             self.daily_goals = direct_mem_json["daily_goals"]
             self.daily_schedule = direct_mem_json["daily_schedule"]
             self.daily_schedule_hourly = direct_mem_json["daily_schedule_hourly"]
+            self.ordered_minds = direct_mem_json["ordered_minds"]
+            self.specify_action = direct_mem_json["specify_action"]
 
             self.act_address = direct_mem_json["act_address"]
             if direct_mem_json["act_start_time"]:
@@ -166,12 +172,11 @@ class DirectMemory:
         direct_mem["curr_cell"] = self.curr_cell
 
         direct_mem["name"] = self.name
-        direct_mem["name_en"] = self.name_en
         direct_mem["age"] = self.age
         direct_mem["gender"] = self.gender
         direct_mem["personality"] = self.personality
         direct_mem["background"] = self.background
-        direct_mem["curr_thing"] = self.curr_thing
+        direct_mem["currently"] = self.currently
         direct_mem["living_area"] = self.living_area
         direct_mem["life_style"] = self.life_style
         direct_mem["daily_plan_desc"] = self.daily_plan_desc
@@ -180,6 +185,8 @@ class DirectMemory:
         direct_mem["daily_goals"] = self.daily_goals
         direct_mem["daily_schedule"] = self.daily_schedule
         direct_mem["daily_schedule_hourly"] = self.daily_schedule_hourly
+        direct_mem["ordered_minds"] = self.ordered_minds
+        direct_mem["specify_action"] = self.specify_action
 
         direct_mem["act_address"] = self.act_address
         direct_mem["act_start_time"] = self.act_start_time.strftime(
@@ -234,6 +241,12 @@ class DirectMemory:
             return True
         return False
 
+    def check_specify_action(self):
+        if not self.specify_action:
+            return False
+        else:
+            return True
+
     def get_str_mds(self):
         """
         获得最小描述集合(Minimal description set),基本的角色信息
@@ -244,10 +257,10 @@ class DirectMemory:
         description += f"性别:{self.gender}\n"
         description += f"性格:{self.personality}\n"
         description += f"个人背景:{self.background}\n"
-        description += f"近期事项:{self.curr_thing}\n"
+        description += f"近期事项:{self.currently}\n"
         description += f"生活方式:{self.life_style}\n"
         # description += f"居住区域:{self.living_area}\n"
-        description += f"生活规划:{self.daily_plan_desc}\n"
+        description += f"今日日程:{self.daily_plan_desc}\n"
         description += f"当前日期:{self.curr_time.strftime('%A %B %d')}"
         return description
 

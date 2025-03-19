@@ -9,12 +9,14 @@ sys.path.append("../../")
 
 from persona.prompt_modules.run_prompt import *
 from persona.cognitive_modules.converse import *
-from converse import (
-    register_convo,
-    update_convo_status_from_map,
-    get_convo_status_from_map,
-    remove_convo_from_map,
-)
+
+# from converse import (
+#     register_convo,
+#     update_convo_status_from_map,
+#     check_participants_form_map,
+#     wait_until_chat_done,
+#     remove_convo_from_map,
+# )
 
 
 def generate_wake_up_time(persona):
@@ -95,7 +97,7 @@ def generate_hourly_schedule(persona, wake_up_time):
     return hourly_compressed_min
 
 
-def simple_generate_hourly_schedule(persona, wake_up_time):
+def simple_generate_hourly_schedule(persona, wake_up_time, new_day):
     hour_str = [
         "00:00",
         "01:00",
@@ -130,7 +132,7 @@ def simple_generate_hourly_schedule(persona, wake_up_time):
         for _ in range(wake_up_time):
             hourly_activity += ["睡觉"]
         hourly_activity_response = run_prompt_simple_generate_hourly_schedule(
-            persona, hour_str, wake_up_time, outing_time
+            persona, hour_str, wake_up_time, outing_time, new_day
         ).split("\n")
 
         hourly_activity += [
@@ -161,58 +163,208 @@ def simple_generate_hourly_schedule(persona, wake_up_time):
     return hourly_compressed_min
 
 
-def revise_identity(persona):
-    p_name = persona.scratch.name
+def generate_plan_note(p_name, statements, current_date, ordered_minds):
+    """生成当日计划注意事项"""
+    prompt_template = f"""
+[相关陈述]
+{statements}
+根据上述陈述，从中选择需要特别注意的陈述，用于{p_name}在制定 {current_date} 这一天的计划时参考。
 
+要求：使用 {p_name} 的视角回答，严格返回需要关注的陈述原文内容，禁止添加其他任何解释、总结或附加信息
+
+示例：
+[相关陈述]
+Monday January 06 - 23:53: 对于李华的重要事项：李华中午计划午餐后13：00到14：00去社区公园散步
+Monday January 06 - 00:00: 这是 李华 在 Monday January 06的计划: 6点起床， 6点起床并完成洗漱和早饭， 8点到12点营业李华超市， 12点到13点到李四饭店吃饭， 13点到21点继续营业李华超市， 21点到23点结束营业并回家休息。
+Monday January 06 - 22:07: 李华关注商品摆放以及销售情况，希望能够提高销售额。
+
+回答：
+Monday January 06 - 23:53: 对于李华的重要事项：李华中午计划午餐后13：00到14：00去社区公园散步
+Monday January 06 - 00:00: 这是 李华 在 Monday January 06的计划: 6点起床， 6点起床并完成洗漱和早饭， 8点到12点营业李华超市， 12点到13点到李四饭店吃饭， 13点到21点继续营业李华超市， 21点到23点结束营业并回家休息。"""
+    output, elapsed_time = LLM_request(
+        prompt_template,
+        parameter={
+            "model": specify_CoT_model,
+            "max_tokens": 2000,
+            "temperature": 0.4,
+            "top_p": 1,
+            "stream": False,
+            "stop": None,
+        },
+    )
+    output = ordered_minds + output.strip("\n")
+    print_prompt_output(p_name, prompt_template, output, elapsed_time)
+    return output
+
+
+def generate_thought_summary(persona, p_name, statements, ordered_minds):
+    """生成日常情绪感受总结"""
+    prompt_template = f"""
+{p_name} 的相关信息：
+年龄:{persona.direct_mem.age}
+性别:{persona.direct_mem.gender}
+性格:{persona.direct_mem.personality}
+个人背景:{persona.direct_mem.background}
+
+[相关陈述]
+{ordered_minds}{statements}
+根据上述陈述，总结 {p_name} 近期的整体感受与思考，100字以内。以上是所有的已知信息，禁止编造虚假信息。
+
+要求：以 {p_name} 的视角回答，仅回答整体感受与思考的内容，完全仅根据上述陈述的已知信息，禁止添加多余解释、总结或附加信息"""
+    output, elapsed_time = LLM_request(
+        prompt_template,
+        parameter={
+            "model": specify_CoT_model,
+            "max_tokens": 500,
+            "temperature": 0.4,
+            "top_p": 1,
+            "stream": False,
+            "stop": None,
+        },
+    )
+    output = output.strip("\n")
+    print_prompt_output(p_name, prompt_template, output, elapsed_time)
+    return output
+
+
+def generate_current_status(
+    persona, p_name, yesterday_date, plan_note, thought_note, ordered_minds
+):
+    """生成更新后的状态描述"""
+    status_prompt = f"""
+{p_name} 在 {yesterday_date} 这一天所想的近期事项：{"(暂无)" if persona.direct_mem.currently == "" else persona.direct_mem.currently}
+
+{p_name} 在 {yesterday_date} 这一天结束时内心的【注意事项】、【感受思考】：{(plan_note + thought_note).replace("\n", "")}
+
+现在的日期是 {persona.direct_mem.curr_time.strftime('%A %B %d')}，请根据以上信息，生成一段话，描述 {p_name} 从今天开始的近期事项。
+
+特别注意，必须考虑到以下重要事项。若有冲突，以重要事项为优先级规划近期事项：
+{ordered_minds}
+要求：
+1. 第三人称叙述
+2. 反映前一天思考内容
+3. 若事项包含具体的日程安排信息，请提供完整细节（包含日期、时间、地点）
+4. 生成不分段的一句话，简洁明了，不超过80字
+
+示例回答：
+张三计划于 Wednesday January 09 下午17:00点在社区中心和社区志愿者举办一场志愿活动筹备会。她正在收集材料，并告诉大家参加当天下午17:00点到19:00点在社区中心举行的聚会。
+---
+赵五最近几天经常去小区内的社区公园散步，他计划于 Wednesday January 09 早上8：00点去社区公园锻炼身体。
+
+严格遵循格式：
+近期事项：<描述内容>"""
+    output, elapsed_time = LLM_request(
+        status_prompt,
+        parameter={
+            "model": specify_CoT_model,
+            "max_tokens": 500,
+            "temperature": 0.4,
+            "top_p": 1,
+            "stream": False,
+            "stop": None,
+        },
+    )
+    if "近期事项：" in output:
+        output = output.split("近期事项：")[-1]
+    output = output.strip("\n")
+    print_prompt_output(p_name, status_prompt, output, elapsed_time)
+    return output
+
+
+def generate_daily_schedule(persona, p_name, current_date):
+    """生成当日概略计划"""
+    schedule_prompt = f"""
+    {p_name} 的相关信息：
+姓名:{persona.direct_mem.name}
+年龄:{persona.direct_mem.age}
+性别:{persona.direct_mem.gender}
+性格:{persona.direct_mem.personality}
+个人背景:{persona.direct_mem.background}
+生活方式:{persona.direct_mem.life_style}
+
+近期事项:{persona.direct_mem.currently}
+昨日日程规划：{persona.direct_mem.daily_plan_desc}
+
+今天的日期是 {current_date}
+由于【近期事项】可能发生变化，从而影响 {p_name}的今日日程规划（亦可能不影响）。请根据以上信息，生成 {p_name} 今日的日程规划。
+1.包含时间段（例：在12:00到13:00去小区内的饭店享用午餐）
+2.必须包含4-6个列表项
+
+示例格式（仅回答今日日程规划内容，禁止添加多余解释、总结或附加信息）：
+1.{p_name} 在7:00起床并完成晨间活动
+3.[...]"""
+    output, elapsed_time = LLM_request(
+        schedule_prompt,
+        parameter={
+            "model": specify_CoT_model,
+            "max_tokens": 1000,
+            "temperature": 0.5,
+            "top_p": 1,
+            "stream": False,
+            "stop": None,
+        },
+    )
+    output = output.strip("\n")
+    print_prompt_output(p_name, schedule_prompt, output, elapsed_time)
+    return output
+
+
+def revise_identity(persona):
+    """
+    重构人物身份信息，生成日程计划、情绪总结及状态更新
+
+    参数：
+        persona: 包含人物记忆与状态的对象，将在函数内被修改
+    """
+    # 初始化基础信息
+    p_name = persona.direct_mem.name
+    current_date = persona.direct_mem.get_curr_date()
+    yesterday_date = (
+        persona.direct_mem.curr_time - datetime.timedelta(days=1)
+    ).strftime("%A %B %d")
+
+    # 阶段1: 信息检索
     focal_points = [
-        f"{p_name}在{persona.scratch.get_str_curr_date_str()}当天的计划。",
+        f"{p_name}在{persona.direct_mem.get_curr_date()}当天的计划。",
         f"关于{p_name}生活的重要近期事件。",
     ]
     retrieved = new_retrieve(persona, focal_points)
 
-    # 构建陈述记录
-    statements = "[陈述记录]\n"
+    statements = ""
+    ordered_minds = ""
+    if persona.direct_mem.ordered_minds:
+        for idx, (created, mind, expired_time) in enumerate(
+            persona.direct_mem.ordered_minds
+        ):
+            persona.direct_mem.ordered_minds[idx][2] -= 1
+            ordered_minds += f"{created}:【{persona.name}的重要事项：{mind}】\n"
+
+            if persona.direct_mem.ordered_minds[idx][2] < 1:
+                persona.direct_mem.ordered_minds.pop(idx)
+    if ordered_minds:
+        print(f"revise_identity ordered statements: {ordered_minds}")
+    # statements += ordered_minds
+
     for key, val in retrieved.items():
         for i in val:
             statements += (
-                f"{i.created.strftime('%A %B %d -- %H:%M %p')}: {i.embedding_key}\n"
+                f"{i.created.strftime('%A %B %d - %H:%M')}: {i.embedding_key}\n"
             )
 
-    # 生成计划笔记
-    plan_prompt = statements + "\n"
-    plan_prompt += f"根据上述陈述，{p_name}在制定*{persona.scratch.curr_time.strftime('%A %B %d')}*计划时，有哪些需要特别注意的事项？"
-    plan_prompt += f"如果包含日程安排信息，请尽可能具体（若陈述中提及，需包含日期、时间和地点）\n\n"
-    plan_prompt += f"请以{p_name}的第一视角进行回答。"
-    plan_note = ChatGPT_single_request(plan_prompt)
+    # 阶段2: 生成核心要素
+    plan_note = generate_plan_note(p_name, statements, current_date, ordered_minds)
+    thought_note = generate_thought_summary(persona, p_name, statements, ordered_minds)
+    new_currently = generate_current_status(
+        persona, p_name, yesterday_date, plan_note, thought_note, ordered_minds
+    )
+    persona.direct_mem.currently = new_currently
+    daily_plan_desc = generate_daily_schedule(persona, p_name, current_date).replace(
+        "\n", ""
+    )
 
-    # 生成情感总结
-    thought_prompt = statements + "\n"
-    thought_prompt += f"基于上述陈述，如何总结{p_name}迄今为止的日常情绪感受？\n\n"
-    thought_prompt += f"请以{p_name}的第一视角进行回答。"
-    thought_note = ChatGPT_single_request(thought_prompt)
-
-    # 生成当前状态
-    currently_prompt = f"{p_name}在{(persona.scratch.curr_time - datetime.timedelta(days=1)).strftime('%A %B %d')}的状态：\n"
-    currently_prompt += f"{persona.scratch.currently}\n\n"
-    currently_prompt += f"{p_name}在{(persona.scratch.curr_time - datetime.timedelta(days=1)).strftime('%A %B %d')}结束时的思考：\n"
-    currently_prompt += (plan_note + thought_note).replace("\n", "") + "\n\n"
-    currently_prompt += f"当前时间为{persona.scratch.curr_time.strftime('%A %B %d')}。根据以上信息，请用第三人称撰写{p_name}当天的状态描述，需反映其前一天的思考内容。"
-    currently_prompt += f"若包含日程安排，请提供完整细节（日期、时间、地点）。\n\n"
-    currently_prompt += "请严格遵循格式：\n状态：<新状态>"
-    new_currently = ChatGPT_single_request(currently_prompt)
-
-    persona.scratch.currently = new_currently
-
-    # 生成每日计划
-    daily_req_prompt = persona.scratch.get_str_iss() + "\n"
-    daily_req_prompt += f"今天是{persona.scratch.curr_time.strftime('%A %B %d')}。请列出{p_name}当日的概略计划（需包含时间段，例如：中午12:00用餐，19:00-20:00观看电视）。\n\n"
-    daily_req_prompt += f"格式要求（列表项4~6条）：\n"
-    daily_req_prompt += f"1. 在<时间>起床并完成早晨例行活动，2. ..."
-
-    new_daily_req = ChatGPT_single_request(daily_req_prompt)
-    new_daily_req = new_daily_req.replace("\n", " ")
-    print("生成结果：", new_daily_req)
-    persona.scratch.daily_plan_req = new_daily_req
+    # 阶段3: 更新人物信息
+    persona.direct_mem.daily_plan_desc = daily_plan_desc
+    print_c(f"revise_identity done")
 
 
 def _new_day_planning(persona, new_day):
@@ -222,16 +374,14 @@ def _new_day_planning(persona, new_day):
             persona, wake_up_time
         )
     elif new_day == "new":
-        # TODO
-        pass
-        # revise_identity(persona)
+        revise_identity(persona)
 
     persona.direct_mem.daily_schedule = simple_generate_hourly_schedule(
-        persona, wake_up_time
+        persona, wake_up_time, new_day
     )
     persona.direct_mem.daily_schedule_hourly = persona.direct_mem.daily_schedule[:]
 
-    thought = f"这是 {persona.direct_mem.name} 在 {persona.direct_mem.curr_time.strftime('%A %B %d')}的计划:"
+    thought = f"{persona.direct_mem.name}在{persona.direct_mem.curr_time.strftime('%A %B %d')}这天的计划是："
     for i in persona.direct_mem.daily_goals:
         thought += f" {i}，"
     thought = thought[:-1] + "。"
@@ -239,10 +389,10 @@ def _new_day_planning(persona, new_day):
     expiration = persona.direct_mem.curr_time + datetime.timedelta(days=30)
     s, p, o = (
         persona.direct_mem.name,
-        "计划",
+        "正在",
         persona.direct_mem.curr_time.strftime("%A %B %d"),
     )
-    keywords = set(["计划"])
+    keywords = set(["正在"])
     thought_poignancy = 5
     thought_embedding_pair = (thought, get_embedding(thought))
     persona.associate_mem.add_thought(
@@ -343,7 +493,6 @@ def generate_new_decomp_schedule(
     count = 0  # enumerate count
     truncated_fin = False
 
-    print("DEBUG::: ", persona.direct_mem.name)
     for act, dur in p.direct_mem.daily_schedule:
         if (dur_sum >= start_hour * 60) and (dur_sum < end_hour * 60):
             main_act_dur += [[act, dur]]
@@ -359,7 +508,6 @@ def generate_new_decomp_schedule(
                     dur_sum - today_min_pass
                 )  ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
                 # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass + 1) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
-                print("DEBUG::: ", truncated_act_dur)
 
                 # truncated_act_dur[-1][-1] -= (dur_sum - today_min_pass) ######## DEC 7 DEBUG;.. is the +1 the right thing to do???
                 truncated_fin = True
@@ -524,22 +672,25 @@ def determine_action(persona, maze):
 
 
 def _choose_retrieved(persona, retrieved):
-    # 清除persona自身事件
+    # TODO: 选择事件的逻辑修改
+    # 清除persona自身事件，这些事件不会被选择
     copy_retrieved = retrieved.copy()
     for event_desc, rel_ctx in copy_retrieved.items():
         curr_event = rel_ctx["curr_event"]
         if curr_event.subject == persona.name:
             del retrieved[event_desc]
 
-    # 首选persona相关事件
+    # 过滤所有object为主语的事件；纳入剩余事件
     priority = []
     for event_desc, rel_ctx in retrieved.items():
         curr_event = rel_ctx["curr_event"]
         if ":" not in curr_event.subject and curr_event.subject != persona.name:
             priority += [rel_ctx]
+    # 目前逻辑：从纳入的剩余事件中随机选择一个
     if priority:
         return random.choice(priority)
 
+    # 如果除了object为主语的事件、persona自身事件外，没有其他事件，选择非空闲的object事件
     # 过滤对象的空闲事件(object正在空闲)，选择剩余事件
     for event_desc, rel_ctx in retrieved.items():
         curr_event = rel_ctx["curr_event"]
@@ -547,6 +698,7 @@ def _choose_retrieved(persona, retrieved):
             priority += [rel_ctx]
     if priority:
         return random.choice(priority)
+
     return None
 
 
@@ -583,6 +735,12 @@ def _should_react(persona, retrieved, personas):
                 return False
 
         if generate_decide_to_talk(init_persona, target_persona, retrieved):
+            # TODO:target
+            # TODO :如果没有，创建map实例，status设置INPROGRESS
+            # TODO :如果有，return False
+
+            # TODO 后续完善：为了让密集居民多说话，focused_event设置为多个，优先级递补
+
             return True
 
         return False
@@ -633,12 +791,15 @@ def _should_react(persona, retrieved, personas):
 
     if ":" not in curr_event.subject:  # 只处理persona事件
         target_persona = personas[curr_event.subject]
-        if lets_talk(persona, target_persona, retrieved):  # 决定是否talk
-            react_mode = ("chat", curr_event.subject)
-            return react_mode  # ("chat", persona name)
-        react_mode = lets_react(persona, target_persona, retrieved)
+        if lets_talk(persona, target_persona, retrieved):
+            init_is_chatting_with = check_participants_form_map(persona.name)
+            if init_is_chatting_with:
+                return ("chatted", init_is_chatting_with)
+            target_is_chatting_with = check_participants_form_map(target_persona.name)
+            if not target_is_chatting_with:
+                return ("chat", target_persona.name)  # ("chat", persona name)
         # 如果不决定talk，才判断是否等待对方的行为（主要是避免使用对象冲突）
-        return react_mode  # ("wait", wait_until)
+        return lets_react(persona, target_persona, retrieved)  # ("wait", wait_until)
     return False
 
 
@@ -661,35 +822,44 @@ def _create_react(
     p = persona
 
     min_sum = 0
-    for i in range(p.direct_mem.get_daily_schedule_index()):
+    # print(f"<_create_react> {persona.name}:{p.direct_mem.get_daily_schedule_index()}")
+    # print(f"<_create_react> {persona.name}:daily_schedule{p.direct_mem.daily_schedule}")
+    # print(
+    #     f"<_create_react> {persona.name}:daily_schedule_hourly{p.direct_mem.daily_schedule_hourly}"
+    # )
+    for i in range(p.direct_mem.get_daily_schedule_hourly_index()):
         min_sum += p.direct_mem.daily_schedule_hourly[i][1]
     start_hour = int(min_sum / 60)
 
     if (
-        p.direct_mem.daily_schedule_hourly[p.direct_mem.get_daily_schedule_index()][1]
+        p.direct_mem.daily_schedule_hourly[
+            p.direct_mem.get_daily_schedule_hourly_index()
+        ][1]
         >= 120
     ):
         end_hour = (
             start_hour
             + p.direct_mem.daily_schedule_hourly[
-                p.direct_mem.get_daily_schedule_index()
+                p.direct_mem.get_daily_schedule_hourly_index()
             ][1]
             / 60
         )
 
     elif (
-        p.direct_mem.daily_schedule_hourly[p.direct_mem.get_daily_schedule_index()][1]
+        p.direct_mem.daily_schedule_hourly[
+            p.direct_mem.get_daily_schedule_hourly_index()
+        ][1]
         + p.direct_mem.daily_schedule_hourly[
-            p.direct_mem.get_daily_schedule_index() + 1
+            p.direct_mem.get_daily_schedule_hourly_index() + 1
         ][1]
     ):
         end_hour = start_hour + (
             (
                 p.direct_mem.daily_schedule_hourly[
-                    p.direct_mem.get_daily_schedule_index()
+                    p.direct_mem.get_daily_schedule_hourly_index()
                 ][1]
                 + p.direct_mem.daily_schedule_hourly[
-                    p.direct_mem.get_daily_schedule_index() + 1
+                    p.direct_mem.get_daily_schedule_hourly_index() + 1
                 ][1]
             )
             / 60
@@ -738,6 +908,8 @@ def _chat_react(maze, persona, target_persona, personas):
     init_persona = persona
     target_persona = personas[target_persona]
 
+    register_convo(init_persona.name, target_persona.name)
+
     # Actually creating the conversation here.
     convo, duration_min = generate_convo(maze, init_persona, target_persona)
     convo_summary = generate_convo_summary(init_persona, convo)
@@ -761,13 +933,13 @@ def _chat_react(maze, persona, target_persona, personas):
             act_event = (p.name, "聊天", target_persona.name)  # chat with
             chatting_with = target_persona.name
             chatting_with_buffer = {}
-            chatting_with_buffer[target_persona.name] = 800
+            chatting_with_buffer[target_persona.name] = 80
         elif role == "target":
             act_address = f"<persona> {init_persona.name}"
             act_event = (p.name, "聊天", init_persona.name)
             chatting_with = init_persona.name
             chatting_with_buffer = {}
-            chatting_with_buffer[init_persona.name] = 800
+            chatting_with_buffer[init_persona.name] = 80
 
         # act_pronunciatio = "💬"
         act_obj_description = None
@@ -790,6 +962,12 @@ def _chat_react(maze, persona, target_persona, personas):
             act_obj_event,
             act_start_time,
         )
+    update_convo_status_from_map(init_persona.name, target_persona.name, "DONE")
+
+
+def _chatted_react(persona, target_name):
+    wait_until_chat_done(persona.name, target_name)
+    remove_convo_from_map(persona.name, target_name)
 
 
 def _wait_react(persona, wait_time):
@@ -836,18 +1014,58 @@ def _wait_react(persona, wait_time):
     )
 
 
+def specify_action(persona, maze):
+    act_specify_desp_input, act_specify_dura = persona.direct_mem.specify_action
+
+    act_specify_address = persona.direct_mem.act_address
+    curr_schedule_idx = persona.direct_mem.get_daily_schedule_hourly_index()
+    act_specify_desp = f"{persona.direct_mem.daily_schedule_hourly[curr_schedule_idx][0]}（{act_specify_desp_input}）"
+    act_specify_desp = act_specify_desp_input
+    address = act_specify_address.split(":")
+    # if len(address) < 4:
+    #     act_object = generate_action_object(
+    #         act_specify_desp, act_specify_address, persona, maze
+    #     )
+    act_specify_event = generate_action_event_triple(act_specify_desp, persona)
+    if len(address) == 4:
+        act_object = address[-1]
+        act_specify_obj_desp = generate_act_obj_desc(
+            act_object, act_specify_desp, persona
+        )
+        act_specify_obj_event = generate_act_obj_event_triple(
+            act_object, act_specify_obj_desp
+        )
+    else:
+        act_specify_obj_desp = None
+        act_specify_obj_event = (None, None, None)
+
+    _create_react(
+        persona,
+        act_specify_desp,  # 在公园休息（随手乱扔垃圾到地上）
+        act_specify_dura,
+        act_specify_address,
+        act_specify_event,  # [李华 正在 随手扔垃圾到地上]
+        None,
+        None,
+        None,
+        None,
+        act_specify_obj_desp,  # 被扔垃圾到地上
+        act_specify_obj_event,  # [公园椅子 正在 被扔垃圾到地上]
+    )
+    persona.direct_mem.specify_action.clear()
+
+
 def plan(persona, maze, personas, new_day, retrieved):
     # plan小时计划（min单位）
     if new_day:  # 如果是同一天内，new_day=False
-        # print_c("_new_day_planning start", COLOR="blue")
         _new_day_planning(persona, new_day)
-        # print_c("_new_day_planning done", COLOR="blue")
+
+    if persona.direct_mem.check_specify_action():
+        specify_action(persona, maze)
 
     # 如果当前时间下的action已到期，新建一个action
     if persona.direct_mem.act_check_finished():
-        # print_c("determine_action start", COLOR="blue")
         determine_action(persona, maze)
-        # print_c("determine_action done", COLOR="blue")
 
     # 决定要关注哪个事件（有且有多个events被检索到）
     # print_c("_choose_retrieved start", COLOR="blue")
@@ -858,19 +1076,19 @@ def plan(persona, maze, personas, new_day, retrieved):
 
     # 决定对事件作什么反应
     if focused_event:
-        # print_c("_should_react start", COLOR="blue")
         reaction_mode = _should_react(persona, focused_event, personas)
-        print("reaction_mode:", reaction_mode)
-        # print_c("_should_react done", COLOR="blue")
+        # print("reaction_mode:", reaction_mode)
         if reaction_mode:
-            if reaction_mode[0] == "chat":  # ("chat", persona name)
+            if reaction_mode[0] == "chat":  # ("chat", target persona name)
                 _chat_react(maze, persona, reaction_mode[1], personas)
+            elif reaction_mode[0] == "chatted":  # ("chatted", chat_init persona name)
+                _chatted_react(persona, reaction_mode[1])
             elif reaction_mode[0] == "wait":  # ("wait", wait_until)
                 _wait_react(persona, reaction_mode[1])
 
     if persona.direct_mem.act_event[1] != "聊天":
         persona.direct_mem.chatting_with = None
-        persona.direct_mem.chat = None
+        persona.direct_mem.chat_history = None
         persona.direct_mem.chatting_end_time = None
     # We want to make sure that the persona does not keep conversing with each
     # other in an infinite loop. So, chatting_with_buffer maintains a form of

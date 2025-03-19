@@ -1,0 +1,20 @@
+planning_thought_v1.txt
+
+Variables: 
+#<INPUT 0># -- All convo utterances
+#<INPUT 1># -- persona name
+#<INPUT 2># -- persona name
+#<INPUT 3># -- persona name
+
+<BLOCK></BLOCK>
+#<INPUT 0>#
+#<INPUT 1>#
+#<INPUT 2>#
+#<INPUT 3>#
+#<INPUT 4>#
+[对话记录]
+#<INPUT 5>#
+
+从#<INPUT 6>#的角度，写下#<INPUT 7>#需要为他的计划记住的对话内容，用完整的句子表达。
+
+"#<INPUT 8>#

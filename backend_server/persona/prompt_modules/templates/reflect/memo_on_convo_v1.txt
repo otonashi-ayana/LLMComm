@@ -1,0 +1,15 @@
+memo_on_convo_v1.txt
+
+Variables: 
+#<INPUT 0># -- All convo utterances
+#<INPUT 1># -- persona name
+#<INPUT 2># -- persona name
+#<INPUT 3># -- persona name
+
+<BLOCK></BLOCK>
+[对话记录]
+#<INPUT 0>#
+
+从#<INPUT 2>#的角度来看，记录下#<INPUT 1>#可能会感兴趣的对话内容，用完整的一句话表达(仅给出其感兴趣的对话内容，禁止分点、添加其他任何解释、总结或附加内容)。
+
+"#<INPUT 3>#

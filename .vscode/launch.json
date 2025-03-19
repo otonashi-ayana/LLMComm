@@ -5,11 +5,43 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python 调试程序: 运行 simulation.py",
+      "name": "运行 simulation.py",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/backend_server/simulation.py",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "(带参数)运行 simulation.py ",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend_server/simulation.py",
+      "console": "integratedTerminal",
+      "args": [
+        "${input:steps}",
+        "${input:origin}",
+        "${input:target}"
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "steps",
+      "type": "promptString",
+      "description": "要运行的步数",
+      "default": "1000"
+    },
+    {
+      "id": "origin",
+      "type": "promptString",
+      "description": "要加载的模拟记录名称",
+      "default": "whisper_test"
+    },
+    {
+      "id": "target",
+      "type": "promptString",
+      "description": "要新创建的模拟记录名称",
+      "default": "whisper_test_1"
     }
   ]
 }

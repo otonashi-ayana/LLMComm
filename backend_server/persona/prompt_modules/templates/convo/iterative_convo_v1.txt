@@ -41,6 +41,6 @@ Variables:
 
 务必输出以下格式的json (其中，end字段的值表示对话是否以 #<INPUT 11># 的话语结束)：
 {
-"utterance": "<#<INPUT 12>#的话语>",
+"utterance": "<#<INPUT 12>#的话语,30到40字>",
 "end": "<json Boolean>"
 }

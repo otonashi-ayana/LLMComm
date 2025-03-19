@@ -77,12 +77,12 @@ def run_prompt_wake_up_time(persona):
         prompt_input = [persona.direct_mem.get_str_mds()]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         return int(response.strip().lower().split("am")[0])
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -133,7 +133,7 @@ def run_prompt_daily_goals(persona, wake_up_time):
         # prompt_input += [f"{str(wake_up_time)}"]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         cl = []
         _cl = re.split(r"[)）]", response)
         for i in _cl[1:]:
@@ -145,9 +145,9 @@ def run_prompt_daily_goals(persona, wake_up_time):
                 cl += [i.strip()]
         return cl
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except Exception as e:
             print(e)
             return False
@@ -172,7 +172,7 @@ def run_prompt_daily_goals(persona, wake_up_time):
     model_param = {
         "model": specify_model,
         "max_tokens": 250,
-        "temperature": 1.3,
+        "temperature": 0.8,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -232,7 +232,7 @@ def run_prompt_generate_hourly_schedule(
 
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         cl = response.strip().split()[-1]
         if cl[0] == "[":
             raise ValueError()
@@ -240,9 +240,9 @@ def run_prompt_generate_hourly_schedule(
             cl = cl[:-1]
         return cl
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -276,7 +276,7 @@ def run_prompt_generate_hourly_schedule(
 
 
 def run_prompt_simple_generate_hourly_schedule(
-    persona, hour_str, wake_up_time, outing_time
+    persona, hour_str, wake_up_time, outing_time, new_day
 ):
     def create_prompt_input(persona, hour_str, wake_up_time, outing_time):
         schedule_format = ""
@@ -285,17 +285,18 @@ def run_prompt_simple_generate_hourly_schedule(
                 schedule_format += f"[{hour_str[idx]} - {hour_str[idx+1]}]"
                 if outing_time and idx in outing_time:
                     schedule_format += (
-                        f" 活动: {persona.direct_mem.name} 计划 离开小区\n"
+                        f" 活动: {persona.direct_mem.name} 正在 离开小区\n"
                     )
                 else:
                     schedule_format += f" 活动: 待填入\n"
         schedule_format += "[23:00 - 24:00] 活动: 待填入"
-
-        daily_plan_intro = f"以下为{persona.direct_mem.get_name()}的大致日程:"
-        for count, goal in enumerate(persona.direct_mem.daily_goals):
-            daily_plan_intro += f"{str(count+1)}) {goal},"
-        daily_plan_intro = daily_plan_intro[:-1]
-
+        if new_day == "first":
+            daily_plan_intro = f"以下为{persona.direct_mem.get_name()}的大致日程:"
+            for count, goal in enumerate(persona.direct_mem.daily_goals):
+                daily_plan_intro += f"{str(count+1)}) {goal},"
+            daily_plan_intro = daily_plan_intro[:-1]
+        else:
+            daily_plan_intro = ""
         prompt_input = []
         prompt_input += [schedule_format]
         prompt_input += [persona.direct_mem.get_str_mds()]
@@ -303,15 +304,15 @@ def run_prompt_simple_generate_hourly_schedule(
 
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         if response[0] != "[":
             raise ValueError()
         else:
             return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -353,12 +354,12 @@ def run_prompt_task_decomp(persona, task, duration):
             all_indices += [curr_f_org_index + 1]
         if curr_f_org_index + 2 <= len(persona.direct_mem.daily_schedule_hourly):
             all_indices += [curr_f_org_index + 2]
-        print("<run_prompt_task_decomp> all_indices:", all_indices)
+        # print("<run_prompt_task_decomp> all_indices:", all_indices)
 
         curr_time_range = ""
         curr_task = ""
 
-        summ_str = f'今天日期是 {persona.direct_mem.curr_time.strftime("%A %B %d")}. '
+        summ_str = f'今天日期是 {persona.direct_mem.curr_time.strftime("%A %B %d")}。 '
         summ_str += f"从 "
         for index in all_indices:
             # print("index", index)
@@ -375,11 +376,11 @@ def run_prompt_task_decomp(persona, task, duration):
                 ) + datetime.timedelta(minutes=end_min)
                 start_time_str = start_time.strftime("%H:%M")
                 end_time_str = end_time.strftime("%H:%M")
-                summ_str += f"{start_time_str} ~ {end_time_str}点, {persona.direct_mem.name} 计划 {persona.direct_mem.daily_schedule_hourly[index][0]}, "
+                summ_str += f"{start_time_str} ~ {end_time_str}点, {persona.direct_mem.name} 正在 {persona.direct_mem.daily_schedule_hourly[index][0]}, "
                 if curr_f_org_index + 1 == index:  # 当前index是下一个任务的index
                     curr_time_range = f"{start_time_str} ~ {end_time_str}"
                     curr_task = persona.direct_mem.daily_schedule_hourly[index][0]
-        summ_str = summ_str[:-2] + "."
+        summ_str = summ_str[:-2] + "。"
 
         prompt_input = []
         prompt_input += [persona.direct_mem.get_str_mds()]
@@ -393,8 +394,8 @@ def run_prompt_task_decomp(persona, task, duration):
         prompt_input += [persona.direct_mem.name]
         return prompt_input
 
-    def response_clean(response):
-        temp = [i.strip() for i in response.split("\n")]
+    def response_clean(response, prompt=""):
+        temp = [i.strip() for i in response.strip("\n").split("\n")]
         _cr = []
         cr = []
         for count, i in enumerate(temp):
@@ -442,9 +443,9 @@ def run_prompt_task_decomp(persona, task, duration):
         cr = cr_ret[1:]
         return cr
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -454,8 +455,8 @@ def run_prompt_task_decomp(persona, task, duration):
         return fs
 
     model_param = {
-        "model": specify_model,
-        "max_tokens": 2000,
+        "model": specify_CoT_model,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
@@ -485,6 +486,7 @@ def run_prompt_action_sector(act_desp, persona, maze):
         act_world = f"{maze.access_cell(persona.direct_mem.curr_cell)['world']}"
 
         prompt_input = []
+        prompt_input += [persona.direct_mem.get_str_mds()]
 
         prompt_input += [persona.direct_mem.get_name()]  # 1
         prompt_input += [persona.direct_mem.living_area.split(":")[1]]
@@ -520,12 +522,12 @@ def run_prompt_action_sector(act_desp, persona, maze):
         prompt_input += [persona.direct_mem.get_name()]  # 12
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            cleaned_up = response_clean(response)
+            cleaned_up = response_clean(response, prompt=prompt)
             act_world = f"{maze.access_cell(persona.direct_mem.curr_cell)['world']}"
             if cleaned_up not in persona.spatial_mem.get_str_accessible_sectors(
                 act_world
@@ -570,6 +572,7 @@ def run_prompt_action_area(
 ):
     def create_prompt_input(action_desc, persona, maze, act_world, act_sector):
         prompt_input = []
+        prompt_input = [persona.direct_mem.get_str_mds()]
         prompt_input += [persona.direct_mem.get_name()]
         x = f"{act_world}:{act_sector}"
         prompt_input += [act_sector]
@@ -592,12 +595,12 @@ def run_prompt_action_area(
         prompt_input += [accessible_area_str]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            cleaned_up = response_clean(response)
+            cleaned_up = response_clean(response, prompt=prompt)
             if cleaned_up not in persona.spatial_mem.get_str_accessible_sector_areas(
                 f"{act_world}:{act_sector}"
             ):
@@ -646,12 +649,12 @@ def run_prompt_action_object(action_desc, persona, maze, temp_address):
         ]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            cleaned_up = response_clean(response)
+            cleaned_up = response_clean(response, prompt=prompt)
             if cleaned_up not in persona.spatial_mem.get_str_accessible_area_objects(
                 temp_address
             ):
@@ -700,14 +703,14 @@ def run_prompt_event_triple(action_desc, persona):
         prompt_input = [persona.direct_mem.name, action_desc]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         cr = response.strip()
         cr = tuple([i.strip() for i in cr[1:].split(")")[0].split(",")])
         return cr
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response = response_clean(response)
+            response = response_clean(response, prompt=prompt)
             if len(response) != 3:
                 return False
         except:
@@ -757,15 +760,15 @@ def run_prompt_act_obj_desc(
         ]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         cr = response.split("正在")[-1].strip()
         if cr[-1] == "。":
             cr = cr[:-1]
         return cr
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -813,14 +816,14 @@ def run_prompt_act_obj_event_triple(
         prompt_input = [act_object, act_obj_desc, act_object]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         cr = response.strip()
         cr = [i.strip() for i in cr[1:].split(")")[0].split(",")]
         return cr
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response = response_clean(response)
+            response = response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -864,12 +867,12 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         if last_chat:
             last_chatted_time = last_chat.created.strftime("%B %d, %Y, %H:%M:%S")
             last_chat_about = last_chat.description
-            about_last_chat = f"{init_persona.name} 和 {target_persona.name} 最后一次在 {last_chatted_time} 讨论了 {last_chat_about}。"
+            about_last_chat = f"{init_persona.name} 和 {target_persona.name} 最后一次在 {last_chatted_time} 讨论了 {last_chat_about}"
 
         context = ""
         for c_node in retrieved["events"]:
             curr_desc = c_node.description.split(" ")
-            curr_desc[2:3] = ["此前"]
+            curr_desc[1:2] = ["此前正在"]
             curr_desc = " ".join(curr_desc)
             context += f"{curr_desc}. "
             context += "\n"
@@ -890,7 +893,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         elif "等待" in init_act_desc:
             init_p_desc = f"{init_persona.name} 正在 {init_act_desc}"  # is
         else:
-            init_p_desc = f"{init_persona.name} 正在 {init_act_desc}"
+            init_p_desc = f"{init_persona.name} 正在去 {init_act_desc} 的路上"
 
         target_act_desc = target_persona.direct_mem.act_description
         if "（" in target_act_desc:
@@ -903,7 +906,7 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         elif "等待" in init_act_desc:
             target_p_desc = f"{init_persona.name} 正在 {init_act_desc}"
         else:
-            target_p_desc = f"{target_persona.name} 正在 {target_act_desc}"
+            target_p_desc = f"{target_persona.name} 正在去 {target_act_desc} 的路上"
 
         prompt_input = []
         prompt_input += [context]
@@ -917,31 +920,41 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         prompt_input += [target_persona.name]
         return prompt_input
 
-    def response_clean(response):
-        print("<run_prompt_decide_to_talk> response:", response)
-        return response.split("回答是或否：")[-1][0]
+    def response_clean(response, prompt=""):
+        response = extract_first_json_dict(response)
+        cleaned_dict = dict()
+        cleaned = []
+        for key, val in response.items():
+            cleaned += [val]
+        cleaned_dict["inference"] = cleaned[0]
+        cleaned_dict["answer"] = True
+        if "f" in str(cleaned[1]) or "F" in str(cleaned[1]):
+            cleaned_dict["answer"] = False
 
-    def response_validate(response):
+        return cleaned_dict
+        # print("<run_prompt_decide_to_talk> response:", response)
+        # return response[-1]
+
+    def response_validate(response, prompt=""):
         try:
-            if response_clean(response) in ["是", "否"]:
-                return True
-            return False
+            extract_first_json_dict(response)
+            return True
         except:
             return False
 
     def get_fail_safe():
-        fs = "是"
+        fs = {"inference": "get_fail_safe", "answer": True}
         return fs
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 100,
+        "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
         "stream": False,
         "stop": None,
     }
-    prompt_template = f"{prompt_path}/plan/decide_to_talk_v1.txt"
+    prompt_template = f"{prompt_path}/plan/decide_to_talk_inner_thought_v1.txt"
     prompt_input = create_prompt_input(init_persona, target_persona, retrieved)
     prompt = generate_prompt(prompt_input, prompt_template)
     output, elapsed_time = generate_response(
@@ -952,20 +965,20 @@ def run_prompt_decide_to_talk(init_persona, target_persona, retrieved):
         get_fail_safe=get_fail_safe(),
     )
     print_prompt_output(init_persona.name, prompt, output, elapsed_time)
-    return True if output == "是" else False
+    return output["answer"]
 
 
 def run_prompt_decide_to_react(init_persona, target_persona, retrieved):
     def create_prompt_input(init_persona, target_persona, retrieved):
         context = ""
-        for c_node in retrieved["events"]:
+        for c_node in retrieved["events"][:20]:
             curr_desc = c_node.description.split(" ")
-            curr_desc[2:3] = ["此前"]
+            curr_desc[1:2] = ["此前"]
             curr_desc = " ".join(curr_desc)
-            context += f"{curr_desc}. "
+            context += f"{curr_desc}。"
         context += "\n"
-        for c_node in retrieved["thoughts"]:
-            context += f"{c_node.description}. "
+        for c_node in retrieved["thoughts"][:20]:
+            context += f"{c_node.description}。"
 
         curr_time = init_persona.direct_mem.curr_time.strftime("%B %d, %Y, %H:%M:%S %p")
         init_act_desc = init_persona.direct_mem.act_description
@@ -1028,12 +1041,12 @@ def run_prompt_decide_to_react(init_persona, target_persona, retrieved):
         prompt_input += [init_act_desc]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         return response.split("答案：选项")[-1].strip()
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            if response_clean(response) in ["1", "2"]:
+            if response_clean(response, prompt=prompt) in ["1", "2"]:
                 return True
             return False
         except:
@@ -1045,7 +1058,7 @@ def run_prompt_decide_to_react(init_persona, target_persona, retrieved):
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 100,
+        "max_tokens": 4096,
         "temperature": 0.3,
         "top_p": 1,
         "stream": False,
@@ -1080,13 +1093,13 @@ def run_prompt_event_poignancy(
         ]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         response = int(response.strip())
         return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -1135,13 +1148,13 @@ def run_prompt_chat_poignancy(
         ]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         response = int(response.strip())
         return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
         except:
             return False
         return True
@@ -1172,6 +1185,212 @@ def run_prompt_chat_poignancy(
         get_fail_safe=get_fail_safe(),
     )
     print_prompt_output(persona.name, prompt, output, elapsed_time, True)
+    return output
+
+
+def run_prompt_focal_point(persona, statements, n):
+    def create_prompt_input(persona, statements, n):
+        return [statements, str(n)]
+
+    def response_clean(response, prompt=""):
+        cleaned = []
+        for line in response.split("\n"):
+            cleaned.append(line.split(")")[-1])
+        return cleaned
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt=prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe(n):
+        return [f"Untitled Topic {i+1}" for i in range(n)]
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 150,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/reflect/generate_focal_point_v1.txt"
+    prompt_input = create_prompt_input(persona, statements, n)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=lambda: get_fail_safe(n),
+    )
+
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_insight_guidance(persona, statements, n):
+    def create_prompt_input(persona, statements, n):
+        prompt_input = []
+        prompt_input += [f"姓名:{persona.direct_mem.name}"]
+        prompt_input += [f"年龄:{persona.direct_mem.age}"]
+        prompt_input += [f"性别:{persona.direct_mem.gender}"]
+        prompt_input += [f"性格:{persona.direct_mem.personality}"]
+        prompt_input += [f"背景:{persona.direct_mem.background}"]
+        prompt_input += [statements]
+        prompt_input += [persona.name]
+        prompt_input += [str(n)]
+
+        return prompt_input
+
+    def response_clean(response, prompt=""):
+        # response = "1. " + response.strip()
+        result = dict()
+        for line in response.split("\n"):
+            content = line.split(". ")[-1]
+            insight_part = content.split("(依据：")[0].strip()
+            evidence_part = content.split("(依据：")[1].split(")")[0].strip()
+            evidence_ids = [
+                int(num.strip()) for num in re.findall(r"\d+", evidence_part)
+            ]
+            result[insight_part] = evidence_ids
+        return result
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt=prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return ["未获取到洞察"] * n
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 200,
+        "temperature": 0.3,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/reflect/insight_guidance_v1.txt"
+    prompt_input = create_prompt_input(persona, statements, n)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_planning_thought_on_convo(persona, all_utt):
+    def create_prompt_input(persona, all_utt):
+        prompt_input = []
+        prompt_input += [f"姓名:{persona.direct_mem.name}"]
+        prompt_input += [f"年龄:{persona.direct_mem.age}"]
+        prompt_input += [f"性别:{persona.direct_mem.gender}"]
+        prompt_input += [f"性格:{persona.direct_mem.personality}"]
+        prompt_input += [f"背景:{persona.direct_mem.background}"]
+        prompt_input += [all_utt]
+        prompt_input += [persona.name]
+        prompt_input += [persona.name]
+        prompt_input += [persona.name]
+        return prompt_input
+
+    def response_clean(response, prompt=""):
+        return response.split('"')[0].strip()
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt=prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 100,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/reflect/planning_thought_v1.txt"
+    prompt_input = create_prompt_input(persona, all_utt)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe,
+    )
+
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_memo_on_convo(persona, all_utt):
+    def create_prompt_input(persona, all_utt):
+        return [
+            all_utt,
+            persona.direct_mem.name,
+            persona.direct_mem.name,
+            persona.direct_mem.name,
+        ]
+
+    def response_clean(response, prompt=""):
+        return response.strip()
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt=prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 300,
+        "temperature": 0,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/reflect/memo_on_convo_v1.txt"
+    prompt_input = create_prompt_input(persona, all_utt)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe,
+    )
+
+    print_prompt_output(persona.name, prompt, output, elapsed_time)
     return output
 
 
@@ -1218,9 +1437,10 @@ def run_prompt_new_decomp_schedule(
             if count < len(truncated_act_dur) - 1:
                 for_time += datetime.timedelta(minutes=int(i[1]))
 
-        new_plan_init += (for_time + datetime.timedelta(minutes=int(i[1]))).strftime(
-            "%H:%M"
-        ) + " ~"
+        # new_plan_init += (for_time + datetime.timedelta(minutes=int(i[1]))).strftime(
+        #     "%H:%M"
+        # ) + " ~"
+        # new_plan_init += "(从此处开始，生成后续日程)"
 
         prompt_input = [
             persona_name,
@@ -1238,10 +1458,14 @@ def run_prompt_new_decomp_schedule(
         ]
         return prompt_input
 
-    def response_clean(response):
-        new_schedule = prompt + " " + response.strip()
-        new_schedule = new_schedule.split("调整后的日程安排：")[-1].strip()
-        new_schedule = new_schedule.split("\n")
+    def response_clean(response, prompt):
+        new_schedule = (
+            prompt.split("(从此处开始，仅生成后续日程)")[0] + response.strip()
+        )
+        new_schedule = new_schedule.split(
+            "调整后的日程安排（仅输出变更时段之后的调整部分，即从以下日程结尾的下一项开始）："
+        )[-1].strip()
+        new_schedule = new_schedule.strip().split("\n")
 
         ret_temp = []
         for i in new_schedule:
@@ -1261,23 +1485,29 @@ def run_prompt_new_decomp_schedule(
 
         return ret
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
             response = response_clean(response, prompt)
             dur_sum = 0
             for act, dur in response:
                 dur_sum += dur
                 if str(type(act)) != "<class 'str'>":
+                    print_c(f"<run_prompt_new_decomp_schedule> act error: {act}")
                     return False
                 if str(type(dur)) != "<class 'int'>":
+                    print_c(f"<run_prompt_new_decomp_schedule> dur error: {dur}")
                     return False
             x = prompt.split("\n")[0].split("原本计划在")[-1].strip()[:-1]
-            x = [
-                datetime.datetime.strptime(i.strip(), "%H:%M %p") for i in x.split("到")
-            ]
-            delta_min = int((x[1] - x[0]).total_seconds() / 60)
+            x_start = datetime.datetime.strptime(x.split("到")[0].strip(), "%H:%M %p")
+            x_end = datetime.datetime.strptime(
+                x.split("到")[-1].rsplit(" ", 1)[0].strip(), "%H:%M %p"
+            )
+            delta_min = int((x_end - x_start).total_seconds() / 60)
 
             if int(dur_sum) != int(delta_min):
+                print_c(
+                    f"<run_prompt_new_decomp_schedule> error dur_sum != delta_min: {dur_sum} != {delta_min}"
+                )
                 return False
 
         except:
@@ -1308,9 +1538,9 @@ def run_prompt_new_decomp_schedule(
         return ret
 
     model_param = {
-        "model": specify_model,
-        "max_tokens": 400,
-        "temperature": 0.3,
+        "model": specify_CoT_model,
+        "max_tokens": 4096,
+        "temperature": 0.4,
         "top_p": 1,
         "stream": False,
         "stop": None,
@@ -1350,10 +1580,10 @@ def run_prompt_agent_chat_summarize_relationship(
         ]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         return response
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         return True
 
     def get_fail_safe():
@@ -1406,10 +1636,10 @@ def run_generate_iterative_chat_utt(
                     v1 = int(
                         (persona.direct_mem.curr_time - i.created).total_seconds() / 60
                     )
-                    prev_convo_insert += f"{str(v1)} 分钟之前， {persona.direct_mem.name} 和 {target_persona.direct_mem.name} 已经 {i.description} This context takes place after that conversation."  # 这句话怎么翻译？？？
+                    prev_convo_insert += f"{str(v1)} 分钟之前，{persona.direct_mem.name} 和 {target_persona.direct_mem.name} 已经 {i.description} This context takes place after that conversation."  # 这句话怎么翻译？？？
                     break
         if prev_convo_insert == "\n":
-            prev_convo_insert = ""
+            prev_convo_insert = "（暂无）"
         if persona.associate_mem.seq_chat:
             if (
                 int(
@@ -1421,11 +1651,13 @@ def run_generate_iterative_chat_utt(
                 )
                 > 480
             ):
-                prev_convo_insert = ""
+                prev_convo_insert = "（暂无）"
 
         curr_sector = f"{maze.access_cell(persona.direct_mem.curr_cell)['sector']}"
         curr_area = f"{maze.access_cell(persona.direct_mem.curr_cell)['area']}"
-        curr_location = f"{curr_sector} 中的 {curr_area}"
+        curr_location = f"{curr_sector}"
+        if curr_area:
+            curr_location += f" 中的 {curr_area}"
 
         retrieved_str = ""
         for key, vals in retrieved.items():
@@ -1456,7 +1688,7 @@ def run_generate_iterative_chat_utt(
         ]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         response = extract_first_json_dict(response)
 
         cleaned_dict = dict()
@@ -1470,7 +1702,7 @@ def run_generate_iterative_chat_utt(
 
         return cleaned_dict
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
             extract_first_json_dict(response)
             return True
@@ -1522,13 +1754,13 @@ def run_prompt_summarize_conversation(
         prompt_input = [convo_str]
         return prompt_input
 
-    def response_clean(response):
+    def response_clean(response, prompt=""):
         ret = "谈论有关 " + response.split("这是一个关于")[-1]
         return ret
 
-    def response_validate(response):
+    def response_validate(response, prompt=""):
         try:
-            response_clean(response)
+            response_clean(response, prompt=prompt)
             return True
         except:
             return False
@@ -1538,7 +1770,7 @@ def run_prompt_summarize_conversation(
 
     model_param = {
         "model": specify_model,
-        "max_tokens": 25,
+        "max_tokens": 50,
         "temperature": 0.8,
         "top_p": 1,
         "stream": False,
@@ -1559,6 +1791,204 @@ def run_prompt_summarize_conversation(
         get_fail_safe=get_fail_safe(),
     )
     print_prompt_output(persona.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_summarize_ideas(persona, statements, question):
+    def create_prompt_input(persona, statements, question):
+        return [statements, persona.direct_mem.name, question]
+
+    def response_clean(response, prompt=""):
+        print_c(f"<run_prompt_summarize_ideas> response: {response}")
+        return response.split('"')[0].strip()
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,  # TODO: specify_model更换为推理模型
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/convo/summarize_ideas_v1.txt"
+    prompt_input = create_prompt_input(persona, statements, question)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_generate_next_convo_line(
+    persona, interlocutor_desc, prev_convo, retrieved_summary
+):
+    def create_prompt_input(persona, interlocutor_desc, prev_convo, retrieved_summary):
+        return [
+            persona.direct_mem.name,
+            persona.direct_mem.get_str_mds(),
+            persona.direct_mem.name,
+            interlocutor_desc,
+            prev_convo,
+            persona.direct_mem.name,
+            retrieved_summary,
+            persona.direct_mem.name,
+        ]
+
+    def response_clean(response, prompt=""):
+        print_c(f"<run_prompt_generate_next_convo_line> response: {response}")
+        return response.split('"')[-2]
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/convo/generate_next_convo_line_v1.txt"
+    prompt_input = create_prompt_input(
+        persona, interlocutor_desc, prev_convo, retrieved_summary
+    )
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_generate_next_minds_line(
+    persona, interlocutor_desc, prev_convo_minds, retrieved_summary
+):
+    def create_prompt_input(
+        persona, interlocutor_desc, prev_convo_minds, retrieved_summary
+    ):
+        return [
+            persona.direct_mem.name,
+            persona.direct_mem.get_str_mds(),
+            persona.direct_mem.name,
+            interlocutor_desc,
+            prev_convo_minds,
+            persona.direct_mem.name,
+            retrieved_summary,
+        ]
+
+    def response_clean(response, prompt=""):
+        print_c(f"<run_prompt_generate_next_minds_line> response: {response}")
+        return response.replace('"', "").replace("'", "")
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/convo/generate_next_convo_minds_v1.txt"
+    prompt_input = create_prompt_input(
+        persona, interlocutor_desc, prev_convo_minds, retrieved_summary
+    )
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
+    return output
+
+
+def run_prompt_generate_whisper_inner_thought(persona, whisper):
+    def create_prompt_input(persona, whisper):
+        return [persona.direct_mem.name, whisper]
+
+    def response_clean(response, prompt=""):
+        return response.split('"')[0].strip()
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/convo/whisper_inner_thought_v1.txt"
+    prompt_input = create_prompt_input(persona, whisper)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
     return output
 
 

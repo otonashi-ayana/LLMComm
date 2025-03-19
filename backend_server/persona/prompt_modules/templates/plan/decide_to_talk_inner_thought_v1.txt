@@ -1,0 +1,21 @@
+decide_to_talk_inner_thought_v1.txt
+
+#<INPUT 0># 最小描述集合 Minimal description set
+
+<BLOCK></BLOCK>
+任务：根据给定上下文，判断主体人物是否会与另一人物发起对话。
+
+上下文信息: #<INPUT 0># 
+此刻时间是 #<INPUT 1>#。#<INPUT 2>#
+#<INPUT 3># 
+#<INPUT 4># 
+
+问题: #<INPUT 5># 会想与 #<INPUT 6># 发起对话吗?
+输出内容模板如下：
+{
+"inference": "<#<INPUT 12>#的考虑,30到40字>",
+"answer": "<json Boolean>"
+}
+要求：
+inference：以#<INPUT 5>#内心第一人称视角回答其内心想法
+answer：给出最终的决定（True 或 False）

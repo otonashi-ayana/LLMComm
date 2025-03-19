@@ -70,10 +70,6 @@ class Maze:
                 if self.object_2d[i][j] in ob_dict:
                     cell_info["object"] = ob_dict[self.object_2d[i][j]]
                 cell_info["spawning_location"] = ""
-                # if spawning_location_2d[i][j] in slb_dict:
-                #     cell_info["spawning_location"] = slb_dict[
-                #         spawning_location_2d[i][j]
-                #     ]
                 if self.collision_2d[i][j] != "0":
                     cell_info["collision"] = True
                 else:
@@ -126,6 +122,54 @@ class Maze:
                     else:
                         self.cells_of_addr[add] = set([(j, i)])
         print("<Maze.init> done")
+
+    def export_map_structure(self, output_path=None):
+        """
+        将地图层级结构导出为JSON文件，结构与spatial_memory.json类似
+        """
+        if output_path is None:
+            output_path = f"{storage_path}/map_structure.json"
+
+        # 构建层级结构
+        structure = {}
+
+        # 遍历所有地址
+        for addr in self.cells_of_addr.keys():
+            parts = addr.split(":")
+
+            # 跳过无效地址
+            if len(parts) < 2 or not all(parts):
+                continue
+
+            world = parts[0]
+            sector = parts[1] if len(parts) > 1 else ""
+            area = parts[2] if len(parts) > 2 else ""
+            obj = parts[3] if len(parts) > 3 else ""
+
+            if sector == "小区大门":
+                continue
+
+            # 构建嵌套结构
+            if world not in structure:
+                structure[world] = {}
+
+            if sector and sector != "":
+                if sector not in structure[world]:
+                    structure[world][sector] = {}
+
+                if area and area != "":
+                    if area not in structure[world][sector]:
+                        structure[world][sector][area] = []
+
+                    if obj and obj != "" and obj not in structure[world][sector][area]:
+                        structure[world][sector][area].append(obj)
+
+        # 写入JSON文件
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(structure, f, indent=4, ensure_ascii=False)
+
+        print(f"<Maze.export_map_structure> 地图结构已导出到: {output_path}")
+        return structure
 
     def access_cell(self, cell):
         x = cell[0]

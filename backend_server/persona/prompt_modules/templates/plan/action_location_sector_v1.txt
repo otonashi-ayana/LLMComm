@@ -1,5 +1,6 @@
 action_location_sector_v1.txt
 
+#<INPUT 0># -- 人物mds
 #<INPUT 0># -- 人物名称
 #<INPUT 1># -- 生活区域living_area
 #<INPUT 2># -- 生活区域的所有事物
@@ -17,7 +18,8 @@ action_location_sector_v1.txt
 
 根据手头的任务从可选区域中选择一个合适的选项
 ---
-#<INPUT 0># 住在 {#<INPUT 1>#}，那里有 {#<INPUT 2>#}。 #<INPUT 3># 目前在 {#<INPUT 4>#}，那里有 {#<INPUT 5>#}。#<INPUT 6># 区域选项：{#<INPUT 7>#}。
+#<INPUT 0>#
+#<INPUT 1># 住在 {#<INPUT 2>#}，那里有 {#<INPUT 3>#}。 #<INPUT 4># 目前在 {#<INPUT 5>#}，那里有 {#<INPUT 6>#}。#<INPUT 7># 区域选项：{#<INPUT 8>#}。
 
 如果活动可以在当前区域内进行，则留在当前区域。只有当活动需要在另一个地方进行时才转移区域。
-必须是文字上的“区域选项”之一。 #<INPUT 8># 正在 #<INPUT 9>#。对于 #<INPUT 10>#, #<INPUT 11># 应该去以下区域(仅返回区域名称，禁止添加其他任何解释、总结或附加内容)：
+必须是文字上的“区域选项”之一。 #<INPUT 9># 正在进行 #<INPUT 10># 这一主事项的 #<INPUT 11># 子事项, #<INPUT 12># 应该去以下区域(仅返回区域名称，禁止添加其他任何解释、总结或附加内容)：

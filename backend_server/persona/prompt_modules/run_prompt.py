@@ -455,7 +455,7 @@ def run_prompt_task_decomp(persona, task, duration):
         return fs
 
     model_param = {
-        "model": specify_CoT_model,
+        "model": specify_model, # specify_CoT_model
         "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
@@ -1538,7 +1538,7 @@ def run_prompt_new_decomp_schedule(
         return ret
 
     model_param = {
-        "model": specify_CoT_model,
+        "model": specify_model, #specify_CoT_model
         "max_tokens": 4096,
         "temperature": 0.4,
         "top_p": 1,

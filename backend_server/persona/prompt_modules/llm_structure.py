@@ -91,10 +91,11 @@ def LLM_request(prompt, parameter):
 def get_embedding(text, model=emb_specify_model):
     text = text.replace("\n", " ")
     if not text:
-        text = "this is blank"
+        text = "无"
     client = OpenAI(api_key=emb_api_key, base_url=emb_base_url)
     response = client.embeddings.create(
-        model=model, input=text, dimensions=1024, encoding_format="float"
+        model=model, input=text, encoding_format="float",
+        # dimensions=1024, 
     )
     response_dump = response.model_dump()
     return response_dump["data"][0]["embedding"]
@@ -112,7 +113,6 @@ def generate_response(
             (reasoning_reasoning, curr_response), elapsed_time = CoT_LLM_request(
                 prompt, parameter
             )
-            # print_c("reasoning_reasoning:", reasoning_reasoning)
         else:
             curr_response, elapsed_time = LLM_request(prompt, parameter)
         if func_valid(curr_response, prompt=prompt):

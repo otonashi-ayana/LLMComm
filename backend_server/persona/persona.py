@@ -36,8 +36,8 @@ class Persona:
     def retrieve(self, perceived):
         return retrieve(self, perceived)
 
-    def plan(self, maze, personas, new_day, retrieved):
-        return plan(self, maze, personas, new_day, retrieved)
+    def plan(self, maze, personas, new_day, retrieved,sec_per_step):
+        return plan(self, maze, personas, new_day, retrieved,sec_per_step)
 
     def reflect(self):
         reflect(self)
@@ -45,7 +45,7 @@ class Persona:
     def execute(self, maze, personas, plan):
         return execute(self, maze, personas, plan)
 
-    def move(self, maze, personas, curr_time):
+    def move(self, maze, personas, curr_time,sec_per_step):
         new_day = False
         if not self.direct_mem.curr_time:
             new_day = "first"
@@ -66,7 +66,7 @@ class Persona:
             ):  # 如果当前动作已经完成(则进行新的规划，不perceive和retrieve)
                 self.direct_mem.curr_cell = backing_cell
                 print("<move> 已经返回小区,恢复到backing_cell")
-                plan = self.plan(maze, personas, new_day, retrieved=dict())
+                plan = self.plan(maze, personas, new_day, retrieved=dict(),sec_per_step=sec_per_step)
                 self.reflect()
                 return self.execute(maze, personas, plan)
 
@@ -80,9 +80,9 @@ class Persona:
             return execution
         perceived = self.perceive(maze)
         retrieved = self.retrieve(perceived)
-        plan = self.plan(maze, personas, new_day, retrieved)
+        plan = self.plan(maze, personas, new_day, retrieved,sec_per_step)
         self.reflect()
         return self.execute(maze, personas, plan)
 
-    def open_convo_session(self, convo_mode):
-        open_convo_session(self, convo_mode)
+    def open_convo_session(self, convo_mode, convo_text=None):
+        open_convo_session(self, convo_mode, convo_text=convo_text)

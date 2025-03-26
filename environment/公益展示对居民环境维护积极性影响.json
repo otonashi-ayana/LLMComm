@@ -1,0 +1,11 @@
+{
+"论文1_公益展示对居民维护环境积极性的影响" : [
+  {"type":"description","description":"煽动性信息的传播、信息茧房的研究、公益宣传效果的研究都可套用此模板"},
+  {"type":"run","hour":"14"},
+  {"type":"run","min":"30"},
+  {"type":"intervene","func":"placement","args":[[1,2],"公益海报（呼吁保护社区环保公益环境）"],"description":"如果该坐标有object则覆盖名称；如果没有则创建"},
+  {"type":"run","day":"10"},
+  {"type":"survey", "args":[["社区一般居民"],"Comm/whisper/agent_survey.csv"]},
+  {"type":"save"}
+]
+}

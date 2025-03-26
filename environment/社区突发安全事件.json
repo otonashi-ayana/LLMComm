@@ -1,0 +1,14 @@
+{
+  "突发安全事件处置" : [
+    {"type":"load","func":"whisper","args":["Comm/whisper/agent_history_init_n3.csv"]},
+    {"type":"run","hour":"14"},
+    {"type":"run","min":"30"},
+    
+
+    {"type":"intervene","func":"whisper","args":[["李华","王五","李四"],"紧急事件：李四饭店发生了争执斗殴事件"]},
+    {"type":"run","hour":"1"},
+    {"type":"interview", "args":[["李华"],["您对在社区公园随手扔垃圾是什么看法？","end"]],"description":"open_convo_session循环对话，end退出后进行后续流程，也可以在args中预先指定问题及end"},
+    {"type":"interview", "args":[["李四","王五"],["您对刚才遇见的社区居民在公园随手扔垃圾是什么看法？","end"]]},
+    {"type":"save"}
+  ]
+}

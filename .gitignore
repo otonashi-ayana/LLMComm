@@ -5,3 +5,7 @@
 
 # 但不忽略 base_comm 文件夹及其内容
 !/environment/storage/base_comm/
+
+/environment/assets/Comm/matrix/*
+!/environment/assets/Comm/matrix/base_comm
+!/environment/assets/Comm/matrix/maze_design

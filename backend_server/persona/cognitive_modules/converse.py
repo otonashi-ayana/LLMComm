@@ -210,7 +210,7 @@ def generate_next_minds(
     for index, row in enumerate(curr_convo):
         prev_convo_minds += f"{row[0]}: {row[1]}\n"
         if index % 2 == 1:
-            prev_convo_minds += f"[内心想法]：{curr_minds[index//2]}\n"
+            prev_convo_minds += f"{curr_minds[index//2]}\n"
 
     next_minds = run_prompt_generate_next_minds_line(
         persona, interlocutor_desc, prev_convo_minds, summarized_idea
@@ -255,14 +255,18 @@ def load_whisper_csv(personas, whispers):
         )
 
 
-def open_convo_session(persona, convo_mode):
+def open_convo_session(persona, convo_mode, convo_text):
     if convo_mode == "interview":
         curr_convo = []
         curr_minds = []
         interlocutor_desc = "采访者"
 
         while True:
-            line = input("请输入内容(输入 end 终止访谈): ")
+            if convo_text:
+                line = convo_text.pop(0)
+            else:
+                line = input("请输入内容(输入 end 终止访谈): ")
+
             if line == "end":
                 break
 
@@ -284,10 +288,13 @@ def open_convo_session(persona, convo_mode):
                 for index, convo in enumerate(curr_convo):
                     print(f"{convo[0]}: {convo[1]}")
                     if index % 2 == 1:
-                        print(f"[内心想法]：{curr_minds[index//2]}")
+                        print(f"{curr_minds[index//2]}")
 
     elif convo_mode == "whisper":
-        whisper = input("请输入内容: ")
+        if convo_text:
+            whisper = convo_text
+        else:
+            whisper = input("请输入内容: ")
         thought = generate_inner_thought(persona, whisper)
 
         created = persona.direct_mem.curr_time

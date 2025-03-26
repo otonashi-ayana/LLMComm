@@ -10,14 +10,6 @@ sys.path.append("../../")
 from persona.prompt_modules.run_prompt import *
 from persona.cognitive_modules.converse import *
 
-# from converse import (
-#     register_convo,
-#     update_convo_status_from_map,
-#     check_participants_form_map,
-#     wait_until_chat_done,
-#     remove_convo_from_map,
-# )
-
 
 def generate_wake_up_time(persona):
     """
@@ -519,7 +511,7 @@ def generate_new_decomp_schedule(
 
     x = (
         truncated_act_dur[-1][0].split("（")[0].strip()
-        + "（即将去 "  # on the way to
+        + "（将要 "  # on the way to
         + truncated_act_dur[-1][0].split("（")[-1][:-1]
         + "）"
     )
@@ -902,7 +894,7 @@ def _create_react(
     )
 
 
-def _chat_react(maze, persona, target_persona, personas):
+def _chat_react(maze, persona, target_persona, personas,sec_per_step):
     # There are two personas -- the persona who is initiating the conversation
     # and the persona who is the target. We get the persona instances here.
     init_persona = persona
@@ -933,13 +925,14 @@ def _chat_react(maze, persona, target_persona, personas):
             act_event = (p.name, "聊天", target_persona.name)  # chat with
             chatting_with = target_persona.name
             chatting_with_buffer = {}
-            chatting_with_buffer[target_persona.name] = 80
+            chatting_with_buffer[target_persona.name] = 10 * int(math.pow(sec_per_step,0.5))
+            print_c(f"chatting_with_buffer 计算(10->30): {chatting_with_buffer[target_persona.name]}")
         elif role == "target":
             act_address = f"<persona> {init_persona.name}"
             act_event = (p.name, "聊天", init_persona.name)
             chatting_with = init_persona.name
             chatting_with_buffer = {}
-            chatting_with_buffer[init_persona.name] = 80
+            chatting_with_buffer[init_persona.name] = 10 * int(math.pow(sec_per_step,0.5))
 
         # act_pronunciatio = "💬"
         act_obj_description = None
@@ -1055,7 +1048,7 @@ def specify_action(persona, maze):
     persona.direct_mem.specify_action.clear()
 
 
-def plan(persona, maze, personas, new_day, retrieved):
+def plan(persona, maze, personas, new_day, retrieved,sec_per_step):
     # plan小时计划（min单位）
     if new_day:  # 如果是同一天内，new_day=False
         _new_day_planning(persona, new_day)
@@ -1080,7 +1073,7 @@ def plan(persona, maze, personas, new_day, retrieved):
         # print("reaction_mode:", reaction_mode)
         if reaction_mode:
             if reaction_mode[0] == "chat":  # ("chat", target persona name)
-                _chat_react(maze, persona, reaction_mode[1], personas)
+                _chat_react(maze, persona, reaction_mode[1], personas,sec_per_step)
             elif reaction_mode[0] == "chatted":  # ("chatted", chat_init persona name)
                 _chatted_react(persona, reaction_mode[1])
             elif reaction_mode[0] == "wait":  # ("wait", wait_until)

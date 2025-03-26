@@ -1,24 +1,27 @@
 {
-  // 使用 IntelliSense 了解相关属性。 
-  // 悬停以查看现有属性的描述。
-  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "运行 simulation.py",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/backend_server/simulation.py",
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "(带参数)运行 simulation.py ",
+      "name": "script simulation.py",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/backend_server/simulation.py",
       "console": "integratedTerminal",
       "args": [
-        "${input:steps}",
+        "script",
+        "${input:origin}",
+        "${input:target}",
+        "${input:script_path}",
+      ]
+    },
+    {
+      "name": "simulation.py ",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend_server/simulation.py",
+      "console": "integratedTerminal",
+      "args": [
+        "normal",
         "${input:origin}",
         "${input:target}"
       ]
@@ -26,22 +29,22 @@
   ],
   "inputs": [
     {
-      "id": "steps",
-      "type": "promptString",
-      "description": "要运行的步数",
-      "default": "1000"
-    },
-    {
       "id": "origin",
       "type": "promptString",
       "description": "要加载的模拟记录名称",
-      "default": "whisper_test"
+      "default": "base_comm_4h"
     },
     {
       "id": "target",
       "type": "promptString",
       "description": "要新创建的模拟记录名称",
-      "default": "whisper_test_1"
+      "default": "base_comm_temp"
+    },
+    {
+      "id": "script_path",
+      "type": "promptString",
+      "description": "脚本路径",
+      "default": "environment/test社区煽动信息传播与治理.json"
     }
   ]
 }

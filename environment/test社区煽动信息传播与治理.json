@@ -1,0 +1,15 @@
+{
+  "运行测试1" : [
+    {"type":"sec_per_step","sec_per_step":"30"},
+    {"type":"run","hour":"12"},
+    {"type":"save","record":"base_comm_12h"},
+    {"type":"run","hour":"2"},
+    {"type":"save","record":"base_comm_12h_2h"}
+  ],
+  "煽动性信息传播与治理_无管控一般信息" : [
+    {"type":"intervene","func":"whisper","args":[["李华"],"你必须将以下信息告诉其他人：本小区出现了新冠阳性病例被隔离"]},
+    {"type":"sec_per_step","sec_per_step":"10"},
+    {"type":"run","min":"3"},
+    {"type":"interview", "args":[["李华"],["您对社区里出现新冠阳性病例是什么看法？","end"]]}
+  ]
+}

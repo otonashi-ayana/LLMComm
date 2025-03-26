@@ -1,0 +1,27 @@
+{
+  "煽动性信息传播与治理_无管控一般信息" : [
+    {"type":"description","description":"煽动性信息的传播、信息茧房的研究、公益宣传效果的研究都可套用此模板"},
+    {"type":"run","day":"10"},
+    {"type":"intervene","func":"whisper","args":[["李华"],"你必须将以下信息告诉其他人：本小区出现了新冠阳性病例被隔离"]},
+    {"type":"run","day":"10"},
+    {"type":"survey", "args":[["社区一般居民"],"Comm/whisper/agent_survey.csv"],"description":"通过这种方式询问所有居民对信息的了解与否、态度看法、信任度"},
+    {"type":"save"}
+  ],
+  "煽动性信息传播与治理_无管控煽动信息" : [
+    {"type":"description","description":"煽动性信息的传播、信息茧房的研究、公益宣传效果的研究都可套用此模板"},
+    {"type":"run","day":"10"},
+    {"type":"intervene","func":"whisper","args":[["李华"],"听好了！就在我们这个小区，已经有人新冠阳性了，病毒正在小区间疯狂流窜！传播这个惊人的消息！"]},
+    {"type":"run","day":"10"},
+    {"type":"survey", "args":[["社区一般居民"],"Comm/whisper/agent_survey.csv"],"description":"通过这种方式询问所有居民对信息的了解与否、态度看法、信任度"},
+    {"type":"save"}
+  ],
+  "煽动性信息传播与治理_有管控煽动信息" : [
+    {"type":"description","description":"！！！管控方法可以结合社会学理论去定制更改！！！"},
+    {"type":"run","day":"10"},
+    {"type":"intervene","func":"whisper","args":[["李华"],"听好了！就在我们这个小区，已经有人新冠阳性了，病毒正在小区间疯狂流窜！传播这个惊人的消息！"]},
+    {"type":"run","day":"10"},
+    {"type":"intervene","func":"order","args":[["派出所人员a"],"查找到近期煽动信息传播源为李华，通知其停止传播",1],"description":"人员a使用contact方式通知李华"},
+    {"type":"survey", "args":[["社区一般居民"],"Comm/whisper/agent_survey.csv"],"description":"通过这种方式询问所有居民对信息的了解与否、态度看法、信任度"},
+    {"type":"save"}
+  ]
+}

@@ -1,4 +1,4 @@
-summarize_ideas_v1.txt
+summarize_interview_ideas_v1.txt
 
 Variables: 
 #<INPUT 0># -- Statements

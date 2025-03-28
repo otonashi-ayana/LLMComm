@@ -3,8 +3,7 @@
     {"type":"sec_per_step","sec_per_step":"30"},
     {"type":"run","hour":"12"},
     {"type":"save","record":"base_comm_12h"},
-    {"type":"run","hour":"2"},
-    {"type":"save","record":"base_comm_12h_2h"}
+    {"type":"run","hour":"2"}
   ],
   "煽动性信息传播与治理_无管控一般信息" : [
     {"type":"intervene","func":"whisper","args":[["李华"],"你必须将以下信息告诉其他人：本小区出现了新冠阳性病例被隔离"]},

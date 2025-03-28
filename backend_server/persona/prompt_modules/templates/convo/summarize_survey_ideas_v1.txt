@@ -1,0 +1,16 @@
+summarize_survey_ideas_v1.txt
+
+Variables: 
+#<INPUT 0># -- Statements
+#<INPUT 1># -- agent name
+#<INPUT 2># -- survey name
+#<INPUT 3># -- survey question
+
+<BLOCK></BLOCK>
+[相关陈述]: 
+#<INPUT 0>#
+
+#<INPUT 1>#正在做一份名为“#<INPUT 2>#”的调查问卷，其中一项问题为：
+"#<INPUT 3>#"
+
+总结与该问题最相关的陈述（仅返回陈述本身内容，禁止添加解释、附加性内容）：

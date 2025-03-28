@@ -1,8 +1,10 @@
 import sys
+import os
 
 sys.path.append("../")
 from persona.memory_modules.direct_memory import *
 from persona.memory_modules.spatial_memory import *
+from persona.memory_modules.associate_memory import *
 from persona.cognitive_modules.plan import *
 from persona.cognitive_modules.perceive import *
 from persona.cognitive_modules.retrieve import *
@@ -13,8 +15,12 @@ from maze import *
 
 
 class Persona:
-    def __init__(self, name, saved_path):
+    def __init__(self, name, sim_path):
         self.name = name
+        saved_path = f"{sim_path}/personas/{self.name}"
+
+        # 确保目录存在
+        os.makedirs(saved_path, exist_ok=True)
 
         direct_memory_path = f"{saved_path}/direct_memory.json"
         self.direct_mem = DirectMemory(direct_memory_path)
@@ -23,9 +29,14 @@ class Persona:
         self.spatial_mem = MemoryTree(spatial_memory_path)
 
         associate_memory_path = f"{saved_path}/associative_memory"
-        self.associate_mem = AssociativeMemory(associate_memory_path)
+        self.associate_mem = AssociativeMemory(
+            associate_memory_path, self.name, sim_path
+        )
 
     def save(self, saved_path):
+        # 确保目录存在
+        os.makedirs(saved_path, exist_ok=True)
+
         self.direct_mem.save(f"{saved_path}/direct_memory.json")
         self.spatial_mem.save(f"{saved_path}/spatial_memory.json")
         self.associate_mem.save(f"{saved_path}/associative_memory")
@@ -36,8 +47,8 @@ class Persona:
     def retrieve(self, perceived):
         return retrieve(self, perceived)
 
-    def plan(self, maze, personas, new_day, retrieved,sec_per_step):
-        return plan(self, maze, personas, new_day, retrieved,sec_per_step)
+    def plan(self, maze, personas, new_day, retrieved, sec_per_step):
+        return plan(self, maze, personas, new_day, retrieved, sec_per_step)
 
     def reflect(self):
         reflect(self)
@@ -45,7 +56,7 @@ class Persona:
     def execute(self, maze, personas, plan):
         return execute(self, maze, personas, plan)
 
-    def move(self, maze, personas, curr_time,sec_per_step):
+    def move(self, maze, personas, curr_time, sec_per_step):
         new_day = False
         if not self.direct_mem.curr_time:
             new_day = "first"
@@ -66,7 +77,9 @@ class Persona:
             ):  # 如果当前动作已经完成(则进行新的规划，不perceive和retrieve)
                 self.direct_mem.curr_cell = backing_cell
                 print("<move> 已经返回小区,恢复到backing_cell")
-                plan = self.plan(maze, personas, new_day, retrieved=dict(),sec_per_step=sec_per_step)
+                plan = self.plan(
+                    maze, personas, new_day, retrieved=dict(), sec_per_step=sec_per_step
+                )
                 self.reflect()
                 return self.execute(maze, personas, plan)
 
@@ -80,7 +93,7 @@ class Persona:
             return execution
         perceived = self.perceive(maze)
         retrieved = self.retrieve(perceived)
-        plan = self.plan(maze, personas, new_day, retrieved,sec_per_step)
+        plan = self.plan(maze, personas, new_day, retrieved, sec_per_step)
         self.reflect()
         return self.execute(maze, personas, plan)
 

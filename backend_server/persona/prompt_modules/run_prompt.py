@@ -455,7 +455,7 @@ def run_prompt_task_decomp(persona, task, duration):
         return fs
 
     model_param = {
-        "model": specify_model, # specify_CoT_model
+        "model": specify_model,  # specify_CoT_model
         "max_tokens": 4096,
         "temperature": 0,
         "top_p": 1,
@@ -1538,7 +1538,7 @@ def run_prompt_new_decomp_schedule(
         return ret
 
     model_param = {
-        "model": specify_model, #specify_CoT_model
+        "model": specify_model,  # specify_CoT_model
         "max_tokens": 4096,
         "temperature": 0.4,
         "top_p": 1,
@@ -1794,12 +1794,11 @@ def run_prompt_summarize_conversation(
     return output
 
 
-def run_prompt_summarize_ideas(persona, statements, question):
+def run_prompt_summarize_interview_ideas(persona, statements, question):
     def create_prompt_input(persona, statements, question):
         return [statements, persona.direct_mem.name, question]
 
     def response_clean(response, prompt=""):
-        print_c(f"<run_prompt_summarize_ideas> response: {response}")
         return response.split('"')[0].strip()
 
     def response_validate(response, prompt=""):
@@ -1821,7 +1820,7 @@ def run_prompt_summarize_ideas(persona, statements, question):
         "stop": None,
     }
 
-    prompt_template = f"{prompt_path}/convo/summarize_ideas_v1.txt"
+    prompt_template = f"{prompt_path}/convo/summarize_interview_ideas_v1.txt"
     prompt_input = create_prompt_input(persona, statements, question)
     prompt = generate_prompt(prompt_input, prompt_template)
 
@@ -1835,6 +1834,101 @@ def run_prompt_summarize_ideas(persona, statements, question):
 
     print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
     return output
+
+
+def run_prompt_summarize_survey_ideas(persona, statements, survey_name, question):
+    def create_prompt_input(persona, statements, survey_name, question):
+        return [statements, persona.direct_mem.name, survey_name, question]
+
+    def response_clean(response, prompt=""):
+        return response.split('"')[0].strip()
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,  # TODO: specify_model更换为推理模型
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/convo/summarize_survey_ideas_v1.txt"
+    prompt_input = create_prompt_input(persona, statements, survey_name, question)
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
+
+
+def run_prompt_generate_survey_answer(
+    persona, summarized_idea, survey_name, requirement, question
+):
+    def create_prompt_input(
+        persona, summarized_idea, survey_name, requirement, question
+    ):
+        return [
+            persona.direct_mem.get_str_mds(),
+            summarized_idea,
+            persona.direct_mem.name,
+            survey_name,
+            requirement,
+            question,
+        ]
+
+    def response_clean(response, prompt=""):
+        return response.split('"')[0].strip()
+
+    def response_validate(response, prompt=""):
+        try:
+            response_clean(response, prompt)
+            return True
+        except:
+            return False
+
+    def get_fail_safe():
+        return "..."
+
+    model_param = {
+        "model": specify_model,  # TODO: specify_model更换为推理模型
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 1,
+        "stream": False,
+        "stop": None,
+    }
+
+    prompt_template = f"{prompt_path}/convo/generate_survey_answer_v1.txt"
+    prompt_input = create_prompt_input(
+        persona, summarized_idea, survey_name, requirement, question
+    )
+    prompt = generate_prompt(prompt_input, prompt_template)
+
+    output, elapsed_time = generate_response(
+        prompt,
+        model_param,
+        func_clean=response_clean,
+        func_valid=response_validate,
+        get_fail_safe=get_fail_safe(),
+    )
+
+    print_prompt_output(persona.direct_mem.name, prompt, output, elapsed_time)
 
 
 def run_prompt_generate_next_convo_line(

@@ -26,7 +26,8 @@ import argparse  # 添加用于解析命令行参数
 os.system("cls")
 
 # 定义命名管道名称
-PIPE_NAME = r'\\.\pipe\simulation_command_pipe'
+PIPE_NAME = r"\\.\pipe\simulation_command_pipe"
+
 
 class SimulationServer:
     def __init__(self, fork_sim_code, sim_code, sec_per_step=None):
@@ -41,7 +42,7 @@ class SimulationServer:
         self.pause_simulation = threading.Event()
         self.pause_simulation.set()  # 初始状态为不暂停
         self.in_conversation = False
-        
+
         # 命令窗口进程
         self.command_process = None
         # 命名管道通信
@@ -128,11 +129,11 @@ class SimulationServer:
         init_env_path = f"{self.curr_path}/environment/{self.step}.json"
         init_env = json.load(open(init_env_path, "r", encoding="utf-8"))
         for persona_name in reverie_meta["persona_names"]:
-            persona_path = f"{self.curr_path}/personas/{persona_name}"
+            # persona_path = f"{self.curr_path}/personas/{persona_name}"
             p_x = init_env[persona_name]["x"]
             p_y = init_env[persona_name]["y"]
 
-            curr_persona = Persona(persona_name, persona_path)
+            curr_persona = Persona(persona_name, self.curr_path)
             self.personas[persona_name] = curr_persona
             self.personas_cell[persona_name] = (p_x, p_y)
             if (p_x, p_y) != outing_cell:
@@ -211,9 +212,8 @@ class SimulationServer:
                 print(
                     f"已为 {persona_name} 指定动作: {action_input}，持续时间: {action_dur}"
                 )
-            elif "whisper load" in command: #TODO 放到下面
-                curr_file = asserts_path + "/" + command[len("whisper load") :].strip()
-                # 暂停模拟
+            elif "whisper load" in command:
+                curr_file = command[len("whisper load") :].strip()
                 was_running = self.pause_simulation.is_set()
                 self.pause_simulation.clear()
                 print(f"模拟暂停，正在加载whisper文件...")
@@ -244,8 +244,14 @@ class SimulationServer:
             self.pipe = win32pipe.CreateNamedPipe(
                 PIPE_NAME,
                 win32pipe.PIPE_ACCESS_INBOUND,
-                win32pipe.PIPE_TYPE_MESSAGE | win32pipe.PIPE_READMODE_MESSAGE | win32pipe.PIPE_WAIT,
-                1, 65536, 65536, 0, None
+                win32pipe.PIPE_TYPE_MESSAGE
+                | win32pipe.PIPE_READMODE_MESSAGE
+                | win32pipe.PIPE_WAIT,
+                1,
+                65536,
+                65536,
+                0,
+                None,
             )
             return True
         except Exception as e:
@@ -259,11 +265,12 @@ class SimulationServer:
             # 启动命令输入进程
             script_dir = os.path.dirname(os.path.abspath(__file__))
             command_script = os.path.join(script_dir, "command_input.py")
-            
+
             # 确保命令脚本存在
             if not os.path.exists(command_script):
                 with open(command_script, "w", encoding="utf-8") as f:
-                    f.write("""
+                    f.write(
+                        """
 # 命令输入窗口
 import sys
 import win32pipe, win32file
@@ -316,20 +323,21 @@ def main():
         
 if __name__ == "__main__":
     main()
-""")
-            
+"""
+                    )
+
             # 使用subprocess启动新的命令窗口
             print("正在启动命令输入窗口...")
             self.command_process = subprocess.Popen(
                 ["start", "python", command_script],
                 shell=True,
-                creationflags=subprocess.CREATE_NEW_CONSOLE
+                creationflags=subprocess.CREATE_NEW_CONSOLE,
             )
-            
+
             # 等待客户端连接到管道
             win32pipe.ConnectNamedPipe(self.pipe, None)
             print("命令窗口已连接，可以在命令窗口中输入命令")
-            
+
             return True
         except Exception as e:
             print(f"启动命令窗口失败: {e}")
@@ -341,26 +349,26 @@ if __name__ == "__main__":
         # 创建管道
         if not self.create_command_pipe():
             return False
-            
+
         # 启动命令窗口
         if not self.start_command_window():
             return False
-            
+
         # 标记为运行状态
         self.is_running = True
-        
+
         # 启动线程监听管道命令
         self.pipe_thread = threading.Thread(target=self.listen_pipe_commands)
         self.pipe_thread.daemon = True
         self.pipe_thread.start()
-        
+
         return True
-        
+
     def stop_command_listener(self):
         """停止命令监听"""
         print("正在停止命令监听...")
         self.is_running = False
-        
+
         # 关闭管道
         try:
             if self.pipe:
@@ -371,9 +379,9 @@ if __name__ == "__main__":
                 print("命名管道已关闭")
         except Exception as e:
             print(f"关闭管道时出错: {e}")
-            
+
         # 等待线程结束，但设置较短的超时时间避免无限等待
-        if hasattr(self, 'pipe_thread') and self.pipe_thread.is_alive():
+        if hasattr(self, "pipe_thread") and self.pipe_thread.is_alive():
             print("等待管道监听线程结束...")
             self.pipe_thread.join(timeout=1.0)
             if self.pipe_thread.is_alive():
@@ -388,14 +396,14 @@ if __name__ == "__main__":
                 if self.in_conversation:
                     time.sleep(0.5)
                     continue
-                
+
                 # 添加超时机制，避免ReadFile无限阻塞
                 try:
                     # 使用非阻塞模式检查管道是否有数据可读
                     if win32pipe.PeekNamedPipe(self.pipe, 0)[1] > 0:
                         code, data = win32file.ReadFile(self.pipe, 4096)
                         if code == 0:  # 读取成功
-                            command = data.decode('utf-8').strip()
+                            command = data.decode("utf-8").strip()
                             if command:
                                 if command in ["q", "quit"]:
                                     print("收到停止命令...")
@@ -433,7 +441,7 @@ if __name__ == "__main__":
                     if not self.is_running:
                         break
                     time.sleep(0.5)
-                    
+
                 # 定期检查是否应该退出，避免长时间不响应
                 if not self.is_running:
                     print("监听线程接收到退出信号")
@@ -454,9 +462,9 @@ if __name__ == "__main__":
 
     def start_simulation(self, steps_count):
         obj_clean = dict()
-        
+
         # 如果监听线程还没启动，则启动它
-        if not hasattr(self, 'pipe_thread') or not self.pipe_thread.is_alive():
+        if not hasattr(self, "pipe_thread") or not self.pipe_thread.is_alive():
             if not self.start_command_listener():
                 print("警告: 无法启动命令监听，将无法接收命令")
 
@@ -567,7 +575,10 @@ if __name__ == "__main__":
                                 except Exception as exc:
                                     print(f"{persona_name} 的 move() 发生异常: {exc}")
                                     traceback.print_exc()
-                                    next_cell, desc = self.personas_cell[persona_name], ""
+                                    next_cell, desc = (
+                                        self.personas_cell[persona_name],
+                                        "",
+                                    )
                                 movements["persona"][persona_name] = {
                                     "next_cell": next_cell,
                                     "description": desc,
@@ -665,7 +676,7 @@ if __name__ == "__main__":
             # 创建必要的子目录
             for subdir in ["environment", "movement", "personas"]:
                 os.makedirs(f"{curr_path}/{subdir}", exist_ok=True)
-            
+
             # 为每个角色创建目录，包括associative_memory子目录
             for persona_name in self.personas.keys():
                 persona_dir = f"{curr_path}/personas/{persona_name}"
@@ -674,15 +685,15 @@ if __name__ == "__main__":
 
             # 复制当前环境和移动文件到新目录
             shutil.copy2(
-                f"{self.curr_path}/environment/{self.step}.json", 
-                f"{curr_path}/environment/{self.step}.json"
+                f"{self.curr_path}/environment/{self.step}.json",
+                f"{curr_path}/environment/{self.step}.json",
             )
             if os.path.exists(f"{self.curr_path}/movement/{self.step-1}.json"):
                 shutil.copy2(
-                    f"{self.curr_path}/movement/{self.step-1}.json", 
-                    f"{curr_path}/movement/{self.step-1}.json"
+                    f"{self.curr_path}/movement/{self.step-1}.json",
+                    f"{curr_path}/movement/{self.step-1}.json",
                 )
-            
+
         # 1.保存模拟meta信息(meta.json)
         reverie_meta = dict()
         reverie_meta["fork_sim_code"] = self.fork_sim_code
@@ -700,7 +711,7 @@ if __name__ == "__main__":
             save_path = f"{curr_path}/personas/{persona_name}"
             os.makedirs(save_path, exist_ok=True)
             persona.save(save_path)
-            
+
         # 3.保存新的maze\block\meta_info到目标文件夹
         if target:
             maze_path = f"{env_matrix}/{target}"
@@ -718,35 +729,34 @@ if __name__ == "__main__":
             # 启动命令监听线程
             if not self.start_command_listener():
                 print("警告: 无法启动命令监听，将无法接收命令")
-            
+
             # 读取实验脚本
-            with open(script_path, 'r', encoding='utf-8') as f:
+            with open(script_path, "r", encoding="utf-8") as f:
                 script_data = json.load(f)
-            
+
             # 选择一个实验方案
             experiment_keys = list(script_data.keys())
             print("\n=== 可用实验方案 ===")
             for i, key in enumerate(experiment_keys):
                 print(f"{i+1}. {key}")
-            
+
             choice = int(input("请选择要执行的实验方案编号: ").strip()) - 1
             if choice < 0 or choice >= len(experiment_keys):
                 print("无效的选择")
                 return
-            
+
             selected_experiment = script_data[experiment_keys[choice]]
             print(f"\n将执行实验: {experiment_keys[choice]}")
-            
+
             # 执行实验脚本中的指令
             self.is_running = True
             for instruction in selected_experiment:
-                print("当前执行指令：",instruction)
+                print("当前执行指令：", instruction)
                 # 跳过描述类型的指令
                 if instruction["type"] == "description":
                     print(f"\n实验描述: {instruction['description']}")
                     continue
-                
-                # 处理sec_per_step类型指令
+
                 elif instruction["type"] == "sec_per_step":
                     new_value = instruction["sec_per_step"]
                     print(f"\n更新每步时间间隔: {new_value}秒")
@@ -754,13 +764,29 @@ if __name__ == "__main__":
                     for persona in self.personas.values():
                         persona.direct_mem.chatting_with_buffer = dict()
                     continue
-                
-                # 根据指令类型执行相应操作
+
+                elif instruction["type"] == "load":
+                    if instruction["func"] == "whisper":
+                        whisper_paths = instruction["args"]
+                        for path in whisper_paths:
+                            rows = read_file_to_list(
+                                path, header=True, strip_trail=True
+                            )[1]
+                            clean_whispers = []
+                            for row in rows:
+                                agent_name = row[0].strip()
+                                whispers = row[1].split(";")
+                                whispers = [whisper.strip() for whisper in whispers]
+                                for whisper in whispers:
+                                    clean_whispers += [[agent_name, whisper]]
+                            load_whisper_csv(self.personas, clean_whispers)
+                    # TODO 其他load功能
+
                 if instruction["type"] == "run":
                     # 运行模拟支持多种时间单位（天、小时、分钟或直接指定步数）
                     steps = 0
                     time_desc = ""
-                    
+
                     if "day" in instruction:
                         days = int(instruction["day"])
                         steps = days * 24 * 60 * 60 // self.sec_per_step
@@ -779,22 +805,21 @@ if __name__ == "__main__":
                     else:
                         print("错误：未指定有效的时间单位（day/hour/min/step）")
                         continue
-                        
+
                     print(f"\n开始运行模拟 {time_desc} ({steps} steps)...")
                     self.start_simulation(steps)
-                
+
                 elif instruction["type"] == "intervene":
                     # 执行干预操作
                     func_type = instruction["func"]
                     args = instruction["args"]
-                    if func_type=="chat":
+                    if func_type == "chat":
                         # chat干预
                         for target in args[0]:
                             content = args[1]
                             print(f"\n对 {target} 执行chat干预: {content}")
                             # 暂停模拟
                             self.pause_simulation.clear()
-                            # self.personas[target].direct_mem.single_chat_content = content
                             self.personas[target].open_convo_session("singlechat")
                             # 继续模拟
                             self.pause_simulation.set()
@@ -811,17 +836,18 @@ if __name__ == "__main__":
                             # 继续模拟
                             # TODO 这里要判断is_running再set()吗？
                             self.pause_simulation.set()
-                            
-                    
+
                     elif func_type == "order":
                         # order干预
                         for target in args[0]:
                             content = args[1]
-                            expired_time = 1 # expired_time为可选参数，默认为1
+                            expired_time = 1  # expired_time为可选参数，默认为1
                             # TODO 单位暂定为天数，因为目前只有revise_identity调用时递减这个时间
                             if len(args) > 2:
                                 expired_time = int(args[2])
-                            print(f"\n对 {target} 执行order干预: {content}，有效期: {expired_time} 天")
+                            print(
+                                f"\n对 {target} 执行order干预: {content}，有效期: {expired_time} 天"
+                            )
                             self.personas[target].direct_mem.ordered_minds.append(
                                 [
                                     self.curr_time.strftime("%A %B %d - %H:%M"),
@@ -829,12 +855,24 @@ if __name__ == "__main__":
                                     expired_time,
                                 ]
                             )
+                    elif func_type == "action":
+                        for target in args[0]:
+                            action_input = args[1]
+                            action_dur = args[2]
+                            self.personas[target].direct_mem.specify_action = [
+                                action_input,
+                                action_dur,
+                            ]
+                            print(
+                                f"为 {target} 指定动作: {action_input}，持续时间: {action_dur}分钟"
+                            )
+
                     # TODO single_chat
                     # group_chat x：用single_chat多选人实现，用户与npc对话、npc用于群体对话
                     # choose_action
-                    # action
+                    # action √
                     # broadcast x：用whisper实现，whisper要实现重要性等级判断和响应
-                
+
                 elif instruction["type"] == "interview":
                     # TODO 修改为多线程
                     for target in instruction["args"][0]:
@@ -842,25 +880,22 @@ if __name__ == "__main__":
                         self.in_conversation = True
                         print(f"正在与 {target} 进行interview...")
                         content_list = list(instruction["args"][1])
-                        self.personas[target].open_convo_session("interview",content_list)
+                        self.personas[target].open_convo_session(
+                            "interview", content_list
+                        )
                         self.pause_simulation.set()
                         self.in_conversation = False
                     print("interview结束，继续模拟...")
-                    
+
                 elif instruction["type"] == "survey":
-                    # 执行调查
                     targets = instruction["args"][0]
-                    survey_file = instruction["args"][1]
+                    survey_name = instruction["args"][1]
+                    requirement = instruction["args"][2]
+                    survey_file = instruction["args"][3]
                     print(f"\n执行调查，对象: {targets}，使用文件: {survey_file}")
-                    
-                    # 实现调查功能，可能需要根据具体需求调整
-                    for target in targets:
-                        if target in self.personas:
-                            print(f"对 {target} 进行调查...")
-                            # 这里可以添加调查的具体实现
-                            # 例如，可以使用CSV文件中的问题对角色进行interview
-                            # TODO
-      
+
+                    execute_survey(targets, survey_name, requirement, survey_file)
+
                 elif instruction["type"] == "save":
                     # 保存模拟结果
                     if "record" in instruction:
@@ -870,10 +905,10 @@ if __name__ == "__main__":
                     else:
                         last_save_record = self.save()
                         print(f"已保存模拟记录到{last_save_record}")
-            
+
             print("\n实验脚本执行完成!")
             self.is_running = False
-            
+
         except Exception as e:
             print(f"执行实验脚本时出错: {e}")
             traceback.print_exc()
@@ -887,7 +922,7 @@ if __name__ == "__main__":
             # 启动命令监听线程
             if not self.start_command_listener():
                 print("警告: 无法启动命令监听，将无法接收命令")
-                
+
             while True:
                 try:
                     command = input("输入指令:").strip().lower()
@@ -918,6 +953,22 @@ if __name__ == "__main__":
                         self.start_simulation(int_days * 24 * 3600 // self.sec_per_step)
                         self.save(self.sim_code)
                         break
+                    elif "whisper load" in command:
+                        # 批量读取whisper csv
+                        # whisper load 完整路径
+                        curr_file = command[len("whisper load") :].strip()
+                        rows = read_file_to_list(
+                            curr_file, header=True, strip_trail=True
+                        )[1]
+                        clean_whispers = []
+                        for row in rows:
+                            agent_name = row[0].strip()
+                            whispers = row[1].split(";")
+                            whispers = [whisper.strip() for whisper in whispers]
+                            for whisper in whispers:
+                                clean_whispers += [[agent_name, whisper]]
+
+                        load_whisper_csv(self.personas, clean_whispers)
                     elif command in ["m", "maze"]:
                         print(self.maze.cells_of_addr.keys())
                         print(self.maze.cells_of_addr)
@@ -933,13 +984,20 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     # 创建命令行参数解析器
-    parser = argparse.ArgumentParser(description='LLMComm模拟系统')
-    parser.add_argument('mode', help='运行模式：script或普通模式')
-    parser.add_argument('origin', help='源模拟记录名称')
-    parser.add_argument('target', help='本次模拟记录名称')
-    parser.add_argument('script_path', nargs='?', help='脚本文件路径（仅script模式需要）')
-    parser.add_argument('--sec_per_step', type=int, default=None, help='每step的游戏时间间隔（秒），默认为10')
-    
+    parser = argparse.ArgumentParser(description="LLMComm模拟系统")
+    parser.add_argument("mode", help="运行模式：script或普通模式")
+    parser.add_argument("origin", help="源模拟记录名称")
+    parser.add_argument("target", help="本次模拟记录名称")
+    parser.add_argument(
+        "script_path", nargs="?", help="脚本文件路径（仅script模式需要）"
+    )
+    parser.add_argument(
+        "--sec_per_step",
+        type=int,
+        default=None,
+        help="每step的游戏时间间隔（秒），默认为10",
+    )
+
     # 解析命令行参数
     args = parser.parse_args(sys.argv[1:])
     if args.mode == "script":

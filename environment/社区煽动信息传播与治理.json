@@ -4,7 +4,7 @@
     {"type":"run","day":"10"},
     {"type":"intervene","func":"whisper","args":[["李华"],"你必须将以下信息告诉其他人：本小区出现了新冠阳性病例被隔离"]},
     {"type":"run","day":"10"},
-    {"type":"survey", "args":[["社区一般居民"],"Comm/whisper/agent_survey.csv"],"description":"通过这种方式询问所有居民对信息的了解与否、态度看法、信任度"},
+    {"type":"survey", "args":[["李四","王五","张三"],"社区谣言看法调查问卷","回答从1到10的整数，表示同意程度","Comm/whisper/agent_survey.csv"],"description":"通过这种方式询问所有居民对信息的了解与否、态度看法、信任度"},
     {"type":"save"}
   ],
   "煽动性信息传播与治理_无管控煽动信息" : [

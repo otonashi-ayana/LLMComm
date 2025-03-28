@@ -1,0 +1,26 @@
+generate_survey_answer_v1.txt
+
+Variables: 
+#<INPUT 0># -- mds
+#<INPUT 1># -- summarized_idea
+#<INPUT 2># -- agent name
+#<INPUT 3># -- survey name
+#<INPUT 4># -- requirement
+#<INPUT 5># -- survey question
+
+<BLOCK></BLOCK>
+以下是一位社区居民的基本信息：
+#<INPUT 0>#
+
+注意，以下是该居民唯一了解的相关信息：
+[
+#<INPUT 1>#
+]
+
+#<INPUT 2>#正在做一份名为“#<INPUT 3>#”的调查问卷，其中一项问题为：
+"#<INPUT 5>#"
+
+问卷的回答格式要求为：
+#<INPUT 4>#
+
+现在，给出#<INPUT 2>#的答案（仅返回#<INPUT 2>#的回答，禁止添加解释、附加性内容）：

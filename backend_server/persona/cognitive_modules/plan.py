@@ -223,10 +223,11 @@ def generate_current_status(
     persona, p_name, yesterday_date, plan_note, thought_note, ordered_minds
 ):
     """生成更新后的状态描述"""
+    backslash_n = "\n"
     status_prompt = f"""
 {p_name} 在 {yesterday_date} 这一天所想的近期事项：{"(暂无)" if persona.direct_mem.currently == "" else persona.direct_mem.currently}
 
-{p_name} 在 {yesterday_date} 这一天结束时内心的【注意事项】、【感受思考】：{(plan_note + thought_note).replace("\n", "")}
+{p_name} 在 {yesterday_date} 这一天结束时内心的【注意事项】、【感受思考】：{(plan_note + thought_note).replace(backslash_n, "")}
 
 现在的日期是 {persona.direct_mem.curr_time.strftime('%A %B %d')}，请根据以上信息，生成一段话，描述 {p_name} 从今天开始的近期事项。
 
@@ -894,7 +895,7 @@ def _create_react(
     )
 
 
-def _chat_react(maze, persona, target_persona, personas,sec_per_step):
+def _chat_react(maze, persona, target_persona, personas, sec_per_step):
     # There are two personas -- the persona who is initiating the conversation
     # and the persona who is the target. We get the persona instances here.
     init_persona = persona
@@ -925,14 +926,20 @@ def _chat_react(maze, persona, target_persona, personas,sec_per_step):
             act_event = (p.name, "聊天", target_persona.name)  # chat with
             chatting_with = target_persona.name
             chatting_with_buffer = {}
-            chatting_with_buffer[target_persona.name] = 10 * int(math.pow(sec_per_step,0.5))
-            print_c(f"chatting_with_buffer 计算(10->30): {chatting_with_buffer[target_persona.name]}")
+            chatting_with_buffer[target_persona.name] = 10 * int(
+                math.pow(sec_per_step, 0.5)
+            )
+            print_c(
+                f"chatting_with_buffer 计算(10->30): {chatting_with_buffer[target_persona.name]}"
+            )
         elif role == "target":
             act_address = f"<persona> {init_persona.name}"
             act_event = (p.name, "聊天", init_persona.name)
             chatting_with = init_persona.name
             chatting_with_buffer = {}
-            chatting_with_buffer[init_persona.name] = 10 * int(math.pow(sec_per_step,0.5))
+            chatting_with_buffer[init_persona.name] = 10 * int(
+                math.pow(sec_per_step, 0.5)
+            )
 
         # act_pronunciatio = "💬"
         act_obj_description = None
@@ -1048,7 +1055,7 @@ def specify_action(persona, maze):
     persona.direct_mem.specify_action.clear()
 
 
-def plan(persona, maze, personas, new_day, retrieved,sec_per_step):
+def plan(persona, maze, personas, new_day, retrieved, sec_per_step):
     # plan小时计划（min单位）
     if new_day:  # 如果是同一天内，new_day=False
         _new_day_planning(persona, new_day)
@@ -1073,7 +1080,7 @@ def plan(persona, maze, personas, new_day, retrieved,sec_per_step):
         # print("reaction_mode:", reaction_mode)
         if reaction_mode:
             if reaction_mode[0] == "chat":  # ("chat", target persona name)
-                _chat_react(maze, persona, reaction_mode[1], personas,sec_per_step)
+                _chat_react(maze, persona, reaction_mode[1], personas, sec_per_step)
             elif reaction_mode[0] == "chatted":  # ("chatted", chat_init persona name)
                 _chatted_react(persona, reaction_mode[1])
             elif reaction_mode[0] == "wait":  # ("wait", wait_until)
